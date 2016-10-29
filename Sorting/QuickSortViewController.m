@@ -9,4 +9,11 @@
 #import "QuickSortViewController.h"
 
 @implementation QuickSortViewController
+
+- (void)viewDidLoad {
+    
+    [super viewDidLoad];
+    [self.view setBackgroundColor:[UIColor greenColor]];
+}
+
 @end

@@ -9,4 +9,11 @@
 #import "InsertionSortViewController.h"
 
 @implementation InsertionSortViewController
+
+- (void)viewDidLoad {
+    
+    [super viewDidLoad];
+    [self.view setBackgroundColor:[UIColor blueColor]];
+}
+
 @end

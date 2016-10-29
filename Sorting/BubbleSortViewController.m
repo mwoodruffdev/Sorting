@@ -9,4 +9,11 @@
 #import "BubbleSortViewController.h"
 
 @implementation BubbleSortViewController
+
+- (void)viewDidLoad {
+    
+    [super viewDidLoad];
+    [self.view setBackgroundColor:[UIColor redColor]];
+}
+
 @end

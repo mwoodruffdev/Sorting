@@ -6,6 +6,7 @@
 //  Copyright © 2016 Mike Woodruff. All rights reserved.
 //
 
+#import "BubbleSortViewController.h"
 #import "SideMenuViewController.h"
 #import "MainViewController.h"
 #import <MFSideMenu/MFSideMenu.h>
@@ -14,6 +15,7 @@
 
 @property (strong, nonatomic) MFSideMenuContainerViewController*  containerController;
 
+@property (strong, nonatomic) UIViewController* selectedViewController;
 @end
 
 @implementation MainViewController
@@ -22,11 +24,9 @@
     [super viewDidLoad];
 
     SideMenuViewController *sideMenuViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"SideMenuViewController"];
+    sideMenuViewController.delegate = self;
     
-    UIViewController * selectedViewController = [[UIViewController alloc] init];
-    [selectedViewController.view setBackgroundColor:[UIColor blueColor]];
-    
-    self.containerController = [MFSideMenuContainerViewController containerWithCenterViewController:selectedViewController leftMenuViewController:sideMenuViewController rightMenuViewController:nil];
+    self.containerController = [MFSideMenuContainerViewController containerWithCenterViewController:self.selectedViewController leftMenuViewController:sideMenuViewController rightMenuViewController:nil];
 
     
     [self addChildViewController:self.containerController];
@@ -35,5 +35,10 @@
     [self.containerController didMoveToParentViewController:self];
 }
 
+- (void)didSelectViewController:(UIViewController *)viewController {
+  
+    self.selectedViewController = viewController;
+    self.containerController.centerViewController = self.selectedViewController;
+}
 
 @end

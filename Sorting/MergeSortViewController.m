@@ -9,4 +9,11 @@
 #import "MergeSortViewController.h"
 
 @implementation MergeSortViewController
+
+- (void)viewDidLoad {
+    
+    [super viewDidLoad];
+    [self.view setBackgroundColor:[UIColor yellowColor]];
+}
+
 @end
