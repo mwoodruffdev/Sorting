@@ -15,6 +15,11 @@
 		2752BC6F1DC48E2C00837BCF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2752BC6E1DC48E2C00837BCF /* Assets.xcassets */; };
 		2752BC721DC48E2C00837BCF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2752BC701DC48E2C00837BCF /* LaunchScreen.storyboard */; };
 		2776F4AB1DC4945B000AE6E5 /* SideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2776F4AA1DC4945B000AE6E5 /* SideMenuViewController.m */; };
+		2776F4B31DC498FD000AE6E5 /* BubbleSortViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2776F4B21DC498FD000AE6E5 /* BubbleSortViewController.m */; };
+		2776F4B71DC499BB000AE6E5 /* QuickSortViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2776F4B61DC499BB000AE6E5 /* QuickSortViewController.m */; };
+		2776F4BA1DC499C5000AE6E5 /* MergeSortViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2776F4B91DC499C5000AE6E5 /* MergeSortViewController.m */; };
+		2776F4BD1DC499D2000AE6E5 /* InsertionSortViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2776F4BC1DC499D2000AE6E5 /* InsertionSortViewController.m */; };
+		2776F4C01DC499E4000AE6E5 /* BaseSortViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2776F4BF1DC499E4000AE6E5 /* BaseSortViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +35,16 @@
 		2752BC731DC48E2C00837BCF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2776F4A91DC4945B000AE6E5 /* SideMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SideMenuViewController.h; sourceTree = "<group>"; };
 		2776F4AA1DC4945B000AE6E5 /* SideMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SideMenuViewController.m; sourceTree = "<group>"; };
+		2776F4B11DC498FD000AE6E5 /* BubbleSortViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BubbleSortViewController.h; sourceTree = "<group>"; };
+		2776F4B21DC498FD000AE6E5 /* BubbleSortViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BubbleSortViewController.m; sourceTree = "<group>"; };
+		2776F4B51DC499BB000AE6E5 /* QuickSortViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuickSortViewController.h; sourceTree = "<group>"; };
+		2776F4B61DC499BB000AE6E5 /* QuickSortViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuickSortViewController.m; sourceTree = "<group>"; };
+		2776F4B81DC499C5000AE6E5 /* MergeSortViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MergeSortViewController.h; sourceTree = "<group>"; };
+		2776F4B91DC499C5000AE6E5 /* MergeSortViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MergeSortViewController.m; sourceTree = "<group>"; };
+		2776F4BB1DC499D2000AE6E5 /* InsertionSortViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InsertionSortViewController.h; sourceTree = "<group>"; };
+		2776F4BC1DC499D2000AE6E5 /* InsertionSortViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InsertionSortViewController.m; sourceTree = "<group>"; };
+		2776F4BE1DC499E4000AE6E5 /* BaseSortViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseSortViewController.h; sourceTree = "<group>"; };
+		2776F4BF1DC499E4000AE6E5 /* BaseSortViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseSortViewController.m; sourceTree = "<group>"; };
 		39F50848D72ACC04E57D61CA /* Pods_Sorting.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sorting.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BFB77BFFE991217998F02A2 /* Pods-Sorting.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sorting.release.xcconfig"; path = "Pods/Target Support Files/Pods-Sorting/Pods-Sorting.release.xcconfig"; sourceTree = "<group>"; };
 		E149BA7F8AD5EB1C4BC3913D /* Pods-Sorting.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sorting.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Sorting/Pods-Sorting.debug.xcconfig"; sourceTree = "<group>"; };
@@ -79,13 +94,9 @@
 			children = (
 				2752BC651DC48E2C00837BCF /* AppDelegate.h */,
 				2752BC661DC48E2C00837BCF /* AppDelegate.m */,
-				2752BC681DC48E2C00837BCF /* MainViewController.h */,
-				2752BC691DC48E2C00837BCF /* MainViewController.m */,
-				2752BC6B1DC48E2C00837BCF /* Main.storyboard */,
-				2776F4A91DC4945B000AE6E5 /* SideMenuViewController.h */,
-				2776F4AA1DC4945B000AE6E5 /* SideMenuViewController.m */,
-				2752BC6E1DC48E2C00837BCF /* Assets.xcassets */,
-				2752BC701DC48E2C00837BCF /* LaunchScreen.storyboard */,
+				2776F4AE1DC498A2000AE6E5 /* Assets */,
+				2776F4AD1DC4989A000AE6E5 /* Sorting */,
+				2776F4AC1DC49892000AE6E5 /* UI */,
 				2752BC731DC48E2C00837BCF /* Info.plist */,
 				2752BC621DC48E2C00837BCF /* Supporting Files */,
 			);
@@ -98,6 +109,52 @@
 				2752BC631DC48E2C00837BCF /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		2776F4AC1DC49892000AE6E5 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				2776F4B41DC49986000AE6E5 /* SortingControllers */,
+				2752BC681DC48E2C00837BCF /* MainViewController.h */,
+				2752BC691DC48E2C00837BCF /* MainViewController.m */,
+				2752BC6B1DC48E2C00837BCF /* Main.storyboard */,
+				2776F4A91DC4945B000AE6E5 /* SideMenuViewController.h */,
+				2776F4AA1DC4945B000AE6E5 /* SideMenuViewController.m */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		2776F4AD1DC4989A000AE6E5 /* Sorting */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Sorting;
+			sourceTree = "<group>";
+		};
+		2776F4AE1DC498A2000AE6E5 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				2752BC6E1DC48E2C00837BCF /* Assets.xcassets */,
+				2752BC701DC48E2C00837BCF /* LaunchScreen.storyboard */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
+		2776F4B41DC49986000AE6E5 /* SortingControllers */ = {
+			isa = PBXGroup;
+			children = (
+				2776F4BE1DC499E4000AE6E5 /* BaseSortViewController.h */,
+				2776F4BF1DC499E4000AE6E5 /* BaseSortViewController.m */,
+				2776F4B11DC498FD000AE6E5 /* BubbleSortViewController.h */,
+				2776F4B21DC498FD000AE6E5 /* BubbleSortViewController.m */,
+				2776F4BB1DC499D2000AE6E5 /* InsertionSortViewController.h */,
+				2776F4BC1DC499D2000AE6E5 /* InsertionSortViewController.m */,
+				2776F4B81DC499C5000AE6E5 /* MergeSortViewController.h */,
+				2776F4B91DC499C5000AE6E5 /* MergeSortViewController.m */,
+				2776F4B51DC499BB000AE6E5 /* QuickSortViewController.h */,
+				2776F4B61DC499BB000AE6E5 /* QuickSortViewController.m */,
+			);
+			name = SortingControllers;
 			sourceTree = "<group>";
 		};
 		6127772B9533C4369C54BD3A /* Frameworks */ = {
@@ -232,6 +289,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				2776F4AB1DC4945B000AE6E5 /* SideMenuViewController.m in Sources */,
+				2776F4BD1DC499D2000AE6E5 /* InsertionSortViewController.m in Sources */,
+				2776F4C01DC499E4000AE6E5 /* BaseSortViewController.m in Sources */,
+				2776F4B31DC498FD000AE6E5 /* BubbleSortViewController.m in Sources */,
+				2776F4BA1DC499C5000AE6E5 /* MergeSortViewController.m in Sources */,
+				2776F4B71DC499BB000AE6E5 /* QuickSortViewController.m in Sources */,
 				2752BC6A1DC48E2C00837BCF /* MainViewController.m in Sources */,
 				2752BC671DC48E2C00837BCF /* AppDelegate.m in Sources */,
 				2752BC641DC48E2C00837BCF /* main.m in Sources */,
