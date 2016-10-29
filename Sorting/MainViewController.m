@@ -14,8 +14,8 @@
 @interface MainViewController ()
 
 @property (strong, nonatomic) MFSideMenuContainerViewController*  containerController;
-
 @property (strong, nonatomic) UIViewController* selectedViewController;
+
 @end
 
 @implementation MainViewController
