@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  SideMenuViewController.h
 //  Sorting
 //
 //  Created by Michael Woodruff on 29/10/2016.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface SideMenuViewController : UITableViewController
 
 @end
-
