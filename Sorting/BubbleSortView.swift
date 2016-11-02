@@ -13,7 +13,7 @@ class BubbleSortView: UIView {
     
     var valueArray: [Int];
     var sortMoveArray: [BubbleSortMove];
-    var elementSubviews: [UIView] = [];
+    var elementSubviews: [BubbleSortIndexView] = [];
     var animationArray:[AnimationBlock]?;
     
     
@@ -40,15 +40,8 @@ class BubbleSortView: UIView {
     internal func setupSubViews() {
         for integer in valueArray {
             
-            let elementView: UIView = UIView();
-            elementView.layer.borderColor = UIColor.black.cgColor;
-            elementView.layer.borderWidth = 1;
+            let elementView: BubbleSortIndexView = BubbleSortIndexView(value: integer);
             addSubview(elementView);
-            
-            let elementValue: UILabel = UILabel();
-            elementValue.text = "\(integer)";
-            elementValue.tag = 1;
-            elementView.addSubview(elementValue);
             
             elementSubviews.append(elementView);
         }
@@ -78,8 +71,9 @@ class BubbleSortView: UIView {
     
     internal func setupSubviewConstraints() {
         
-        var prevView: UIView? = nil;
-        for elementView in elementSubviews {
+        for (i, elementView) in elementSubviews.enumerated() {
+            
+            let width = superview!.frame.size.width / CGFloat(valueArray.count);
             
             let elementValue = elementView.viewWithTag(1);
             elementValue?.translatesAutoresizingMaskIntoConstraints = false;
@@ -89,21 +83,10 @@ class BubbleSortView: UIView {
             elementView.translatesAutoresizingMaskIntoConstraints = false;
             elementView.topAnchor.constraint(equalTo: topAnchor).isActive = true;
             elementView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true;
-            elementView.widthAnchor.constraint(equalToConstant: superview!.frame.size.width / CGFloat(valueArray.count)).isActive = true;
+            elementView.widthAnchor.constraint(equalToConstant: width).isActive = true;
             
-            if(prevView == nil) {
-                
-                elementView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true;
-            } else {
-                elementView.leftAnchor.constraint(equalTo: prevView!.rightAnchor).isActive = true;
-            }
-            
-            if (elementView == elementSubviews.last) {
-                
-                elementView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true;
-            }
-            
-            prevView = elementView;
+            let leftAnchorConstant = width * CGFloat(i);
+            elementView.updateLeft(constant: leftAnchorConstant);
         }
     }
     
@@ -135,19 +118,24 @@ class BubbleSortView: UIView {
                 case .swap:
                     
                     animationAction = {
+                        
                         let viewOne = self.elementSubviews[sortMove.positionOne.index];
                         let viewTwo = self.elementSubviews[sortMove.positionTwo!.index];
 
                         swap(&self.elementSubviews[sortMove.positionOne.index], &self.elementSubviews[sortMove.positionTwo!.index])
                         
-                        let viewOneOldConstraints = viewOne.constraints;
-                        viewOne.removeConstraints(viewOne.constraints);
-                        viewOne.addConstraints(viewTwo.constraints);
-                    
-                        viewTwo.removeConstraints(viewTwo.constraints);
-                        viewTwo.addConstraints(viewOneOldConstraints);
+                        let width = self.superview!.frame.size.width / CGFloat(self.valueArray.count);
+
+                        let viewTwoLA = CGFloat(sortMove.positionOne.index) * width;
+                        viewTwo.updateLeft(constant: viewTwoLA);
+                        //viewTwo.leftAnchor.constraint(equalTo: self.leftAnchor, constant: viewTwoLA).isActive = true;
                         
                         
+                        let viewOneLA = CGFloat(sortMove.positionTwo!.index) * width;
+                        viewOne.updateLeft(constant: viewOneLA);
+                        //viewOne.leftAnchor.constraint(equalTo: self.leftAnchor, constant: viewOneLA).isActive = true;
+                        
+                        self.setNeedsLayout();
                         self.layoutIfNeeded();
                     }
                     
@@ -177,5 +165,44 @@ class BubbleSortView: UIView {
                 }
             }
         });
+    }
+    
+    class BubbleSortIndexView: UIView {
+        
+        var valueLabel: UILabel;
+        var leftConstraint: NSLayoutConstraint?;
+        
+        init(value: Int) {
+            
+            valueLabel = UILabel();
+            valueLabel.text = "\(value)";
+            valueLabel.tag = 1;
+            super.init(frame: CGRect.zero);
+            self.layer.borderColor = UIColor.black.cgColor;
+            self.layer.borderWidth = 1;
+            addSubview(valueLabel);
+        }
+        
+        required init?(coder aDecoder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+        
+        override func didMoveToSuperview() {
+            super.didMoveToSuperview();
+            if(superview != nil) {
+                
+            }
+        }
+        
+        func updateLeft(constant: CGFloat) {
+     
+            if(leftConstraint == nil) {
+                leftConstraint = leftAnchor.constraint(equalTo: superview!.leftAnchor, constant: constant);
+                leftConstraint?.isActive = true;
+            } else {
+                
+                leftConstraint?.constant = constant;
+            }
+        }
     }
 }
