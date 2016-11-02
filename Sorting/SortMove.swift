@@ -1,5 +1,5 @@
 //
-//  SortingAlgorithm.swift
+//  SortMove.swift
 //  Sorting
 //
 //  Created by Michael Woodruff on 02/11/2016.
@@ -8,9 +8,6 @@
 
 import Foundation
 
-import UIKit
-
-protocol SortingAlgorithm {
+protocol SortMove {
     
-    func sort() -> [SortMove];
 }

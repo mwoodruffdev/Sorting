@@ -11,11 +11,17 @@ import UIKit
 
 class BubbleSortViewController: UIViewController, SortingViewController {
 
+    let sortArray = [3, 1, 0, 4, 2];
+    
     override func viewDidLoad() {
         super.viewDidLoad();
         view.backgroundColor = UIColor.red;
-        let bubbleSort = BubbleSort(unsortedArray: [3, 1, 0, 4, 2]);
-        bubbleSort.sort();
+        
+        let bubbleSort = BubbleSort(unsortedArray: sortArray);
+        let sortingQueue = bubbleSort.sort();
+        
+        let bubbleSortView = BubbleSortView(valueArray: sortArray, sortMoveArray: sortingQueue);
+        view.addSubview(bubbleSortView);
     }
     
     func sort() {

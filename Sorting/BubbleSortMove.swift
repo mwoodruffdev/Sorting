@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct BubbleSortMove {
+struct BubbleSortMove: SortMove {
 
     var positionOne: Position;
     var positionTwo: Position?;

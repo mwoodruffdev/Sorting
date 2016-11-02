@@ -8,7 +8,7 @@
 
 import Foundation
 
-class BubbleSort: NSObject {
+class BubbleSort: SortingAlgorithm {
     
     var unsortedArray: [Int];
     
@@ -17,7 +17,7 @@ class BubbleSort: NSObject {
         self.unsortedArray = unsortedArray;
     }
     
-    func sort() -> [BubbleSortMove] {
+    func sort() -> [SortMove] {
     
         var sortedAboveIndex = unsortedArray.count;
         var sortedArray = unsortedArray;
