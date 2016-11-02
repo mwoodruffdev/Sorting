@@ -12,5 +12,5 @@ import UIKit
 
 protocol SortingAlgorithm {
     
-    func sort() -> [BubbleSortMoves];
+    func sort() -> [BubbleSortMove];
 }

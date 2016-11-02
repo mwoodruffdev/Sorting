@@ -90,6 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				2784808E1DC9A228002ADF3D /* AppDelegate.swift */,
+				278480751DC99566002ADF3D /* Sorting-Bridging-Header.h */,
 				278480781DC9957A002ADF3D /* Algorithms */,
 				2776F4AE1DC498A2000AE6E5 /* Assets */,
 				2776F4AD1DC4989A000AE6E5 /* Sorting */,
@@ -122,7 +123,6 @@
 		2776F4AD1DC4989A000AE6E5 /* Sorting */ = {
 			isa = PBXGroup;
 			children = (
-				278480751DC99566002ADF3D /* Sorting-Bridging-Header.h */,
 			);
 			name = Sorting;
 			sourceTree = "<group>";

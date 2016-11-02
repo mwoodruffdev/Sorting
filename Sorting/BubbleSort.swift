@@ -17,29 +17,32 @@ class BubbleSort: NSObject {
         self.unsortedArray = unsortedArray;
     }
     
-    func sort() -> [BubbleSortMoves] {
+    func sort() -> [BubbleSortMove] {
     
         var sortedAboveIndex = unsortedArray.count;
         var sortedArray = unsortedArray;
-        var moveArray: [BubbleSortMoves] = [];
+        var moveArray: [BubbleSortMove] = [];
         
         repeat {
             var lastSwapIndex = 0;
             for i in 1 ..< sortedAboveIndex {
-            
+                let firstPosition: BubbleSortMove.Position = BubbleSortMove.Position(index: i, value: sortedArray[i]);
+                let secondPosition: BubbleSortMove.Position = BubbleSortMove.Position(index: i-1, value: sortedArray[i-1]);
+                
+                moveArray.append(BubbleSortMove.checking(positionOne: firstPosition, positionTwo: secondPosition));
                 if (sortedArray[i - 1] > sortedArray[i]) {
                     swap(&sortedArray[i], &sortedArray[i-1])
-                    moveArray.append(.swap);
+                    moveArray.append(BubbleSortMove.swap(positionOne: firstPosition, positionTwo: secondPosition));
                     lastSwapIndex = i
                 }
             }
-             sortedAboveIndex = lastSwapIndex
+            
+            sortedAboveIndex = lastSwapIndex
+            let sortedAbovePosition: BubbleSortMove.Position = BubbleSortMove.Position(index: sortedAboveIndex, value: sortedArray[sortedAboveIndex]);
+            moveArray.append(BubbleSortMove.sortedFrom(sortedPosition: sortedAbovePosition));
         } while (sortedAboveIndex != 0)
         
-        print("unsorted array: \(unsortedArray)");
-        print("sorted array: \(sortedArray)");
+        
         return moveArray;
     }
-    
-    
 }
