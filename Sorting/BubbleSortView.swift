@@ -33,7 +33,7 @@ class BubbleSortView: UIView {
     
     internal func setupView() {
         
-        backgroundColor = UIColor.green;
+        backgroundColor = UIColor.white;
         setupSubViews();
     }
     
@@ -106,7 +106,7 @@ class BubbleSortView: UIView {
                         
                         for view in self.elementSubviews {
                         
-                            if(view != viewOne && view != viewTwo) {
+                            if(view != viewOne && view != viewTwo && !view.sorted) {
                                 view.backgroundColor = UIColor.clear;
                             }
                         }
@@ -118,6 +118,20 @@ class BubbleSortView: UIView {
                     animationArray.append(animationAction!);
                     break;
                 case .sortedFrom:
+                    
+                    animationAction = {
+                        
+                        let sortedIndex = sortMove.positionOne.index;
+                        
+                        for i in sortedIndex ..< self.elementSubviews.count {
+                         
+                            let view = self.elementSubviews[i];
+                            view.backgroundColor = UIColor.green;
+                            view.sorted = true;
+                        }
+                    }
+                    
+                    animationArray.append(animationAction!);
                     break;
                 case .swap:
                     
@@ -175,6 +189,7 @@ class BubbleSortView: UIView {
         
         internal var valueLabel: UILabel;
         internal var leftConstraint: NSLayoutConstraint?;
+        var sorted: Bool = false;
         
         init(value: Int) {
             
