@@ -101,14 +101,18 @@ class BubbleSortView: UIView {
                 case .checking:
                     animationAction = {
                         
+                        let viewOne = self.elementSubviews[sortMove.positionOne.index]
+                        let viewTwo = self.elementSubviews[sortMove.positionTwo!.index];
+                        
                         for view in self.elementSubviews {
-                            
-                            view.backgroundColor = UIColor.clear;
+                        
+                            if(view != viewOne && view != viewTwo) {
+                                view.backgroundColor = UIColor.clear;
+                            }
                         }
                         
-                        let viewOne = self.elementSubviews[sortMove.positionOne.index]
+                        
                         viewOne.backgroundColor = UIColor.red;
-                        let viewTwo = self.elementSubviews[sortMove.positionTwo!.index];
                         viewTwo.backgroundColor = UIColor.red;
                     }
                     animationArray.append(animationAction!);
@@ -149,7 +153,7 @@ class BubbleSortView: UIView {
     
     func startAnimation() {
         
-        UIView.animate(withDuration: 2, animations: (self.animationArray![0]), completion: { (isComplete) in
+        UIView.animate(withDuration: 1, animations: (self.animationArray![0]), completion: { (isComplete) in
             if(isComplete) {
                 self.animateAtIndex(index: 1);
             }
@@ -158,9 +162,9 @@ class BubbleSortView: UIView {
     
     internal func animateAtIndex(index: Int) {
     
-        UIView.animate(withDuration: 2, animations: self.animationArray![index], completion: {(isComplete) in
+        UIView.animate(withDuration: 1, animations: self.animationArray![index], completion: {(isComplete) in
             if(isComplete) {
-                if(index - 1 < self.animationArray!.count) {
+                if(index + 1 < self.animationArray!.count) {
                     self.animateAtIndex(index: index+1);
                 }
             }
@@ -169,8 +173,8 @@ class BubbleSortView: UIView {
     
     class BubbleSortIndexView: UIView {
         
-        var valueLabel: UILabel;
-        var leftConstraint: NSLayoutConstraint?;
+        internal var valueLabel: UILabel;
+        internal var leftConstraint: NSLayoutConstraint?;
         
         init(value: Int) {
             
@@ -185,13 +189,6 @@ class BubbleSortView: UIView {
         
         required init?(coder aDecoder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
-        }
-        
-        override func didMoveToSuperview() {
-            super.didMoveToSuperview();
-            if(superview != nil) {
-                
-            }
         }
         
         func updateLeft(constant: CGFloat) {
