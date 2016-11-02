@@ -12,10 +12,14 @@ import UIKit
 class BubbleSortView: UIView {
     
     var valueArray: [Int];
-    var sortMoveArray: [SortMove];
+    var sortMoveArray: [BubbleSortMove];
     var elementSubviews: [UIView] = [];
+    var animationArray:[AnimationBlock]?;
     
-    init(valueArray: [Int], sortMoveArray: [SortMove]) {
+    
+    typealias AnimationBlock = () -> Void;
+    
+    init(valueArray: [Int], sortMoveArray: [BubbleSortMove]) {
         
         self.valueArray = valueArray;
         self.sortMoveArray = sortMoveArray;
@@ -58,6 +62,8 @@ class BubbleSortView: UIView {
             
             setupSelfConstraints();
             setupSubviewConstraints();
+            animationArray = setupAnimations();
+            startAnimation();
         }
     }
     
@@ -101,7 +107,75 @@ class BubbleSortView: UIView {
         }
     }
     
-    func startSortAnimation() {
+    func setupAnimations() -> [AnimationBlock]{
         
+        var animationArray: [AnimationBlock] = [];
+        for sortMove in sortMoveArray {
+            
+            var animationAction: AnimationBlock?;
+            
+            switch(sortMove.moveType) {
+                case .checking:
+                    animationAction = {
+                        
+                        for view in self.elementSubviews {
+                            
+                            view.backgroundColor = UIColor.clear;
+                        }
+                        
+                        let viewOne = self.elementSubviews[sortMove.positionOne.index]
+                        viewOne.backgroundColor = UIColor.red;
+                        let viewTwo = self.elementSubviews[sortMove.positionTwo!.index];
+                        viewTwo.backgroundColor = UIColor.red;
+                    }
+                    animationArray.append(animationAction!);
+                    break;
+                case .sortedFrom:
+                    break;
+                case .swap:
+                    
+                    animationAction = {
+                        let viewOne = self.elementSubviews[sortMove.positionOne.index];
+                        let viewTwo = self.elementSubviews[sortMove.positionTwo!.index];
+
+                        swap(&self.elementSubviews[sortMove.positionOne.index], &self.elementSubviews[sortMove.positionTwo!.index])
+                        
+                        let viewOneOldConstraints = viewOne.constraints;
+                        viewOne.removeConstraints(viewOne.constraints);
+                        viewOne.addConstraints(viewTwo.constraints);
+                    
+                        viewTwo.removeConstraints(viewTwo.constraints);
+                        viewTwo.addConstraints(viewOneOldConstraints);
+                        
+                        
+                        self.layoutIfNeeded();
+                    }
+                    
+                    animationArray.append(animationAction!);
+                    break;
+            }
+        }
+        
+        return animationArray;
+    }
+    
+    func startAnimation() {
+        
+        UIView.animate(withDuration: 2, animations: (self.animationArray![0]), completion: { (isComplete) in
+            if(isComplete) {
+                self.animateAtIndex(index: 1);
+            }
+        })
+    }
+    
+    internal func animateAtIndex(index: Int) {
+    
+        UIView.animate(withDuration: 2, animations: self.animationArray![index], completion: {(isComplete) in
+            if(isComplete) {
+                if(index - 1 < self.animationArray!.count) {
+                    self.animateAtIndex(index: index+1);
+                }
+            }
+        });
     }
 }

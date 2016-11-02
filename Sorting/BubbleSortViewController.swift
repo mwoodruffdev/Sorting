@@ -20,7 +20,7 @@ class BubbleSortViewController: UIViewController, SortingViewController {
         let bubbleSort = BubbleSort(unsortedArray: sortArray);
         let sortingQueue = bubbleSort.sort();
         
-        let bubbleSortView = BubbleSortView(valueArray: sortArray, sortMoveArray: sortingQueue);
+        let bubbleSortView = BubbleSortView(valueArray: sortArray, sortMoveArray: sortingQueue as! [BubbleSortMove]);
         view.addSubview(bubbleSortView);
     }
     
