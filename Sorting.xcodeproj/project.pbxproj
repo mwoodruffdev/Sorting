@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2517F245971D640C733191D0 /* Pods_Sorting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39F50848D72ACC04E57D61CA /* Pods_Sorting.framework */; };
+		2731415E1DD1A7840060B6B4 /* SortCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2731415D1DD1A7840060B6B4 /* SortCollectionViewCell.swift */; };
 		2752BC6D1DC48E2C00837BCF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2752BC6B1DC48E2C00837BCF /* Main.storyboard */; };
 		2752BC6F1DC48E2C00837BCF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2752BC6E1DC48E2C00837BCF /* Assets.xcassets */; };
 		2752BC721DC48E2C00837BCF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2752BC701DC48E2C00837BCF /* LaunchScreen.storyboard */; };
@@ -23,10 +24,10 @@
 		2784808F1DC9A228002ADF3D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2784808E1DC9A228002ADF3D /* AppDelegate.swift */; };
 		278480911DC9A302002ADF3D /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278480901DC9A302002ADF3D /* MainViewController.swift */; };
 		278480931DC9C443002ADF3D /* SortMove.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278480921DC9C443002ADF3D /* SortMove.swift */; };
-		278480961DC9E257002ADF3D /* BubbleSortView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278480951DC9E257002ADF3D /* BubbleSortView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2731415D1DD1A7840060B6B4 /* SortCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortCollectionViewCell.swift; sourceTree = "<group>"; };
 		2752BC5F1DC48E2C00837BCF /* Sorting.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sorting.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2752BC6C1DC48E2C00837BCF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2752BC6E1DC48E2C00837BCF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -45,7 +46,6 @@
 		2784808E1DC9A228002ADF3D /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		278480901DC9A302002ADF3D /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		278480921DC9C443002ADF3D /* SortMove.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortMove.swift; sourceTree = "<group>"; };
-		278480951DC9E257002ADF3D /* BubbleSortView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BubbleSortView.swift; sourceTree = "<group>"; };
 		39F50848D72ACC04E57D61CA /* Pods_Sorting.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sorting.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BFB77BFFE991217998F02A2 /* Pods-Sorting.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sorting.release.xcconfig"; path = "Pods/Target Support Files/Pods-Sorting/Pods-Sorting.release.xcconfig"; sourceTree = "<group>"; };
 		E149BA7F8AD5EB1C4BC3913D /* Pods-Sorting.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sorting.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Sorting/Pods-Sorting.debug.xcconfig"; sourceTree = "<group>"; };
@@ -174,7 +174,7 @@
 		278480941DC9E246002ADF3D /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				278480951DC9E257002ADF3D /* BubbleSortView.swift */,
+				2731415D1DD1A7840060B6B4 /* SortCollectionViewCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -313,10 +313,10 @@
 			files = (
 				278480851DC99ED9002ADF3D /* BubbleSortViewController.swift in Sources */,
 				278480911DC9A302002ADF3D /* MainViewController.swift in Sources */,
+				2731415E1DD1A7840060B6B4 /* SortCollectionViewCell.swift in Sources */,
 				278480831DC99E93002ADF3D /* SortingViewController.swift in Sources */,
 				2784808D1DC9A04C002ADF3D /* SideMenuViewController.swift in Sources */,
 				278480931DC9C443002ADF3D /* SortMove.swift in Sources */,
-				278480961DC9E257002ADF3D /* BubbleSortView.swift in Sources */,
 				2784807A1DC995A9002ADF3D /* SortingAlgorithm.swift in Sources */,
 				2784808B1DC99FE7002ADF3D /* QuickSortViewController.swift in Sources */,
 				278480871DC99F73002ADF3D /* InsertionSortViewController.swift in Sources */,
