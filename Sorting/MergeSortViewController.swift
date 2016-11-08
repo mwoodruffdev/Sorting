@@ -11,6 +11,9 @@ import UIKit
 
 class MergeSortViewController: UIViewController, SortingViewController {
     
+    internal var sortArray: [Int] = [3, 1, 0, 4, 2];
+    internal var sortCollectionView: UICollectionView!
+    
     override func viewDidLoad() {
 
         super.viewDidLoad()
