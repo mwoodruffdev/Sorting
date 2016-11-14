@@ -41,6 +41,10 @@ class QuickSort: SortingAlgorithm {
     
     func partition(v: inout [Int], low: Int, high: Int) -> Int {
 
+        let wallOne: QuickSortMove.Position = QuickSortMove.Position(index: low, value: v[low]);
+        let wallTwo: QuickSortMove.Position = QuickSortMove.Position(index: high, value: v[high])
+        test.append(QuickSortMove.addWall(positionOne: wallOne, positionTwo: wallTwo));
+        
         let pivot = v[high]
         
         var i = low

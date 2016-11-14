@@ -15,17 +15,11 @@ class QuickSortViewController: BaseSortingViewController {
     typealias AnimationBlock  = (Animation, Int);
     var animationMoves: [AnimationBlock]?;
 
-    
     override func viewDidLoad() {
         super.viewDidLoad();
         view.backgroundColor = UIColor.green;
         
         let quickSort: QuickSort = QuickSort(unsortedArray: sortArray);
-        let sortingQueue = quickSort.sort();
-        
-        if let testQueue = quickSort as? QuickSort {
-            print(testQueue.test);
-        }
         
         animationMoves = sortCollectionView(moves: quickSort.test as! [QuickSortMove]);
     }

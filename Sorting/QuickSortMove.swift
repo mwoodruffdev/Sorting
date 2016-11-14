@@ -21,9 +21,25 @@ class QuickSortMove: SortMove {
         self.moveType = moveType;
     }
     
+    init(positionOne: Position, moveType: QuickSortMoveType) {
+        
+        self.positionOne = positionOne;
+        self.moveType = moveType;
+    }
+    
+    static func addWall(positionOne: Position, positionTwo: Position) -> QuickSortMove {
+        
+        return QuickSortMove(positionOne: positionOne, positionTwo: positionTwo, moveType: .addWall);
+    }
+    
     static func swap(positionOne: Position, positionTwo: Position) -> QuickSortMove {
         
         return QuickSortMove(positionOne: positionOne, positionTwo: positionTwo, moveType: .swap);
+    }
+    
+    static func selectSorted(positionOne: Position) -> QuickSortMove {
+        
+        return QuickSortMove(positionOne: positionOne, moveType: .selectSorted);
     }
     
     struct Position {
@@ -41,7 +57,9 @@ class QuickSortMove: SortMove {
 
 enum QuickSortMoveType {
     
+    case check
     case swap
-    case checking
-    case sortedFrom
+    case selectPivot
+    case selectSorted
+    case addWall
 }

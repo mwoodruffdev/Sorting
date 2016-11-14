@@ -13,7 +13,7 @@
 		2752BC6F1DC48E2C00837BCF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2752BC6E1DC48E2C00837BCF /* Assets.xcassets */; };
 		2752BC721DC48E2C00837BCF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2752BC701DC48E2C00837BCF /* LaunchScreen.storyboard */; };
 		275592B61DD995B000A5F093 /* QuickSort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275592B51DD995B000A5F093 /* QuickSort.swift */; };
-		275592BA1DD9B61700A5F093 /* QuickSortMov.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275592B91DD9B61700A5F093 /* QuickSortMov.swift */; };
+		275592BA1DD9B61700A5F093 /* QuickSortMove.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275592B91DD9B61700A5F093 /* QuickSortMove.swift */; };
 		2784807A1DC995A9002ADF3D /* SortingAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278480791DC995A9002ADF3D /* SortingAlgorithm.swift */; };
 		2784807F1DC9962E002ADF3D /* BubbleSortMove.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2784807E1DC9962E002ADF3D /* BubbleSortMove.swift */; };
 		278480811DC9967A002ADF3D /* BubbleSort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278480801DC9967A002ADF3D /* BubbleSort.swift */; };
@@ -36,7 +36,7 @@
 		2752BC711DC48E2C00837BCF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2752BC731DC48E2C00837BCF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		275592B51DD995B000A5F093 /* QuickSort.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuickSort.swift; sourceTree = "<group>"; };
-		275592B91DD9B61700A5F093 /* QuickSortMov.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuickSortMov.swift; sourceTree = "<group>"; };
+		275592B91DD9B61700A5F093 /* QuickSortMove.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuickSortMove.swift; sourceTree = "<group>"; };
 		278480751DC99566002ADF3D /* Sorting-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sorting-Bridging-Header.h"; sourceTree = "<group>"; };
 		278480791DC995A9002ADF3D /* SortingAlgorithm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortingAlgorithm.swift; sourceTree = "<group>"; };
 		2784807E1DC9962E002ADF3D /* BubbleSortMove.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BubbleSortMove.swift; sourceTree = "<group>"; };
@@ -172,7 +172,7 @@
 			children = (
 				2784807E1DC9962E002ADF3D /* BubbleSortMove.swift */,
 				278480921DC9C443002ADF3D /* SortMove.swift */,
-				275592B91DD9B61700A5F093 /* QuickSortMov.swift */,
+				275592B91DD9B61700A5F093 /* QuickSortMove.swift */,
 			);
 			name = SortMoves;
 			sourceTree = "<group>";
@@ -331,7 +331,7 @@
 				2784808F1DC9A228002ADF3D /* AppDelegate.swift in Sources */,
 				2784807F1DC9962E002ADF3D /* BubbleSortMove.swift in Sources */,
 				278480811DC9967A002ADF3D /* BubbleSort.swift in Sources */,
-				275592BA1DD9B61700A5F093 /* QuickSortMov.swift in Sources */,
+				275592BA1DD9B61700A5F093 /* QuickSortMove.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
