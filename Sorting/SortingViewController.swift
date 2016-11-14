@@ -17,7 +17,7 @@ protocol SortingViewController {
 
 class BaseSortingViewController: UIViewController, SortingViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
-    internal var sortArray: [Int] = [3, 1, 0, 4, 2];
+    internal var sortArray: [Int] = [3, 1, 0, 4, 2,0,3,5,7,2,4,7,3,3,8,0,3,35,6,3,7,3];
     internal var sortCollectionView: UICollectionView!
     
     override func viewDidLoad() {
