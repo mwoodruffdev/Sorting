@@ -24,16 +24,7 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
         
         super.viewDidLoad();
         
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 6, left: 3, bottom: 6, right: 3)
-        layout.itemSize = CGSize(width: 30, height: 30)
-        
-        sortCollectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
-        sortCollectionView.dataSource = self
-        sortCollectionView.delegate = self
-        sortCollectionView.register(SortCollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
-        sortCollectionView.backgroundColor = UIColor.white
-        self.view.addSubview(sortCollectionView)
+        setupCollectionView(layout: createCollectionViewLayout());
         
         let button = UIButton(frame: CGRect(x: 100, y: 100, width: 100, height: 100));
         button.setTitle("SWAP PLEASE", for: .normal);
@@ -41,6 +32,25 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
         button.addTarget(self, action: #selector(swap), for: .touchUpInside);
         button.setTitleColor(UIColor.white, for: .normal);
         view.addSubview(button);
+    }
+    
+    internal func createCollectionViewLayout() -> UICollectionViewLayout {
+        
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 6, left: 3, bottom: 6, right: 3)
+        layout.itemSize = CGSize(width: 30, height: 30)
+        
+        return layout;
+    }
+    
+    internal func setupCollectionView(layout: UICollectionViewLayout) {
+        
+        sortCollectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
+        sortCollectionView.dataSource = self
+        sortCollectionView.delegate = self
+        sortCollectionView.register(SortCollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
+        sortCollectionView.backgroundColor = UIColor.white
+        self.view.addSubview(sortCollectionView)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

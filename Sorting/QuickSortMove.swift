@@ -42,6 +42,16 @@ class QuickSortMove: SortMove {
         return QuickSortMove(positionOne: positionOne, moveType: .selectSorted);
     }
     
+    static func selectPivot(positionOne: Position) -> QuickSortMove {
+        
+        return QuickSortMove(positionOne: positionOne, moveType: .selectPivot);
+    }
+    
+    static func selectLeftRight(positionOne: Position, positionTwo: Position) -> QuickSortMove {
+        
+        return QuickSortMove(positionOne: positionOne, positionTwo: positionTwo, moveType: .selectLeftRight);
+    }
+    
     struct Position {
         
         var index: Int;
@@ -57,7 +67,7 @@ class QuickSortMove: SortMove {
 
 enum QuickSortMoveType {
     
-    case check
+    case selectLeftRight
     case swap
     case selectPivot
     case selectSorted

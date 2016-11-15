@@ -46,15 +46,20 @@ class QuickSort: SortingAlgorithm {
         test.append(QuickSortMove.addWall(positionOne: wallOne, positionTwo: wallTwo));
         
         let pivot = v[high]
+        let selectPivot: QuickSortMove.Position = QuickSortMove.Position(index: high, value: pivot);
+        test.append(QuickSortMove.selectPivot(positionOne: selectPivot));
         
         var i = low
         for j in low..<high {
+            
+            let leftPosition: QuickSortMove.Position = QuickSortMove.Position(index: i, value: v[i]);
+            let rightPosition: QuickSortMove.Position = QuickSortMove.Position(index: j, value: v[j]);
+            test.append(QuickSortMove.selectLeftRight(positionOne: leftPosition, positionTwo: rightPosition));
+            
             if v[j] <= pivot {
                 (v[i], v[j]) = (v[j], v[i])
   
-                let firstPosition: QuickSortMove.Position = QuickSortMove.Position(index: i, value: v[i]);
-                let secondPosition: QuickSortMove.Position = QuickSortMove.Position(index: j, value: v[j]);
-                test.append(QuickSortMove(positionOne: firstPosition, positionTwo: secondPosition, moveType: .swap));
+                test.append(QuickSortMove(positionOne: leftPosition, positionTwo: rightPosition, moveType: .swap));
                 i += 1
             }
         }
