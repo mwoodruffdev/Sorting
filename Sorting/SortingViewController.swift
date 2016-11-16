@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import ZCAnimatedLabel
 
 protocol SortingViewController {
     
@@ -19,18 +20,19 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
 
     internal var sortArray: [Int] = [3, 1, 0, 4, 2,0,3,5,7,2,4,7,3,3,8,0,3,35,6,3,7,3];
     internal var sortCollectionView: UICollectionView!
+    internal var statusLabel: UILabel!;
     
     override func viewDidLoad() {
         
         super.viewDidLoad();
         
         setupCollectionView(layout: createCollectionViewLayout());
-        
+        addLabel();
         let button = UIButton(frame: CGRect(x: 100, y: 100, width: 100, height: 100));
         button.setTitle("SWAP PLEASE", for: .normal);
         button.tag = 0;
         button.addTarget(self, action: #selector(swap), for: .touchUpInside);
-        button.setTitleColor(UIColor.white, for: .normal);
+        button.setTitleColor(UIColor.black, for: .normal);
         view.addSubview(button);
     }
     
@@ -51,6 +53,13 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
         sortCollectionView.register(SortCollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
         sortCollectionView.backgroundColor = UIColor.white
         self.view.addSubview(sortCollectionView)
+    }
+    
+    internal func addLabel() {
+        
+        statusLabel = UILabel(frame: CGRect(x: 100, y: 200, width: 200, height: 30));
+        statusLabel.textColor = UIColor.black;
+        view.addSubview(statusLabel);
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
