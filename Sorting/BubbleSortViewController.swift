@@ -108,26 +108,26 @@ class BubbleSortViewController: BaseSortingViewController {
                     animationArray.append(block);
                     
                     break;
-                case .swap, .dontSwap:
+                case .swap:
                 
                     let animation: Animation = {
                         
                         self.sortCollectionView.moveItem(at: IndexPath(row: sortMove.positionOne.index, section: 0), to: IndexPath(row: sortMove.positionTwo!.index, section: 0))
                         self.sortCollectionView.moveItem(at: IndexPath(row: sortMove.positionTwo!.index, section: 0), to: IndexPath(row: sortMove.positionOne.index, section: 0))
                         
-                        if(sortMove.moveType == .swap) {
-                            self.statusLabel.text = "Yes!";
-                            self.statusLabel.textColor = UIColor.green;
-                        } else {
-                            self.statusLabel.text = "Nope!";
-                            self.statusLabel.textColor = UIColor.red;
-                        }
+                        self.statusLabel.text = "Yes!";
+                        self.statusLabel.textColor = UIColor.green;
                     }
                     
                     let type = 0;
                     let block = (animation, type);
                     animationArray.append(block);
                     
+                    break;
+                case .dontSwap:
+                    self.statusLabel.fadeTransition(duration: 1);
+                    self.statusLabel.text = "Nope!";
+                    self.statusLabel.textColor = UIColor.red;
                     break;
             }
         }

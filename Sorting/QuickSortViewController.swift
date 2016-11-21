@@ -88,7 +88,7 @@ class QuickSortViewController: BaseSortingViewController {
                 })
             } else if block.1 == 1 {
                 
-                UIView.animate(withDuration: 5, animations: animationMoves![index].0, completion: { (didFinish) in
+                UIView.animate(withDuration: 0, animations: animationMoves![index].0, completion: { (didFinish) in
                     
                     if(didFinish) {
                         self.startAnimations(index: index + 1);

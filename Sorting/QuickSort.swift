@@ -47,7 +47,7 @@ class QuickSort: SortingAlgorithm {
         moves.append(QuickSortMove.selectPivot(positionOne: selectPivot));
         
         var left = low
-        for right in low+1..<high {
+        for right in low..<high {
             
             let leftPosition: QuickSortMove.Position = QuickSortMove.Position(index: left, value: v[left]);
             let rightPosition: QuickSortMove.Position = QuickSortMove.Position(index: right, value: v[right]);
