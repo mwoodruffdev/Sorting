@@ -15,6 +15,7 @@
 		275592B61DD995B000A5F093 /* QuickSort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275592B51DD995B000A5F093 /* QuickSort.swift */; };
 		275592BA1DD9B61700A5F093 /* QuickSortMove.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275592B91DD9B61700A5F093 /* QuickSortMove.swift */; };
 		275592BC1DDAD27400A5F093 /* QuickSortCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275592BB1DDAD27400A5F093 /* QuickSortCollectionViewCell.swift */; };
+		275B391F1DE2DCFE0000B22C /* MergeSort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275B391E1DE2DCFE0000B22C /* MergeSort.swift */; };
 		2784807A1DC995A9002ADF3D /* SortingAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278480791DC995A9002ADF3D /* SortingAlgorithm.swift */; };
 		2784807F1DC9962E002ADF3D /* BubbleSortMove.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2784807E1DC9962E002ADF3D /* BubbleSortMove.swift */; };
 		278480811DC9967A002ADF3D /* BubbleSort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278480801DC9967A002ADF3D /* BubbleSort.swift */; };
@@ -39,6 +40,7 @@
 		275592B51DD995B000A5F093 /* QuickSort.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuickSort.swift; sourceTree = "<group>"; };
 		275592B91DD9B61700A5F093 /* QuickSortMove.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuickSortMove.swift; sourceTree = "<group>"; };
 		275592BB1DDAD27400A5F093 /* QuickSortCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuickSortCollectionViewCell.swift; sourceTree = "<group>"; };
+		275B391E1DE2DCFE0000B22C /* MergeSort.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MergeSort.swift; sourceTree = "<group>"; };
 		278480751DC99566002ADF3D /* Sorting-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sorting-Bridging-Header.h"; sourceTree = "<group>"; };
 		278480791DC995A9002ADF3D /* SortingAlgorithm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortingAlgorithm.swift; sourceTree = "<group>"; };
 		2784807E1DC9962E002ADF3D /* BubbleSortMove.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BubbleSortMove.swift; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 			children = (
 				278480791DC995A9002ADF3D /* SortingAlgorithm.swift */,
 				278480801DC9967A002ADF3D /* BubbleSort.swift */,
+				275B391E1DE2DCFE0000B22C /* MergeSort.swift */,
 				275592B51DD995B000A5F093 /* QuickSort.swift */,
 			);
 			name = Algorithms;
@@ -323,6 +326,7 @@
 				278480851DC99ED9002ADF3D /* BubbleSortViewController.swift in Sources */,
 				278480911DC9A302002ADF3D /* MainViewController.swift in Sources */,
 				2731415E1DD1A7840060B6B4 /* SortCollectionViewCell.swift in Sources */,
+				275B391F1DE2DCFE0000B22C /* MergeSort.swift in Sources */,
 				278480831DC99E93002ADF3D /* SortingViewController.swift in Sources */,
 				2784808D1DC9A04C002ADF3D /* SideMenuViewController.swift in Sources */,
 				278480931DC9C443002ADF3D /* SortMove.swift in Sources */,
