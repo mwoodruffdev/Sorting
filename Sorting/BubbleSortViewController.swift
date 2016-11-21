@@ -13,17 +13,16 @@ class BubbleSortViewController: BaseSortingViewController {
 
     var animationMoves: [AnimationBlock]?;
     
-    typealias Animation = () -> Void
     typealias AnimationBlock  = (Animation, Int);
     
     override func viewDidLoad() {
         
         super.viewDidLoad();
         
-        let bubbleSort = BubbleSort(unsortedArray: sortArray);
-        let sortingQueue = bubbleSort.sort();
+        if let sortingQueue = BubbleSort.sort(unsortedArray: sortArray) as? [BubbleSortMove] {
         
-        animationMoves = sortCollectionView(moves: sortingQueue as! [BubbleSortMove]);
+            animationMoves = sortCollectionView(moves: sortingQueue);
+        }
     }
     
     override func startAnimations(index: Int) {

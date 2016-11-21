@@ -26,10 +26,10 @@ class QuickSortMove: SortMove {
         self.positionOne = positionOne;
         self.moveType = moveType;
     }
-    
-    static func addWall(positionOne: Position, positionTwo: Position) -> QuickSortMove {
+
+    static func check(positionOne: Position, positionTwo: Position) -> QuickSortMove {
         
-        return QuickSortMove(positionOne: positionOne, positionTwo: positionTwo, moveType: .addWall);
+        return QuickSortMove(positionOne: positionOne, positionTwo: positionTwo, moveType: .check);
     }
     
     static func swap(positionOne: Position, positionTwo: Position) -> QuickSortMove {
@@ -67,9 +67,9 @@ class QuickSortMove: SortMove {
 
 enum QuickSortMoveType {
     
+    case check
     case selectLeftRight
     case swap
     case selectPivot
     case selectSorted
-    case addWall
 }

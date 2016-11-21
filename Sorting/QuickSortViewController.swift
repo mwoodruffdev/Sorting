@@ -13,16 +13,27 @@ class QuickSortViewController: BaseSortingViewController {
     
     typealias Animation = () -> Void
     typealias AnimationBlock  = (Animation, Int);
+    
     var animationMoves: [AnimationBlock]?;
+    var pivotLabel: UILabel!;
 
     override func viewDidLoad() {
         super.viewDidLoad();
+        
         view.backgroundColor = UIColor.green;
+    
+        if let sortingQueue = QuickSort.sort(unsortedArray: sortArray) as? [QuickSortMove] {
+            animationMoves = sortCollectionView(moves: sortingQueue);
+        }
+    }
+    
+    override func createCollectionViewLayout() -> UICollectionViewLayout {
         
-        let quickSort: QuickSort = QuickSort(unsortedArray: sortArray);
-        quickSort.sort();
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 6, left: 3, bottom: 6, right: 3)
+        layout.itemSize = CGSize(width: 30, height: 60)
         
-        animationMoves = sortCollectionView(moves: quickSort.test as! [QuickSortMove]);
+        return layout;
     }
     
     override func setupCollectionView(layout: UICollectionViewLayout) {
@@ -35,12 +46,33 @@ class QuickSortViewController: BaseSortingViewController {
         self.view.addSubview(sortCollectionView)
     }
     
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! QuickSortCollectionViewCell;
+    override func setupCell(row: Int, cell: UICollectionViewCell) {
         
-        cell.backgroundColor = UIColor.black;
-        cell.valueLabel.text = "\(sortArray[indexPath.row])";
-        return cell
+        if let cell = cell as? QuickSortCollectionViewCell {
+            cell.backgroundColor = UIColor.black;
+            cell.valueLabel.text = "\(sortArray[row])";
+        }
+    }
+    
+    override func setupViews() {
+        
+        super.setupViews();
+        setupLabels();
+    }
+    
+    internal func setupLabels() {
+        
+        pivotLabel = UILabel();
+        pivotLabel.textColor = UIColor.blue;
+        view.addSubview(pivotLabel);
+    }
+    
+    override func applyAutoLayoutConstraints() {
+        
+        super.applyAutoLayoutConstraints();
+        pivotLabel.translatesAutoresizingMaskIntoConstraints = false;
+        pivotLabel.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: 10).isActive = true;
+        pivotLabel.centerXAnchor.constraint(equalTo: pivotLabel.superview!.centerXAnchor).isActive = true;
     }
     
     override func startAnimations(index: Int) {
@@ -56,7 +88,7 @@ class QuickSortViewController: BaseSortingViewController {
                 })
             } else if block.1 == 1 {
                 
-                UIView.animate(withDuration: 1, animations: animationMoves![index].0, completion: { (didFinish) in
+                UIView.animate(withDuration: 5, animations: animationMoves![index].0, completion: { (didFinish) in
                     
                     if(didFinish) {
                         self.startAnimations(index: index + 1);
@@ -74,12 +106,34 @@ class QuickSortViewController: BaseSortingViewController {
             
             switch(sortMove.moveType) {
                 
-                case .swap:
+                case .check:
                     
+                    let animation: Animation = {
+                        
+                        self.statusLabel.fadeTransition(duration: 1);
+                        self.statusLabel.textColor = UIColor.black;
+                        self.statusLabel.text = "Is \(sortMove.positionOne.value) <= to \(sortMove.positionTwo!.value)";
+                    }
+                    let block = (animation, 1);
+                    animationArray.append(block);
+                    break;
+                
+                case .swap:
+                
                     let animation: Animation = {
                         
                         self.sortCollectionView.moveItem(at: IndexPath(row: sortMove.positionOne.index, section: 0), to: IndexPath(row: sortMove.positionTwo!.index, section: 0))
                         self.sortCollectionView.moveItem(at: IndexPath(row: sortMove.positionTwo!.index, section: 0), to: IndexPath(row: sortMove.positionOne.index, section: 0))
+                        
+                        if(sortMove.moveType == .swap) {
+                            self.statusLabel.fadeTransition(duration: 1);
+                            self.statusLabel.text = "Yes!";
+                            self.statusLabel.textColor = UIColor.green;
+                        } else {
+                            self.statusLabel.fadeTransition(duration: 1);
+                            self.statusLabel.text = "Nope!";
+                            self.statusLabel.textColor = UIColor.red;
+                        }
                     }
                     
                     let type = 0;
@@ -97,45 +151,20 @@ class QuickSortViewController: BaseSortingViewController {
                             if i == sortMove.positionOne.index || i == sortMove.positionTwo?.index {
                                 continue;
                             }
-                            if let unHighlightedCell =  self.sortCollectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? QuickSortCollectionViewCell {
+                            if let unHighlightedCell =  self.sortCollectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? QuickSortCollectionViewCell, unHighlightedCell.isSorted == false {
                                 
                                 unHighlightedCell.backgroundColor = UIColor.black;
+                                unHighlightedCell.resetLR();
                             }
                         }
                         
                         let cell1 = self.sortCollectionView.cellForItem(at: IndexPath(row: sortMove.positionOne.index, section: 0)) as? QuickSortCollectionViewCell;
                         cell1?.isPivot = true;
                         cell1?.backgroundColor = UIColor.blue;
+                        
+                        self.pivotLabel.fadeTransition(duration: 1);
+                        self.pivotLabel.text = "Pivot is \(sortMove.positionOne.value)";
                     }
-                    let type = 1;
-                    let block = (animation, type);
-                    animationArray.append(block);
-                    break;
-                
-                case .addWall:
-                
-                    let animation: Animation = {
-                        
-                        let leftWallCell = self.sortCollectionView.cellForItem(at: IndexPath(row: sortMove.positionOne.index, section: 0)) as? QuickSortCollectionViewCell;
-                        let rightWallCell = self.sortCollectionView.cellForItem(at: IndexPath(row: sortMove.positionTwo!.index, section: 0)) as? QuickSortCollectionViewCell;
-                        
-                        leftWallCell?.leftWall.isHidden = false;
-                        rightWallCell?.rightWall.isHidden = false;
-                        
-                        for i in (0 ..< self.sortArray.count) {
-                            
-                            if i == sortMove.positionOne.index || i == sortMove.positionTwo?.index {
-                                continue;
-                            }
-                            
-                            if let unHighlightedCell =  self.sortCollectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? QuickSortCollectionViewCell {
-                                
-                                unHighlightedCell.backgroundColor = UIColor.black;
-                                unHighlightedCell.hideWalls();
-                            }
-                        }
-                    }
-                    
                     let type = 1;
                     let block = (animation, type);
                     animationArray.append(block);
@@ -144,23 +173,64 @@ class QuickSortViewController: BaseSortingViewController {
                 case .selectLeftRight:
                 
                     let animation: Animation = {
-                    
+
                         for i in (0 ..< self.sortArray.count) {
                             
                             if i == sortMove.positionOne.index || i == sortMove.positionTwo?.index {
                                 continue;
                             }
+                            
                             if let unHighlightedCell =  self.sortCollectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? QuickSortCollectionViewCell,
-                                unHighlightedCell.isPivot == false, unHighlightedCell.sorted == false {
+                                unHighlightedCell.isPivot == false, unHighlightedCell.isSorted == false {
                                 
                                 unHighlightedCell.backgroundColor = UIColor.black;
+                                unHighlightedCell.resetLR();
                             }
                         }
                         
-                        let leftCell = self.sortCollectionView.cellForItem(at: IndexPath(row: sortMove.positionOne.index, section: 0)) as? QuickSortCollectionViewCell;
-                        let rightCell = self.sortCollectionView.cellForItem(at: IndexPath(row: sortMove.positionTwo!.index, section: 0)) as? QuickSortCollectionViewCell;
-                        leftCell?.backgroundColor = UIColor.red;
-                        rightCell?.backgroundColor = UIColor.red;
+                        
+                        let cell1 = self.sortCollectionView.cellForItem(at: IndexPath(row: sortMove.positionOne.index, section: 0)) as? QuickSortCollectionViewCell;
+                        let cell2 = self.sortCollectionView.cellForItem(at: IndexPath(row: sortMove.positionTwo!.index, section: 0)) as? QuickSortCollectionViewCell;
+                        
+                        if(sortMove.positionOne.index == sortMove.positionTwo!.index) {
+                        
+                            cell1?.setAsLAndR();
+                            cell1?.backgroundColor = UIColor.orange;
+                        } else {
+                        
+                            cell1?.setAsL();
+                            cell2?.setAsR();
+                            cell1?.backgroundColor = UIColor.orange;
+                            cell2?.backgroundColor = UIColor.orange;
+                        }
+                    }
+                    
+                    let type = 1;
+                    let block = (animation, type);
+                    animationArray.append(block);
+                    break;
+                
+            case .selectSorted:
+                    let animation: Animation = {
+                        
+                        for i in (0 ..< self.sortArray.count) {
+                            
+                            if i == sortMove.positionOne.index || i == sortMove.positionTwo?.index {
+                                continue;
+                            }
+                            
+                            if let unHighlightedCell =  self.sortCollectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? QuickSortCollectionViewCell,
+                                unHighlightedCell.isPivot == false, unHighlightedCell.isSorted == false {
+                                
+                                unHighlightedCell.backgroundColor = UIColor.black;
+                                unHighlightedCell.resetLR();
+                            }
+                        }
+                        
+                        
+                        let cell1 = self.sortCollectionView.cellForItem(at: IndexPath(row: sortMove.positionOne.index, section: 0)) as? QuickSortCollectionViewCell;
+                        cell1?.isSorted = true;
+                        cell1?.backgroundColor = UIColor.green;
                     }
                     
                     let type = 1;
@@ -174,5 +244,17 @@ class QuickSortViewController: BaseSortingViewController {
         }
         
         return animationArray;
+    }
+    
+}
+
+extension UIView {
+    func fadeTransition(duration:CFTimeInterval) {
+        let animation:CATransition = CATransition()
+        animation.timingFunction = CAMediaTimingFunction(name:
+            kCAMediaTimingFunctionEaseInEaseOut)
+        animation.type = kCATransitionFade
+        animation.duration = duration
+        self.layer.add(animation, forKey: kCATransitionFade)
     }
 }

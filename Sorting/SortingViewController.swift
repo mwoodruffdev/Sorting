@@ -17,18 +17,18 @@ protocol SortingViewController {
 
 class BaseSortingViewController: UIViewController, SortingViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
-    internal var sortArray: [Int] = [3, 1, 0, 4, 2,0,3,5,7,2,4,7,3,3,8,0,3,35,6,3,7,3];
+    internal var sortArray: [Int] = [3, 1, 0, 4, 2, 0];
     internal var sortCollectionView: UICollectionView!
     internal var sortButton: UIButton!;
     internal var statusLabel: UILabel!;
+    
+    typealias Animation = () -> Void
     
     override func viewDidLoad() {
         
         super.viewDidLoad();
         
-        setupCollectionView(layout: createCollectionViewLayout());
-        setupSortButton();
-        setupStatusLabel();
+        setupViews();
         applyAutoLayoutConstraints();
     }
     
@@ -39,6 +39,12 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
         layout.itemSize = CGSize(width: 30, height: 30)
         
         return layout;
+    }
+    
+    internal func setupViews() {
+        setupCollectionView(layout: createCollectionViewLayout());
+        setupSortButton();
+        setupStatusLabel();
     }
     
     internal func setupCollectionView(layout: UICollectionViewLayout) {
@@ -92,11 +98,19 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! SortCollectionViewCell;
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath);
         
-        cell.backgroundColor = UIColor.black;
-        cell.valueLabel.text = "\(sortArray[indexPath.row])";
+        setupCell(row: indexPath.row, cell: cell);
         return cell
+    }
+    
+    
+    internal func setupCell(row: Int, cell: UICollectionViewCell) {
+        if let cell = cell as? SortCollectionViewCell {
+            cell.backgroundColor = UIColor.black;
+            cell.valueLabel.text = "\(sortArray[row])";
+        }
+
     }
     
     func swap(sender: UIButton) {

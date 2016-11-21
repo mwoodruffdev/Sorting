@@ -10,66 +10,69 @@ import Foundation
 
 class QuickSort: SortingAlgorithm {
 
-    var unsortedArray: [Int];
-    var pivotLoc: Int = 0;
-
     var test:[SortMove] = [];
     
-    init(unsortedArray: [Int]) {
+    static func sort(unsortedArray: [Int]) -> [SortMove] {
         
-        self.unsortedArray = unsortedArray;
-    }
-    
-    func sort() -> [SortMove] {
+        var unsortedCopy = unsortedArray;
         
         guard unsortedArray.count > 1 else {
             return [];
         }
         
-        quicksort(v: &unsortedArray, low: 0, high: unsortedArray.count - 1);
-        return [];
+        var moves: [QuickSortMove] = [];
+        quicksort(moves: &moves, v: &unsortedCopy, low: 0, high: unsortedArray.count - 1);
+        
+        return moves;
     }
     
-    func quicksort(v: inout [Int], low: Int, high: Int) {
+    internal static func quicksort(moves: inout [QuickSortMove], v: inout [Int], low: Int, high: Int) {
         
         if low < high {
-            let pivot = partition(v: &v, low: low, high: high)
-            quicksort(v: &v, low: low, high: pivot - 1)
-            quicksort(v: &v, low: pivot + 1, high: high)
+            
+            let pivot = partition(moves: &moves, v: &v, low: low, high: high)
+            quicksort(moves: &moves, v: &v, low: low, high: pivot - 1)
+            quicksort(moves: &moves, v: &v, low: pivot + 1, high: high)
+        } else if low == high {
+            
+            let sortedPosition: QuickSortMove.Position = QuickSortMove.Position(index: low, value: v[low]);
+            moves.append(QuickSortMove(positionOne: sortedPosition, moveType: .selectSorted));
         }
     }
     
-    func partition(v: inout [Int], low: Int, high: Int) -> Int {
-
-        let wallOne: QuickSortMove.Position = QuickSortMove.Position(index: low, value: v[low]);
-        let wallTwo: QuickSortMove.Position = QuickSortMove.Position(index: high, value: v[high])
-        test.append(QuickSortMove.addWall(positionOne: wallOne, positionTwo: wallTwo));
+    internal static func partition(moves: inout [QuickSortMove], v: inout [Int], low: Int, high: Int) -> Int {
         
         let pivot = v[high]
         let selectPivot: QuickSortMove.Position = QuickSortMove.Position(index: high, value: pivot);
-        test.append(QuickSortMove.selectPivot(positionOne: selectPivot));
+        moves.append(QuickSortMove.selectPivot(positionOne: selectPivot));
         
-        var i = low
-        for j in low..<high {
+        var left = low
+        for right in low+1..<high {
             
-            let leftPosition: QuickSortMove.Position = QuickSortMove.Position(index: i, value: v[i]);
-            let rightPosition: QuickSortMove.Position = QuickSortMove.Position(index: j, value: v[j]);
-            test.append(QuickSortMove.selectLeftRight(positionOne: leftPosition, positionTwo: rightPosition));
+            let leftPosition: QuickSortMove.Position = QuickSortMove.Position(index: left, value: v[left]);
+            let rightPosition: QuickSortMove.Position = QuickSortMove.Position(index: right, value: v[right]);
             
-            if v[j] <= pivot {
-                (v[i], v[j]) = (v[j], v[i])
+            //Highlight the left / right positions
+            moves.append(QuickSortMove.selectLeftRight(positionOne: leftPosition, positionTwo: rightPosition));
+            moves.append(QuickSortMove.check(positionOne: leftPosition, positionTwo: selectPivot));
+            
+            if v[right] <= pivot {
+                (v[left], v[right]) = (v[right], v[left])
   
-                test.append(QuickSortMove(positionOne: leftPosition, positionTwo: rightPosition, moveType: .swap));
-                i += 1
+                //Yes. So swap
+                moves.append(QuickSortMove(positionOne: leftPosition, positionTwo: rightPosition, moveType: .swap));
+                left += 1
             }
         }
         
-        (v[i], v[high]) = (v[high], v[i])
+        (v[left], v[high]) = (v[high], v[left])
         
-        let firstPosition: QuickSortMove.Position = QuickSortMove.Position(index: i, value: v[i]);
-        let secondPosition: QuickSortMove.Position = QuickSortMove.Position(index: high, value: v[high]);
-        test.append(QuickSortMove(positionOne: firstPosition, positionTwo: secondPosition, moveType: .swap));
-            
-        return i
+        let leftPosition: QuickSortMove.Position = QuickSortMove.Position(index: left, value: v[left]);
+        let pivotPosition: QuickSortMove.Position = QuickSortMove.Position(index: high, value: v[high]);
+        moves.append(QuickSortMove(positionOne: leftPosition, positionTwo: pivotPosition, moveType: .swap));
+        
+        moves.append(QuickSortMove(positionOne: leftPosition, moveType: .selectSorted));
+        
+        return left
     }
 }

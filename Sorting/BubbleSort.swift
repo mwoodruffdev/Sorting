@@ -10,18 +10,11 @@ import Foundation
 
 class BubbleSort: SortingAlgorithm {
     
-    var unsortedArray: [Int];
-    
-    init(unsortedArray: [Int]) {
-        
-        self.unsortedArray = unsortedArray;
-    }
-    
-    func sort() -> [SortMove] {
+    static func sort(unsortedArray: [Int]) -> [SortMove] {
     
         var sortedAboveIndex = unsortedArray.count;
         var sortedArray = unsortedArray;
-        var moveArray: [BubbleSortMove] = [];
+        var moves: [BubbleSortMove] = [];
         
         repeat {
             var lastSwapIndex = 0;
@@ -29,23 +22,23 @@ class BubbleSort: SortingAlgorithm {
                 let firstPosition: BubbleSortMove.Position = BubbleSortMove.Position(index: i, value: sortedArray[i]);
                 let secondPosition: BubbleSortMove.Position = BubbleSortMove.Position(index: i-1, value: sortedArray[i-1]);
                 
-                moveArray.append(BubbleSortMove.checking(positionOne: firstPosition, positionTwo: secondPosition));
+                moves.append(BubbleSortMove.checking(positionOne: firstPosition, positionTwo: secondPosition));
                 if (sortedArray[i - 1] > sortedArray[i]) {
                     swap(&sortedArray[i], &sortedArray[i-1])
-                    moveArray.append(BubbleSortMove.swap(positionOne: firstPosition, positionTwo: secondPosition));
+                    moves.append(BubbleSortMove.swap(positionOne: firstPosition, positionTwo: secondPosition));
                     lastSwapIndex = i
                 } else {
                     
-                    moveArray.append(BubbleSortMove.dontSwap(positionOne: firstPosition, positionTwo: secondPosition));
+                    moves.append(BubbleSortMove.dontSwap(positionOne: firstPosition, positionTwo: secondPosition));
                 }
             }
             
             sortedAboveIndex = lastSwapIndex
             let sortedAbovePosition: BubbleSortMove.Position = BubbleSortMove.Position(index: sortedAboveIndex, value: sortedArray[sortedAboveIndex]);
-            moveArray.append(BubbleSortMove.sortedFrom(sortedPosition: sortedAbovePosition));
+            moves.append(BubbleSortMove.sortedFrom(sortedPosition: sortedAbovePosition));
         } while (sortedAboveIndex != 0)
         
         
-        return moveArray;
+        return moves;
     }
 }
