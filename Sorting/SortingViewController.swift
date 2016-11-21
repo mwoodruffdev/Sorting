@@ -8,7 +8,6 @@
 
 import Foundation
 import UIKit
-import ZCAnimatedLabel
 
 protocol SortingViewController {
     
@@ -20,6 +19,7 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
 
     internal var sortArray: [Int] = [3, 1, 0, 4, 2,0,3,5,7,2,4,7,3,3,8,0,3,35,6,3,7,3];
     internal var sortCollectionView: UICollectionView!
+    internal var sortButton: UIButton!;
     internal var statusLabel: UILabel!;
     
     override func viewDidLoad() {
@@ -27,13 +27,9 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
         super.viewDidLoad();
         
         setupCollectionView(layout: createCollectionViewLayout());
-        addLabel();
-        let button = UIButton(frame: CGRect(x: 100, y: 100, width: 100, height: 100));
-        button.setTitle("SWAP PLEASE", for: .normal);
-        button.tag = 0;
-        button.addTarget(self, action: #selector(swap), for: .touchUpInside);
-        button.setTitleColor(UIColor.black, for: .normal);
-        view.addSubview(button);
+        setupSortButton();
+        setupStatusLabel();
+        applyAutoLayoutConstraints();
     }
     
     internal func createCollectionViewLayout() -> UICollectionViewLayout {
@@ -55,12 +51,41 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
         self.view.addSubview(sortCollectionView)
     }
     
-    internal func addLabel() {
+    internal func setupSortButton() {
         
-        statusLabel = UILabel(frame: CGRect(x: 100, y: 200, width: 200, height: 30));
+        sortButton = UIButton();
+        sortButton.setTitle("START", for: .normal);
+        sortButton.tag = 0;
+        sortButton.addTarget(self, action: #selector(swap), for: .touchUpInside);
+        sortButton.backgroundColor = UIColor.black;
+        sortButton.setTitleColor(UIColor.white, for: .normal);
+        view.addSubview(sortButton);
+    }
+    
+    internal func setupStatusLabel() {
+        
+        statusLabel = UILabel();
+        statusLabel.text = "Tap start to begin";
         statusLabel.textColor = UIColor.black;
         view.addSubview(statusLabel);
     }
+    
+    //MARK: Autolayout
+    
+    internal func applyAutoLayoutConstraints() {
+        
+        sortButton.translatesAutoresizingMaskIntoConstraints = false;
+        sortButton.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true;
+        sortButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true;
+        sortButton.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true;
+        sortButton.heightAnchor.constraint(equalToConstant: 50).isActive = true;
+        
+        statusLabel.translatesAutoresizingMaskIntoConstraints = false;
+        statusLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true;
+        statusLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true;
+    }
+    
+    //MARK: Collection View
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return sortArray.count;
@@ -76,6 +101,7 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
     
     func swap(sender: UIButton) {
         
+        sortButton.setTitle("Stop Sorting", for: .normal);
         if(sender.tag == 0) {
             startAnimations(index: 0);
         }
