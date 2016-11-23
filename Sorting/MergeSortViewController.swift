@@ -100,6 +100,17 @@ class MergeSortViewController: BaseSortingViewController {
                 let block = (animation, type);
                 animationArray.append(block);
                 break;
+                
+            case .applyColor:
+                let animation: Animation = {
+                    
+                    let cell = self.sortCollectionView.cellForItem(at: IndexPath(row: sortMove.colorIndex!, section: 0));
+                    cell?.backgroundColor = sortMove.color;
+                }
+                let block = (animation, 1)
+                animationArray.append(block);
+                break;
+                
             case .swap:
                 let animation: Animation = {
                     
