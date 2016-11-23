@@ -17,7 +17,7 @@ protocol SortingViewController {
 
 class BaseSortingViewController: UIViewController, SortingViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
-    internal var sortArray: [Int] = [1,2,3,4,5];
+    internal var sortArray: [Int] = [5,2,5,4,6,8,2,3,4,1,5,8,2,8,3,7,3,8,3,3,3,1,2];
     internal var sortCollectionView: UICollectionView!
     internal var sortButton: UIButton!;
     internal var statusLabel: UILabel!;
@@ -100,17 +100,20 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath);
         
-        setupCell(row: indexPath.row, cell: cell);
+        setupCell(indexPath: indexPath, cell: cell);
         return cell
     }
     
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1;
+    }
     
-    internal func setupCell(row: Int, cell: UICollectionViewCell) {
+    
+    internal func setupCell(indexPath: IndexPath, cell: UICollectionViewCell) {
         if let cell = cell as? SortCollectionViewCell {
             cell.backgroundColor = UIColor.black;
-            cell.valueLabel.text = "\(sortArray[row])";
+            cell.valueLabel.text = "\(sortArray[indexPath.row])";
         }
-
     }
     
     func swap(sender: UIButton) {

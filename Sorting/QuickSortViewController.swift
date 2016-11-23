@@ -46,11 +46,11 @@ class QuickSortViewController: BaseSortingViewController {
         self.view.addSubview(sortCollectionView)
     }
     
-    override func setupCell(row: Int, cell: UICollectionViewCell) {
+    override func setupCell(indexPath: IndexPath, cell: UICollectionViewCell) {
         
         if let cell = cell as? QuickSortCollectionViewCell {
             cell.backgroundColor = UIColor.black;
-            cell.valueLabel.text = "\(sortArray[row])";
+            cell.valueLabel.text = "\(sortArray[indexPath.row])";
         }
     }
     
