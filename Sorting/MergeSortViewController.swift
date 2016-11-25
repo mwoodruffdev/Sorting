@@ -92,7 +92,7 @@ class MergeSortViewController: BaseSortingViewController {
                     avG = avG / difference;
                     avB = avB / difference;
                     averageColor = UIColor(red: avR, green: avG, blue: avB, alpha: 1);
-
+                    averageColor = averageColor?.modified(withAdditionalHue: 1, additionalSaturation: 1, additionalBrightness: 1);
                     
                     for i in sortMove.low!..<sortMove.high! + 1 {
                         
@@ -157,5 +157,25 @@ class MergeSortViewController: BaseSortingViewController {
     override func swap(sender: UIButton) {
         
         super.swap(sender: sender);
+    }
+}
+
+extension UIColor {
+    
+    func modified(withAdditionalHue hue: CGFloat, additionalSaturation: CGFloat, additionalBrightness: CGFloat) -> UIColor {
+        
+        var currentHue: CGFloat = 0.0
+        var currentSaturation: CGFloat = 0.0
+        var currentBrigthness: CGFloat = 0.0
+        var currentAlpha: CGFloat = 0.0
+        
+        if self.getHue(&currentHue, saturation: &currentSaturation, brightness: &currentBrigthness, alpha: &currentAlpha){
+            return UIColor(hue: currentHue + hue,
+                           saturation: currentSaturation + additionalSaturation,
+                           brightness: currentBrigthness + additionalBrightness,
+                           alpha: currentAlpha)
+        } else {
+            return self
+        }
     }
 }

@@ -17,7 +17,7 @@ protocol SortingViewController {
 
 class BaseSortingViewController: UIViewController, SortingViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
-    internal var sortArray: [Int] = [5,2,5,4,6,8,2];
+    internal var sortArray: [Int] = [5,2,5,4,6,8,2,4,6,8,2,4,6];
     internal var sortCollectionView: UICollectionView!
     internal var sortButton: UIButton!;
     internal var statusLabel: UILabel!;
@@ -141,7 +141,7 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
                 })
             } else if block.1 == .defaultView {
                 
-                UIView.animate(withDuration: 1, animations: animationMoves![index].0, completion: { (didFinish) in
+                UIView.animate(withDuration: 3, animations: animationMoves![index].0, completion: { (didFinish) in
                     
                     if(didFinish) {
                         self.startAnimations(index: index + 1);
