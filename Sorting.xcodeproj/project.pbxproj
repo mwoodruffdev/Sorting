@@ -82,6 +82,13 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		271AF4BE1DE8419400B3FB02 /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Animation;
+			sourceTree = "<group>";
+		};
 		2752BC561DC48E2B00837BCF = {
 			isa = PBXGroup;
 			children = (
@@ -103,6 +110,7 @@
 		2752BC611DC48E2C00837BCF /* Sorting */ = {
 			isa = PBXGroup;
 			children = (
+				271AF4BE1DE8419400B3FB02 /* Animation */,
 				2784808E1DC9A228002ADF3D /* AppDelegate.swift */,
 				278480751DC99566002ADF3D /* Sorting-Bridging-Header.h */,
 				278480781DC9957A002ADF3D /* Algorithms */,

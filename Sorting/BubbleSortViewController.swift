@@ -10,10 +10,6 @@ import Foundation
 import UIKit
 
 class BubbleSortViewController: BaseSortingViewController {
-
-    var animationMoves: [AnimationBlock]?;
-    
-    typealias AnimationBlock  = (Animation, Int);
     
     override func viewDidLoad() {
         
@@ -22,29 +18,6 @@ class BubbleSortViewController: BaseSortingViewController {
         if let sortingQueue = BubbleSort.sort(unsortedArray: sortArray) as? [BubbleSortMove] {
         
             animationMoves = sortCollectionView(moves: sortingQueue);
-        }
-    }
-    
-    override func startAnimations(index: Int) {
-        
-        if(index < animationMoves!.count) {
-            
-            let block = animationMoves![index];
-            if block.1 == 0 {
-                self.sortCollectionView.performBatchUpdates(animationMoves![index].0, completion: { (didFinish) in
-                    if(didFinish) {
-                        self.startAnimations(index: index + 1)
-                    }
-                })
-            } else if block.1 == 1 {
-                
-                UIView.animate(withDuration: 1, animations: animationMoves![index].0, completion: { (didFinish) in
-                    
-                    if(didFinish) {
-                        self.startAnimations(index: index + 1);
-                    }
-                })
-            }
         }
     }
     
@@ -78,9 +51,8 @@ class BubbleSortViewController: BaseSortingViewController {
                         self.statusLabel.text = "is  \(sortMove.positionTwo!.value)  > \(sortMove.positionOne.value) ?";
                         self.statusLabel.textColor = UIColor.black;
                     }
-                    let type = 1;
-                    let block = (animation, type);
-                    animationArray.append(block);
+                    
+                    animationArray.append((animation, .defaultView));
                     break;
                 case .sortedFrom:
 
@@ -103,10 +75,7 @@ class BubbleSortViewController: BaseSortingViewController {
                         }
                     }
                     
-                    let type = 1;
-                    let block = (animation, type);
-                    animationArray.append(block);
-                    
+                    animationArray.append((animation, .defaultView));
                     break;
                 case .swap:
                 
@@ -119,10 +88,7 @@ class BubbleSortViewController: BaseSortingViewController {
                         self.statusLabel.textColor = UIColor.green;
                     }
                     
-                    let type = 0;
-                    let block = (animation, type);
-                    animationArray.append(block);
-                    
+                    animationArray.append((animation, .collectionView));
                     break;
                 case .dontSwap:
                     self.statusLabel.fadeTransition(duration: 1);

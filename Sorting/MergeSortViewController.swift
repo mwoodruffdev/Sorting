@@ -11,11 +11,8 @@ import UIKit
 
 class MergeSortViewController: BaseSortingViewController {
     
-    var animationMoves: [AnimationBlock]?;
     var sectionArray: [Int] = [];
     var workingArray: [Int] = [];
-    
-    typealias AnimationBlock  = (Animation, Int);
     
     override func viewDidLoad() {
 
@@ -51,32 +48,16 @@ class MergeSortViewController: BaseSortingViewController {
             } else {
                 text = "\(workingArray[indexPath.row])"
             }
+            
+            cell.backgroundColor = getRandomRainbowColor(index: indexPath.row);
             cell.valueLabel.text = text
         }
     }
     
-    override func startAnimations(index: Int) {
+    func getRandomRainbowColor(index: Int) -> UIColor {
         
-        if(index < animationMoves!.count) {
-            
-            let block = animationMoves![index];
-            if block.1 == 0 {
-                self.sortCollectionView.performBatchUpdates(animationMoves![index].0, completion: { (didFinish) in
-                    if(didFinish) {
-                        self.startAnimations(index: index + 1)
-                    }
-                })
-            } else if block.1 == 1 {
-                
-                UIView.animate(withDuration: 1, animations: animationMoves![index].0, completion: { (didFinish) in
-                    
-                    if(didFinish) {
-                        self.startAnimations(index: index + 1);
-                    }
-                })
-            }
-        }
-
+        let hue: CGFloat = CGFloat(sectionArray[0]) / CGFloat(index);
+        return UIColor(hue: hue, saturation: 1, brightness: 1, alpha: 1);
     }
     
     func sortCollectionView(moves: [MergeSortMove]) -> [AnimationBlock] {
@@ -94,21 +75,15 @@ class MergeSortViewController: BaseSortingViewController {
                     self.sectionArray[1] = sortMove.high! - sortMove.low! + 1;
                     self.workingArray = sortMove.workingArray!;
                     
+//                    for i in sortMove.low!..<sortMove.high! {
+//                    
+//                        let cell = self.sortCollectionView.cellForItem(at: IndexPath(row: i, section: 0));
+//                        cell?.backgroundColor = UIColor.blue;
+//                    }
+                    
                     self.sortCollectionView.insertSections(NSIndexSet(index: 1) as! IndexSet);
                 }
-                let type = 0;
-                let block = (animation, type);
-                animationArray.append(block);
-                break;
-                
-            case .applyColor:
-                let animation: Animation = {
-                    
-                    let cell = self.sortCollectionView.cellForItem(at: IndexPath(row: sortMove.colorIndex!, section: 0));
-                    cell?.backgroundColor = sortMove.color;
-                }
-                let block = (animation, 1)
-                animationArray.append(block);
+                animationArray.append((animation, .collectionView));
                 break;
                 
             case .swap:
@@ -120,17 +95,12 @@ class MergeSortViewController: BaseSortingViewController {
                     let ip1 = IndexPath(row:workingIndex!, section: 1)
                     let ip2 = IndexPath(row: arrayIndex!, section: 0)
                     
-//                    let cell = self.sortCollectionView.cellForItem(at: ip2) as? SortCollectionViewCell;
-//                    cell?.valueLabel.textColor = UIColor.black
-                    
                     self.sortCollectionView.moveItem(at: ip1, to: ip2);
                     self.sortCollectionView.moveItem(at: ip2, to: ip1);
                 }
-                let type = 0;
-                let block = (animation, type);
-                animationArray.append(block);
-                break;
                 
+                animationArray.append((animation, .collectionView));
+                break;
             case .removeWorking:
                 let animation: Animation = {
                     self.sectionArray.remove(at: 1);
@@ -138,9 +108,7 @@ class MergeSortViewController: BaseSortingViewController {
                     self.sortCollectionView.deleteSections(NSIndexSet(index: 1) as! IndexSet);
                 }
                 
-                let type = 0;
-                let block = (animation, type);
-                animationArray.append(block);
+                animationArray.append((animation, .collectionView));
                 break;
             default:
                 break;

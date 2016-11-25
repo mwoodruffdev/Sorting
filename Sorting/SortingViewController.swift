@@ -22,7 +22,10 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
     internal var sortButton: UIButton!;
     internal var statusLabel: UILabel!;
     
+    typealias AnimationBlock  = (Animation, AnimationType);
     typealias Animation = () -> Void
+    
+    var animationMoves: [AnimationBlock]?;
     
     override func viewDidLoad() {
         
@@ -124,8 +127,31 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
         }
     }
     
+    
     func startAnimations(index: Int) {
-
-        print("not implemented!");
+        
+        if(index < animationMoves!.count) {
+            
+            let block = animationMoves![index];
+            if block.1 == .collectionView {
+                self.sortCollectionView.performBatchUpdates(animationMoves![index].0, completion: { (didFinish) in
+                    if(didFinish) {
+                        self.startAnimations(index: index + 1)
+                    }
+                })
+            } else if block.1 == .defaultView {
+                
+                UIView.animate(withDuration: 1, animations: animationMoves![index].0, completion: { (didFinish) in
+                    
+                    if(didFinish) {
+                        self.startAnimations(index: index + 1);
+                    }
+                })
+            }
+        }
+    }
+    
+    enum AnimationType {
+        case collectionView, defaultView;
     }
 }

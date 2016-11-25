@@ -23,7 +23,6 @@ class MergeSort: SortingAlgorithm {
     static func mergeSort(moves: inout [MergeSortMove], a: inout [Int], low: Int, high: Int) {
         
         if low == high {
-            moves.append(MergeSortMove.applyColor(colorIndex: low, color: getRandomRainbowColor(total: a.count, index: low)));
             return;
         }
         
@@ -71,11 +70,5 @@ class MergeSort: SortingAlgorithm {
             moves.append(MergeSortMove.swap(positionOne: arrayPosition, positionTwo: workingPosition));
         }
         moves.append(MergeSortMove.removeWorking());
-    }
-    
-    static func getRandomRainbowColor(total: Int, index: Int) -> UIColor {
-        
-        let hue: CGFloat = CGFloat(total) / CGFloat(index);
-        return UIColor(hue: hue, saturation: 1, brightness: 1, alpha: 1);
     }
 }

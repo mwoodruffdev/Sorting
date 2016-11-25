@@ -55,10 +55,6 @@ class MergeSortMove: SortMove {
         return MergeSortMove(low: low, high: high, workingArray: workingArray, moveType: .addWorking);
     }
     
-    static func applyColor(colorIndex: Int, color: UIColor) -> MergeSortMove {
-        return MergeSortMove(colorIndex: colorIndex, color: color, moveType: .applyColor);
-    }
-    
     static func removeWorking() -> MergeSortMove {
         
         return MergeSortMove(moveType: .removeWorking);
@@ -85,7 +81,6 @@ class MergeSortMove: SortMove {
 enum MergeSortMoveType {
     
     case addWorking
-    case applyColor
     case removeWorking
     case swap;
 }

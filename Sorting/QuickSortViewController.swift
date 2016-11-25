@@ -11,10 +11,6 @@ import UIKit
 
 class QuickSortViewController: BaseSortingViewController {
     
-    typealias Animation = () -> Void
-    typealias AnimationBlock  = (Animation, Int);
-    
-    var animationMoves: [AnimationBlock]?;
     var pivotLabel: UILabel!;
 
     override func viewDidLoad() {
@@ -75,29 +71,6 @@ class QuickSortViewController: BaseSortingViewController {
         pivotLabel.centerXAnchor.constraint(equalTo: pivotLabel.superview!.centerXAnchor).isActive = true;
     }
     
-    override func startAnimations(index: Int) {
-        
-        if(index < animationMoves!.count) {
-            
-            let block = animationMoves![index];
-            if block.1 == 0 {
-                self.sortCollectionView.performBatchUpdates(animationMoves![index].0, completion: { (didFinish) in
-                    if(didFinish) {
-                        self.startAnimations(index: index + 1)
-                    }
-                })
-            } else if block.1 == 1 {
-                
-                UIView.animate(withDuration: 1, animations: animationMoves![index].0, completion: { (didFinish) in
-                    
-                    if(didFinish) {
-                        self.startAnimations(index: index + 1);
-                    }
-                })
-            }
-        }
-    }
-    
     func sortCollectionView(moves: [QuickSortMove]) -> [AnimationBlock] {
         
         var animationArray: [AnimationBlock] = [];
@@ -114,8 +87,8 @@ class QuickSortViewController: BaseSortingViewController {
                         self.statusLabel.textColor = UIColor.black;
                         self.statusLabel.text = "Is \(sortMove.positionOne.value) <= to \(sortMove.positionTwo!.value)";
                     }
-                    let block = (animation, 1);
-                    animationArray.append(block);
+                    
+                    animationArray.append((animation, .defaultView));
                     break;
                 
                 case .swap:
@@ -136,10 +109,7 @@ class QuickSortViewController: BaseSortingViewController {
                         }
                     }
                     
-                    let type = 0;
-                    let block = (animation, type);
-                    animationArray.append(block);
-                    
+                    animationArray.append((animation, .defaultView));
                     break;
                 
                 case .selectPivot:
@@ -165,9 +135,8 @@ class QuickSortViewController: BaseSortingViewController {
                         self.pivotLabel.fadeTransition(duration: 1);
                         self.pivotLabel.text = "Pivot is \(sortMove.positionOne.value)";
                     }
-                    let type = 1;
-                    let block = (animation, type);
-                    animationArray.append(block);
+                    
+                    animationArray.append((animation, .defaultView));
                     break;
                 
                 case .selectLeftRight:
@@ -205,9 +174,7 @@ class QuickSortViewController: BaseSortingViewController {
                         }
                     }
                     
-                    let type = 1;
-                    let block = (animation, type);
-                    animationArray.append(block);
+                    animationArray.append((animation, .defaultView));
                     break;
                 
             case .selectSorted:
@@ -233,9 +200,7 @@ class QuickSortViewController: BaseSortingViewController {
                         cell1?.backgroundColor = UIColor.green;
                     }
                     
-                    let type = 1;
-                    let block = (animation, type);
-                    animationArray.append(block);
+                    animationArray.append((animation, .defaultView));
                     break;
                 
                 default:
