@@ -17,7 +17,7 @@ protocol SortingViewController {
 
 class BaseSortingViewController: UIViewController, SortingViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
-    internal var sortArray: [Int] = [5,2,5,4,6,8,2,3,4,1,5,8,2,8,3,7,3,8,3,3,3,1,2];
+    internal var sortArray: [Int] = [5,2,5,4,6,8,2];
     internal var sortCollectionView: UICollectionView!
     internal var sortButton: UIButton!;
     internal var statusLabel: UILabel!;

@@ -20,8 +20,6 @@ class MergeSortViewController: BaseSortingViewController {
         
         sectionArray.append(sortArray.count);
         view.backgroundColor = UIColor.yellow;
-        
-        
         if let sortingQueue = MergeSort.sort(unsortedArray: sortArray) as? [MergeSortMove] {
             
             animationMoves = sortCollectionView(moves: sortingQueue);
@@ -40,16 +38,18 @@ class MergeSortViewController: BaseSortingViewController {
     
     override func setupCell(indexPath: IndexPath, cell: UICollectionViewCell) {
         if let cell = cell as? SortCollectionViewCell {
-            cell.backgroundColor = UIColor.black;
             
             var text: String;
             if (indexPath.section == 0) {
+                
                 text = "\(sortArray[indexPath.row])"
+                cell.backgroundColor = getRandomRainbowColor(index: indexPath.row);
             } else {
+                
                 text = "\(workingArray[indexPath.row])"
+                cell.backgroundColor = UIColor.black;
             }
             
-            cell.backgroundColor = getRandomRainbowColor(index: indexPath.row);
             cell.valueLabel.text = text
         }
     }
@@ -69,21 +69,56 @@ class MergeSortViewController: BaseSortingViewController {
             switch(sortMove.moveType) {
                 
             case .addWorking:
-                let animation: Animation = {
+                
+                var averageColor: UIColor?;
+                let colorAnimation: Animation = {
+                    
+                    var avR: CGFloat = 0;
+                    var avG: CGFloat = 0;
+                    var avB: CGFloat = 0;
+                    let difference: CGFloat = CGFloat(sortMove.high! - sortMove.low! + 1);
+                    
+                    for i in sortMove.low!..<sortMove.high! + 1 {
+                        
+                        let cell = self.sortCollectionView.cellForItem(at: IndexPath(row: i, section: 0));
+                        let color = cell?.backgroundColor;
+                        let colorComponents = (color!.cgColor).components;
+                        avR = avR + colorComponents![0];
+                        avG = avG + colorComponents![1];
+                        avB = avB + colorComponents![2];
+                    }
+                    
+                    avR = avR / difference;
+                    avG = avG / difference;
+                    avB = avB / difference;
+                    averageColor = UIColor(red: avR, green: avG, blue: avB, alpha: 1);
+
+                    
+                    for i in sortMove.low!..<sortMove.high! + 1 {
+                        
+                        let cell = self.sortCollectionView.cellForItem(at: IndexPath(row: i, section: 0));
+                        cell?.backgroundColor = averageColor;
+                    }
+                }
+                
+                let insertSectionAnimation: Animation = {
                     
                     self.sectionArray.append(0);
                     self.sectionArray[1] = sortMove.high! - sortMove.low! + 1;
                     self.workingArray = sortMove.workingArray!;
-                    
-//                    for i in sortMove.low!..<sortMove.high! {
-//                    
-//                        let cell = self.sortCollectionView.cellForItem(at: IndexPath(row: i, section: 0));
-//                        cell?.backgroundColor = UIColor.blue;
-//                    }
-                    
                     self.sortCollectionView.insertSections(NSIndexSet(index: 1) as! IndexSet);
                 }
-                animationArray.append((animation, .collectionView));
+                
+                let workingColorAnimation: Animation = {
+                    for i in 0..<self.sectionArray[1] {
+                        let cell = self.sortCollectionView.cellForItem(at: IndexPath(row: i, section: 1));
+                        cell?.backgroundColor = averageColor;
+                    }
+                }
+                
+                animationArray.append((colorAnimation, .defaultView));
+                animationArray.append((insertSectionAnimation, .collectionView));
+                animationArray.append((workingColorAnimation, .defaultView));
                 break;
                 
             case .swap:
@@ -117,5 +152,10 @@ class MergeSortViewController: BaseSortingViewController {
         }
         
         return animationArray;
+    }
+    
+    override func swap(sender: UIButton) {
+        
+        super.swap(sender: sender);
     }
 }
