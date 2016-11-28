@@ -106,7 +106,7 @@ class MergeSortViewController: BaseSortingViewController {
                     self.sectionArray.append(0);
                     self.sectionArray[1] = sortMove.high! - sortMove.low! + 1;
                     self.workingArray = sortMove.workingArray!;
-                    self.sortCollectionView.insertSections(NSIndexSet(index: 1) as! IndexSet);
+                    self.sortCollectionView.insertSections(IndexSet(integer: 1));
                 }
                 
                 let workingColorAnimation: Animation = {
@@ -140,12 +140,10 @@ class MergeSortViewController: BaseSortingViewController {
                 let animation: Animation = {
                     self.sectionArray.remove(at: 1);
                     self.workingArray = [];
-                    self.sortCollectionView.deleteSections(NSIndexSet(index: 1) as! IndexSet);
+                    self.sortCollectionView.deleteSections(IndexSet(integer: 1));
                 }
                 
                 animationArray.append((animation, .collectionView));
-                break;
-            default:
                 break;
             }
             
@@ -157,6 +155,18 @@ class MergeSortViewController: BaseSortingViewController {
     override func swap(sender: UIButton) {
         
         super.swap(sender: sender);
+    }
+    
+    override func worstCaseText() -> String {
+        return "O(n log n)";
+    }
+    
+    override func averageCaseText() -> String {
+        return "O(n log n)";
+    }
+    
+    override func bestCaseText() -> String {
+        return "O(n log n)";
     }
 }
 

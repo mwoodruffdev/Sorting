@@ -202,15 +202,23 @@ class QuickSortViewController: BaseSortingViewController {
                     
                     animationArray.append((animation, .defaultView));
                     break;
-                
-                default:
-                    break;
             }
         }
         
         return animationArray;
     }
     
+    override func worstCaseText() -> String {
+        return "O(n^2)";
+    }
+    
+    override func averageCaseText() -> String {
+        return "O(n log n)";
+    }
+    
+    override func bestCaseText() -> String {
+        return "O(n log n)";
+    }
 }
 
 extension UIView {

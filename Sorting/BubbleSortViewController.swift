@@ -100,4 +100,16 @@ class BubbleSortViewController: BaseSortingViewController {
         
         return animationArray;
     }
+    
+    override func worstCaseText() -> String {
+        return "O(n^2)";
+    }
+    
+    override func averageCaseText() -> String {
+        return "O(n^2)";
+    }
+    
+    override func bestCaseText() -> String {
+        return "O(n)";
+    }
 }

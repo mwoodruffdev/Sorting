@@ -21,6 +21,9 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
     internal var sortCollectionView: UICollectionView!
     internal var sortButton: UIButton!;
     internal var statusLabel: UILabel!;
+    internal var worstCaseLabel: UILabel!;
+    internal var averageCaseLabel: UILabel!;
+    internal var bestCaseLabel: UILabel!;
     internal var heightConstraint: NSLayoutConstraint?;
     
     typealias AnimationBlock  = (Animation, AnimationType);
@@ -47,6 +50,7 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
     
     internal func setupViews() {
         setupCollectionView(layout: createCollectionViewLayout());
+        setupComplexityLabels()
         setupSortButton();
         setupStatusLabel();
     }
@@ -59,6 +63,24 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
         sortCollectionView.register(SortCollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
         sortCollectionView.backgroundColor = UIColor.white
         self.view.addSubview(sortCollectionView)
+    }
+    
+    internal func setupComplexityLabels() {
+        
+        worstCaseLabel = UILabel();
+        worstCaseLabel.text = "Worst Case: \(worstCaseText())";
+        worstCaseLabel.textColor = UIColor.black;
+        view.addSubview(worstCaseLabel);
+        
+        averageCaseLabel = UILabel();
+        averageCaseLabel.text = "Average Case: \(averageCaseText())";
+        averageCaseLabel.textColor = UIColor.black;
+        view.addSubview(averageCaseLabel);
+        
+        bestCaseLabel = UILabel();
+        bestCaseLabel.text = "Best Case: \(bestCaseText())";
+        bestCaseLabel.textColor = UIColor.black;
+        view.addSubview(bestCaseLabel);
     }
     
     internal func setupSortButton() {
@@ -101,6 +123,22 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
         heightConstraint = sortCollectionView.heightAnchor.constraint(equalToConstant: view.frame.size.height);
         heightConstraint?.isActive = true;
         
+        worstCaseLabel.translatesAutoresizingMaskIntoConstraints = false;
+        worstCaseLabel.topAnchor.constraint(equalTo: sortCollectionView.bottomAnchor, constant: 10).isActive = true
+        worstCaseLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true;
+        
+        averageCaseLabel.translatesAutoresizingMaskIntoConstraints = false;
+        averageCaseLabel.topAnchor.constraint(equalTo: worstCaseLabel.bottomAnchor, constant: 10).isActive = true
+        averageCaseLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true;
+        
+        bestCaseLabel.translatesAutoresizingMaskIntoConstraints = false;
+        bestCaseLabel.topAnchor.constraint(equalTo: averageCaseLabel.bottomAnchor, constant: 10).isActive = true
+        bestCaseLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true;
+        
+        worstCaseLabel.translatesAutoresizingMaskIntoConstraints = false;
+        worstCaseLabel.topAnchor.constraint(equalTo: bestCaseLabel.bottomAnchor, constant: 10).isActive = true
+        worstCaseLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true;
+        
         sortButton.translatesAutoresizingMaskIntoConstraints = false;
         sortButton.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true;
         sortButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true;
@@ -137,6 +175,8 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
         }
     }
     
+    //MARK: Animations
+    
     func swap(sender: UIButton) {
         
         sortButton.setTitle("Stop Sorting", for: .normal);
@@ -171,5 +211,18 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
     
     enum AnimationType {
         case collectionView, defaultView;
+    }
+    
+    //MARK: Complexity
+    internal func worstCaseText() -> String {
+        return "";
+    }
+    
+    internal func averageCaseText() -> String {
+        return "";
+    }
+    
+    internal func bestCaseText() -> String {
+        return "";
     }
 }
