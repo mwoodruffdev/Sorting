@@ -21,6 +21,7 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
     internal var sortCollectionView: UICollectionView!
     internal var sortButton: UIButton!;
     internal var statusLabel: UILabel!;
+    internal var heightConstraint: NSLayoutConstraint?;
     
     typealias AnimationBlock  = (Animation, AnimationType);
     typealias Animation = () -> Void
@@ -30,7 +31,7 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
     override func viewDidLoad() {
         
         super.viewDidLoad();
-        
+        view.backgroundColor = UIColor.white;
         setupViews();
         applyAutoLayoutConstraints();
     }
@@ -52,7 +53,7 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
     
     internal func setupCollectionView(layout: UICollectionViewLayout) {
         
-        sortCollectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
+        sortCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
         sortCollectionView.dataSource = self
         sortCollectionView.delegate = self
         sortCollectionView.register(SortCollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
@@ -81,7 +82,24 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
     
     //MARK: Autolayout
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews();
+        
+        if(sortCollectionView.contentSize.height > 0) {
+        
+            heightConstraint?.constant = sortCollectionView.contentSize.height;
+        }
+    }
+    
     internal func applyAutoLayoutConstraints() {
+        
+        sortCollectionView.translatesAutoresizingMaskIntoConstraints = false;
+        sortCollectionView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true;
+        sortCollectionView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true;
+        sortCollectionView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true;
+        
+        heightConstraint = sortCollectionView.heightAnchor.constraint(equalToConstant: view.frame.size.height);
+        heightConstraint?.isActive = true;
         
         sortButton.translatesAutoresizingMaskIntoConstraints = false;
         sortButton.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true;
