@@ -107,7 +107,7 @@ class QuickSortViewController: BaseSortingViewController {
                         }
                     }
                     
-                    animationArray.append((animation, .defaultView));
+                    animationArray.append((animation, .collectionView));
                     break;
                 
                 case .selectPivot:
