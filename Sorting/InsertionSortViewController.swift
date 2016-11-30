@@ -59,8 +59,7 @@ class InsertionSortViewController: BaseSortingViewController {
                         self.sortCollectionView.moveItem(at: IndexPath(row: sortMove.positionOne.index, section: 0), to: IndexPath(row: sortMove.positionTwo!.index, section: 0))
                         self.sortCollectionView.moveItem(at: IndexPath(row: sortMove.positionTwo!.index, section: 0), to: IndexPath(row: sortMove.positionOne.index, section: 0))
                         
-                        self.statusLabel.text = "Yes!";
-                        self.statusLabel.textColor = UIColor.green;
+                        //TODO: Update Log View
                     }
                     
                     animationArray.append((swapAnimation, .collectionView));

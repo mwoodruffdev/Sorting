@@ -48,8 +48,8 @@ class BubbleSortViewController: BaseSortingViewController {
                                 unHighlightedCell.backgroundColor = UIColor.black;
                             }
                         }
-                        self.statusLabel.text = "is  \(sortMove.positionTwo!.value)  > \(sortMove.positionOne.value) ?";
-                        self.statusLabel.textColor = UIColor.black;
+                        
+                        //TODO: Log View
                     }
                     
                     animationArray.append((animation, .defaultView));
@@ -84,16 +84,13 @@ class BubbleSortViewController: BaseSortingViewController {
                         self.sortCollectionView.moveItem(at: IndexPath(row: sortMove.positionOne.index, section: 0), to: IndexPath(row: sortMove.positionTwo!.index, section: 0))
                         self.sortCollectionView.moveItem(at: IndexPath(row: sortMove.positionTwo!.index, section: 0), to: IndexPath(row: sortMove.positionOne.index, section: 0))
                         
-                        self.statusLabel.text = "Yes!";
-                        self.statusLabel.textColor = UIColor.green;
+                        //TODO: Log View
                     }
                     
                     animationArray.append((animation, .collectionView));
                     break;
                 case .dontSwap:
-                    self.statusLabel.fadeTransition(duration: 1);
-                    self.statusLabel.text = "Nope!";
-                    self.statusLabel.textColor = UIColor.red;
+                    //TODO: Log View
                     break;
             }
         }

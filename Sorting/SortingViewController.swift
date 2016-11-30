@@ -20,7 +20,7 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
     internal var sortArray: [Int] = [5,2,5,4,6,8,2,4,6,8,2,4,6];
     internal var sortCollectionView: UICollectionView!
     internal var sortButton: UIButton!;
-    internal var statusLabel: UILabel!;
+    internal var logView: UITextView!;
     internal var worstCaseLabel: UILabel!;
     internal var averageCaseLabel: UILabel!;
     internal var bestCaseLabel: UILabel!;
@@ -52,7 +52,7 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
         setupCollectionView(layout: createCollectionViewLayout());
         setupComplexityLabels()
         setupSortButton();
-        setupStatusLabel();
+        setupLogView();
     }
     
     internal func setupCollectionView(layout: UICollectionViewLayout) {
@@ -63,6 +63,15 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
         sortCollectionView.register(SortCollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
         sortCollectionView.backgroundColor = UIColor.white
         self.view.addSubview(sortCollectionView)
+    }
+    
+    internal func setupLogView() {
+    
+        logView = UITextView();
+        logView.layer.borderWidth = 1;
+        logView.layer.borderColor = UIColor.black.cgColor;
+        logView.text = "Press start to begin!";
+        view.addSubview(logView);
     }
     
     internal func setupComplexityLabels() {
@@ -92,14 +101,6 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
         sortButton.backgroundColor = UIColor.black;
         sortButton.setTitleColor(UIColor.white, for: .normal);
         view.addSubview(sortButton);
-    }
-    
-    internal func setupStatusLabel() {
-        
-        statusLabel = UILabel();
-        statusLabel.text = "Tap start to begin";
-        statusLabel.textColor = UIColor.black;
-        view.addSubview(statusLabel);
     }
     
     //MARK: Autolayout
@@ -135,15 +136,17 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
         bestCaseLabel.topAnchor.constraint(equalTo: averageCaseLabel.bottomAnchor, constant: 10).isActive = true
         bestCaseLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true;
         
+        logView.translatesAutoresizingMaskIntoConstraints = false;
+        logView.topAnchor.constraint(equalTo: bestCaseLabel.bottomAnchor, constant: 20).isActive = true;
+        logView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true;
+        logView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true;
+        logView.bottomAnchor.constraint(equalTo: sortButton.topAnchor, constant: -10).isActive = true;
+        
         sortButton.translatesAutoresizingMaskIntoConstraints = false;
         sortButton.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true;
         sortButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true;
         sortButton.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true;
         sortButton.heightAnchor.constraint(equalToConstant: 50).isActive = true;
-        
-        statusLabel.translatesAutoresizingMaskIntoConstraints = false;
-        statusLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true;
-        statusLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true;
     }
     
     //MARK: Collection View

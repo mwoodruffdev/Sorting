@@ -10,8 +10,6 @@ import Foundation
 import UIKit
 
 class QuickSortViewController: BaseSortingViewController {
-    
-    var pivotLabel: UILabel!;
 
     override func viewDidLoad() {
         super.viewDidLoad();
@@ -48,27 +46,6 @@ class QuickSortViewController: BaseSortingViewController {
         }
     }
     
-    override func setupViews() {
-        
-        super.setupViews();
-        setupLabels();
-    }
-    
-    internal func setupLabels() {
-        
-        pivotLabel = UILabel();
-        pivotLabel.textColor = UIColor.blue;
-        view.addSubview(pivotLabel);
-    }
-    
-    override func applyAutoLayoutConstraints() {
-        
-        super.applyAutoLayoutConstraints();
-        pivotLabel.translatesAutoresizingMaskIntoConstraints = false;
-        pivotLabel.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: 10).isActive = true;
-        pivotLabel.centerXAnchor.constraint(equalTo: pivotLabel.superview!.centerXAnchor).isActive = true;
-    }
-    
     func sortCollectionView(moves: [QuickSortMove]) -> [AnimationBlock] {
         
         var animationArray: [AnimationBlock] = [];
@@ -79,14 +56,7 @@ class QuickSortViewController: BaseSortingViewController {
                 
                 case .check:
                     
-                    let animation: Animation = {
-                        
-                        self.statusLabel.fadeTransition(duration: 1);
-                        self.statusLabel.textColor = UIColor.black;
-                        self.statusLabel.text = "Is \(sortMove.positionOne.value) <= to \(sortMove.positionTwo!.value)";
-                    }
-                    
-                    animationArray.append((animation, .defaultView));
+                    //TODO: update log view 
                     break;
                 
                 case .swap:
@@ -97,13 +67,9 @@ class QuickSortViewController: BaseSortingViewController {
                         self.sortCollectionView.moveItem(at: IndexPath(row: sortMove.positionTwo!.index, section: 0), to: IndexPath(row: sortMove.positionOne.index, section: 0))
                         
                         if(sortMove.moveType == .swap) {
-                            self.statusLabel.fadeTransition(duration: 1);
-                            self.statusLabel.text = "Yes!";
-                            self.statusLabel.textColor = UIColor.green;
+                            //TODO: Log View
                         } else {
-                            self.statusLabel.fadeTransition(duration: 1);
-                            self.statusLabel.text = "Nope!";
-                            self.statusLabel.textColor = UIColor.red;
+                            //TODO: Log View
                         }
                     }
                     
@@ -130,8 +96,7 @@ class QuickSortViewController: BaseSortingViewController {
                         cell1?.isPivot = true;
                         cell1?.backgroundColor = UIColor.blue;
                         
-                        self.pivotLabel.fadeTransition(duration: 1);
-                        self.pivotLabel.text = "Pivot is \(sortMove.positionOne.value)";
+                        //TODO: Log View
                     }
                     
                     animationArray.append((animation, .defaultView));
