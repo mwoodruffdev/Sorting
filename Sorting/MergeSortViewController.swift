@@ -19,7 +19,6 @@ class MergeSortViewController: BaseSortingViewController {
         super.viewDidLoad()
         
         sectionArray.append(sortArray.count);
-        view.backgroundColor = UIColor.yellow;
         if let sortingQueue = MergeSort.sort(unsortedArray: sortArray) as? [MergeSortMove] {
             
             animationMoves = sortCollectionView(moves: sortingQueue);

@@ -135,10 +135,6 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
         bestCaseLabel.topAnchor.constraint(equalTo: averageCaseLabel.bottomAnchor, constant: 10).isActive = true
         bestCaseLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true;
         
-        worstCaseLabel.translatesAutoresizingMaskIntoConstraints = false;
-        worstCaseLabel.topAnchor.constraint(equalTo: bestCaseLabel.bottomAnchor, constant: 10).isActive = true
-        worstCaseLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true;
-        
         sortButton.translatesAutoresizingMaskIntoConstraints = false;
         sortButton.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true;
         sortButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true;

@@ -20,7 +20,7 @@ class MergeSort: SortingAlgorithm {
         return moves;
     }
     
-    static func mergeSort(moves: inout [MergeSortMove], a: inout [Int], low: Int, high: Int) {
+    private static func mergeSort(moves: inout [MergeSortMove], a: inout [Int], low: Int, high: Int) {
         
         if low == high {
             return;

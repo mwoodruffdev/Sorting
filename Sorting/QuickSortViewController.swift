@@ -15,8 +15,6 @@ class QuickSortViewController: BaseSortingViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad();
-        
-        view.backgroundColor = UIColor.green;
     
         if let sortingQueue = QuickSort.sort(unsortedArray: sortArray) as? [QuickSortMove] {
             animationMoves = sortCollectionView(moves: sortingQueue);

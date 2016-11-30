@@ -9,18 +9,24 @@
 import Foundation
 import UIKit
 
-class InsertionSortViewController: UIViewController, SortingViewController {
+class InsertionSortViewController: BaseSortingViewController {
     
-    internal var sortArray: [Int] = [3, 1, 0, 4, 2];
-    internal var sortCollectionView: UICollectionView!
     
     override func viewDidLoad() {
         
+        InsertionSort.sort(unsortedArray: sortArray);
         super.viewDidLoad();
-        view.backgroundColor = UIColor.blue;
+    }
+
+    override func worstCaseText() -> String {
+        return "O(n^2)";
     }
     
-    func sort() {
-        
+    override func averageCaseText() -> String {
+        return "O(n^2)";
+    }
+    
+    override func bestCaseText() -> String {
+        return "O(n)";
     }
 }

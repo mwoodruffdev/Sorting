@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2517F245971D640C733191D0 /* Pods_Sorting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39F50848D72ACC04E57D61CA /* Pods_Sorting.framework */; };
+		271AF4C61DEE92FD00B3FB02 /* InsertionSort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271AF4C51DEE92FD00B3FB02 /* InsertionSort.swift */; };
 		2731415E1DD1A7840060B6B4 /* SortCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2731415D1DD1A7840060B6B4 /* SortCollectionViewCell.swift */; };
 		2752BC6D1DC48E2C00837BCF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2752BC6B1DC48E2C00837BCF /* Main.storyboard */; };
 		2752BC6F1DC48E2C00837BCF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2752BC6E1DC48E2C00837BCF /* Assets.xcassets */; };
@@ -32,6 +33,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		271AF4C51DEE92FD00B3FB02 /* InsertionSort.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InsertionSort.swift; sourceTree = "<group>"; };
 		2731415D1DD1A7840060B6B4 /* SortCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortCollectionViewCell.swift; sourceTree = "<group>"; };
 		2752BC5F1DC48E2C00837BCF /* Sorting.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sorting.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2752BC6C1DC48E2C00837BCF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 			children = (
 				278480791DC995A9002ADF3D /* SortingAlgorithm.swift */,
 				278480801DC9967A002ADF3D /* BubbleSort.swift */,
+				271AF4C51DEE92FD00B3FB02 /* InsertionSort.swift */,
 				275B391E1DE2DCFE0000B22C /* MergeSort.swift */,
 				275592B51DD995B000A5F093 /* QuickSort.swift */,
 			);
@@ -326,6 +329,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				271AF4C61DEE92FD00B3FB02 /* InsertionSort.swift in Sources */,
 				278480851DC99ED9002ADF3D /* BubbleSortViewController.swift in Sources */,
 				278480911DC9A302002ADF3D /* MainViewController.swift in Sources */,
 				2731415E1DD1A7840060B6B4 /* SortCollectionViewCell.swift in Sources */,

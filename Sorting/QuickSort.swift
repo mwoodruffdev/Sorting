@@ -26,7 +26,7 @@ class QuickSort: SortingAlgorithm {
         return moves;
     }
     
-    internal static func quicksort(moves: inout [QuickSortMove], v: inout [Int], low: Int, high: Int) {
+    private static func quicksort(moves: inout [QuickSortMove], v: inout [Int], low: Int, high: Int) {
         
         if low < high {
             
