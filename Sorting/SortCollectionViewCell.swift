@@ -12,6 +12,7 @@ class SortCollectionViewCell: UICollectionViewCell {
     
     var valueLabel: UILabel!;
     var sorted: Bool = false;
+    var chosen: Bool = false;
     
     override init(frame: CGRect) {
         super.init(frame: frame);

@@ -14,11 +14,21 @@ class InsertionSortMove: SortMove {
     var positionTwo: Position?;
     var moveType: InsertionSortMoveType;
     
-    init(positionOne: Position, positionTwo: Position, moveType: InsertionSortMoveType) {
+    init(positionOne: Position, positionTwo: Position?, moveType: InsertionSortMoveType) {
         
         self.positionOne = positionOne;
         self.positionTwo = positionTwo;
         self.moveType = moveType;
+    }
+    
+    static func dontSwap(positionOne: Position, positionTwo: Position) -> InsertionSortMove {
+        
+        return InsertionSortMove(positionOne: positionOne, positionTwo: positionTwo, moveType: .dontSwap);
+    }
+    
+    static func sorted(positionOne: Position) -> InsertionSortMove {
+        
+        return InsertionSortMove(positionOne: positionOne, positionTwo: nil, moveType: .sorted);
     }
     
     static func swap(positionOne: Position, positionTwo: Position) -> InsertionSortMove {
@@ -40,6 +50,8 @@ class InsertionSortMove: SortMove {
 }
 
 enum InsertionSortMoveType {
-    
+ 
+    case dontSwap
+    case sorted
     case swap
 }
