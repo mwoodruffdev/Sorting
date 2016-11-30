@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2517F245971D640C733191D0 /* Pods_Sorting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39F50848D72ACC04E57D61CA /* Pods_Sorting.framework */; };
 		271AF4C61DEE92FD00B3FB02 /* InsertionSort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271AF4C51DEE92FD00B3FB02 /* InsertionSort.swift */; };
+		271AF4C81DEEAE1900B3FB02 /* InsertionSortMove.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271AF4C71DEEAE1900B3FB02 /* InsertionSortMove.swift */; };
 		2731415E1DD1A7840060B6B4 /* SortCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2731415D1DD1A7840060B6B4 /* SortCollectionViewCell.swift */; };
 		2752BC6D1DC48E2C00837BCF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2752BC6B1DC48E2C00837BCF /* Main.storyboard */; };
 		2752BC6F1DC48E2C00837BCF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2752BC6E1DC48E2C00837BCF /* Assets.xcassets */; };
@@ -34,6 +35,7 @@
 
 /* Begin PBXFileReference section */
 		271AF4C51DEE92FD00B3FB02 /* InsertionSort.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InsertionSort.swift; sourceTree = "<group>"; };
+		271AF4C71DEEAE1900B3FB02 /* InsertionSortMove.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InsertionSortMove.swift; sourceTree = "<group>"; };
 		2731415D1DD1A7840060B6B4 /* SortCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortCollectionViewCell.swift; sourceTree = "<group>"; };
 		2752BC5F1DC48E2C00837BCF /* Sorting.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sorting.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2752BC6C1DC48E2C00837BCF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 				275B39201DE41A1C0000B22C /* MergeSortMove.swift */,
 				278480921DC9C443002ADF3D /* SortMove.swift */,
 				275592B91DD9B61700A5F093 /* QuickSortMove.swift */,
+				271AF4C71DEEAE1900B3FB02 /* InsertionSortMove.swift */,
 			);
 			name = SortMoves;
 			sourceTree = "<group>";
@@ -337,6 +340,7 @@
 				278480831DC99E93002ADF3D /* SortingViewController.swift in Sources */,
 				275B39211DE41A1C0000B22C /* MergeSortMove.swift in Sources */,
 				2784808D1DC9A04C002ADF3D /* SideMenuViewController.swift in Sources */,
+				271AF4C81DEEAE1900B3FB02 /* InsertionSortMove.swift in Sources */,
 				278480931DC9C443002ADF3D /* SortMove.swift in Sources */,
 				2784807A1DC995A9002ADF3D /* SortingAlgorithm.swift in Sources */,
 				2784808B1DC99FE7002ADF3D /* QuickSortViewController.swift in Sources */,

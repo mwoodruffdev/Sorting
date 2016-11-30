@@ -12,20 +12,25 @@ class InsertionSort: SortingAlgorithm {
 
     static func sort(unsortedArray: [Int]) -> [SortMove] {
         
-        var copyArray = unsortedArray;
-        insertionSort(a: &copyArray);
-        return [];
+        return insertionSort(unsortedArray: unsortedArray);
     }
     
-    private static func insertionSort(a: inout [Int]) -> [Int] {
+    private static func insertionSort(unsortedArray: [Int]) -> [InsertionSortMove] {
         
-        for x in 1..<a.count {
+        var unsortedArray = unsortedArray;
+        
+        var moves: [InsertionSortMove] = [];
+        
+        for x in 1..<unsortedArray.count {
             var y = x;
-            while y > 0 && a[y] < a[y-1] {
-                (a[y-1], a[y]) = (a[y], a[y-1]);
+            while y > 0 && unsortedArray[y] < unsortedArray[y-1] {
+                
+                (unsortedArray[y-1], unsortedArray[y]) = (unsortedArray[y], unsortedArray[y-1]);
+                moves.append(InsertionSortMove.swap(positionOne: InsertionSortMove.Position(index: (y-1), value: unsortedArray[y-1]), positionTwo: InsertionSortMove.Position(index: y, value: unsortedArray[y])));
                 y = y - 1;
             }
         }
-        return a;
+        
+        return moves;
     }
 }
