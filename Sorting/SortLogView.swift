@@ -16,12 +16,15 @@ class SortLogView: UITextView {
         attributedText.addAttribute(NSForegroundColorAttributeName, value: color, range: NSMakeRange(0, attributedText.length));
         
         let currentText = NSMutableAttributedString(attributedString: self.attributedText);
-        currentText.append(attributedText);
         currentText.append(NSAttributedString(string: "\n"));
+        currentText.append(attributedText);
 
         self.attributedText = currentText;
         
-        let bottom = NSMakeRange(attributedText.length - 1, 1);
-        self.scrollRangeToVisible(bottom);
+        let bottom = NSMakeRange(currentText.length - 1, 1);
+        DispatchQueue.main.async {
+            self.scrollRangeToVisible(bottom);
+
+        }
     }
 }
