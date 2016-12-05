@@ -49,7 +49,7 @@ class BubbleSortViewController: BaseSortingViewController {
                             }
                         }
                         
-                        //TODO: Log View
+                        self.logView.insertNewLine(text: "Is \(sortMove.positionTwo!.value) > \(sortMove.positionOne.value)?", color: UIColor.red);
                     }
                     
                     animationArray.append((animation, .defaultView));
@@ -73,6 +73,8 @@ class BubbleSortViewController: BaseSortingViewController {
                             }
                             i = i + 1;
                         }
+                        
+                        self.logView.insertNewLine(text: "The list is now sorted from index \(sortMove.positionOne.index)", color: UIColor.green);
                     }
                     
                     animationArray.append((animation, .defaultView));
@@ -84,13 +86,19 @@ class BubbleSortViewController: BaseSortingViewController {
                         self.sortCollectionView.moveItem(at: IndexPath(row: sortMove.positionOne.index, section: 0), to: IndexPath(row: sortMove.positionTwo!.index, section: 0))
                         self.sortCollectionView.moveItem(at: IndexPath(row: sortMove.positionTwo!.index, section: 0), to: IndexPath(row: sortMove.positionOne.index, section: 0))
                         
-                        //TODO: Log View
+                        self.logView.insertNewLine(text: "YES! Swap index \(sortMove.positionTwo!.index) and index \(sortMove.positionOne.index)", color: UIColor.black);
                     }
                     
                     animationArray.append((animation, .collectionView));
                     break;
                 case .dontSwap:
                     //TODO: Log View
+                    let animation: Animation = {
+                        
+                        self.logView.insertNewLine(text: "NO!", color: UIColor.black);
+                    }
+                    animationArray.append((animation, .defaultView));
+                    
                     break;
             }
         }

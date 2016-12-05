@@ -56,24 +56,73 @@ class QuickSortViewController: BaseSortingViewController {
                 
                 case .check:
                     
-                    //TODO: update log view 
+                    let animation: Animation = {
+                        
+                        self.logView.insertNewLine(text: "Is \(sortMove.positionOne.value) <= \(sortMove.positionTwo!.value)?", color: UIColor.red);
+                    }
+                    
+                    animationArray.append((animation, .defaultView));
                     break;
                 
-                case .swap:
+                case .dontSwap:
+                    let dontSwapAnimation = {
+                        
+                        self.logView.insertNewLine(text: "NO!", color: UIColor.black);
+                    }
+                    
+                    animationArray.append((dontSwapAnimation, .collectionView));
+                    
+                    break;
                 
+                case .pivotSwap:
+                    
+                    let textAnimation: Animation = {
+                        self.logView.insertNewLine(text: "YES! Swap with the pivot", color: UIColor.black);
+                    }
+                    
                     let animation: Animation = {
                         
                         self.sortCollectionView.moveItem(at: IndexPath(row: sortMove.positionOne.index, section: 0), to: IndexPath(row: sortMove.positionTwo!.index, section: 0))
                         self.sortCollectionView.moveItem(at: IndexPath(row: sortMove.positionTwo!.index, section: 0), to: IndexPath(row: sortMove.positionOne.index, section: 0))
-                        
-                        if(sortMove.moveType == .swap) {
-                            //TODO: Log View
+                    }
+                    
+                    animationArray.append((textAnimation, .defaultView));
+                    animationArray.append((animation, .collectionView));
+                    break;
+                
+                case .swap:
+                
+                    let textAnimation: Animation = {
+                        if(sortMove.positionOne.index != sortMove.positionTwo?.index) {
+                            self.logView.insertNewLine(text: "YES! Swap the Left and Right pointers", color: UIColor.black);
                         } else {
-                            //TODO: Log View
+                            self.logView.insertNewLine(text: "YES!", color: UIColor.black);
                         }
                     }
                     
+                    let animation: Animation = {
+                        
+                        self.sortCollectionView.moveItem(at: IndexPath(row: sortMove.positionOne.index, section: 0), to: IndexPath(row: sortMove.positionTwo!.index, section: 0))
+                        self.sortCollectionView.moveItem(at: IndexPath(row: sortMove.positionTwo!.index, section: 0), to: IndexPath(row: sortMove.positionOne.index, section: 0))
+                    }
+                    
+                    animationArray.append((textAnimation, .defaultView));
                     animationArray.append((animation, .collectionView));
+                    break;
+                
+                case .incrementLeft:
+                    let incrementLeftAnimation: Animation = {
+                        self.logView.insertNewLine(text: "Increment Left", color: UIColor.black);
+                    }
+                    
+                    animationArray.append((incrementLeftAnimation, .defaultView));
+                    break;
+                case .incrementRight:
+                    let incrementRightAnimation: Animation = {
+                        self.logView.insertNewLine(text: "Increment Right", color: UIColor.black);
+                    }
+                    
+                    animationArray.append((incrementRightAnimation, .defaultView));
                     break;
                 
                 case .selectPivot:
@@ -96,7 +145,7 @@ class QuickSortViewController: BaseSortingViewController {
                         cell1?.isPivot = true;
                         cell1?.backgroundColor = UIColor.blue;
                         
-                        //TODO: Log View
+                        self.logView.insertNewLine(text: "\(sortMove.positionOne.value) (index \(sortMove.positionOne.index)) is the pivot", color: UIColor.blue);
                     }
                     
                     animationArray.append((animation, .defaultView));
@@ -126,12 +175,17 @@ class QuickSortViewController: BaseSortingViewController {
                         
                         if(sortMove.positionOne.index == sortMove.positionTwo!.index) {
                         
+                            self.logView.insertNewLine(text: "\(sortMove.positionOne.value) (index \(sortMove.positionOne.index)) is the left and right pointer", color: UIColor.orange);
                             cell1?.setAsLAndR();
                             cell1?.backgroundColor = UIColor.orange;
                         } else {
                         
                             cell1?.setAsL();
+                            self.logView.insertNewLine(text: "\(sortMove.positionOne.value) (index \(sortMove.positionOne.index)) is the left pointer", color: UIColor.orange);
+                            
                             cell2?.setAsR();
+                            self.logView.insertNewLine(text: "\(sortMove.positionTwo!.value) (index \(sortMove.positionTwo!.index)) is the right pointer", color: UIColor.orange);
+                            
                             cell1?.backgroundColor = UIColor.orange;
                             cell2?.backgroundColor = UIColor.orange;
                         }
@@ -161,6 +215,8 @@ class QuickSortViewController: BaseSortingViewController {
                         let cell1 = self.sortCollectionView.cellForItem(at: IndexPath(row: sortMove.positionOne.index, section: 0)) as? QuickSortCollectionViewCell;
                         cell1?.isSorted = true;
                         cell1?.backgroundColor = UIColor.green;
+                        
+                        self.logView.insertNewLine(text: "\(sortMove.positionOne.value) (index \(sortMove.positionTwo?.index) is now sorted", color: UIColor.green);
                     }
                     
                     animationArray.append((animation, .defaultView));

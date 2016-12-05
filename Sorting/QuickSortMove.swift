@@ -32,6 +32,22 @@ class QuickSortMove: SortMove {
         return QuickSortMove(positionOne: positionOne, positionTwo: positionTwo, moveType: .check);
     }
     
+    static func dontSwap(positionOne: Position, positionTwo: Position) -> QuickSortMove {
+        return QuickSortMove(positionOne: positionOne, positionTwo: positionTwo, moveType: .dontSwap);
+    }
+    
+    static func incrementLeft(positionOne: Position) -> QuickSortMove {
+        return QuickSortMove(positionOne: positionOne, moveType: .incrementLeft);
+    }
+    
+    static func incrementRight(positionOne: Position) -> QuickSortMove {
+        return QuickSortMove(positionOne: positionOne, moveType: .incrementRight);
+    }
+    
+    static func pivorSwap(positionOne: Position, positionTwo: Position) -> QuickSortMove {
+        return QuickSortMove(positionOne: positionOne, positionTwo: positionTwo, moveType: .pivotSwap);
+    }
+    
     static func swap(positionOne: Position, positionTwo: Position) -> QuickSortMove {
         
         return QuickSortMove(positionOne: positionOne, positionTwo: positionTwo, moveType: .swap);
@@ -68,8 +84,12 @@ class QuickSortMove: SortMove {
 enum QuickSortMoveType {
     
     case check
+    case dontSwap
+    case incrementLeft
+    case incrementRight
     case selectLeftRight
     case swap
     case selectPivot
     case selectSorted
+    case pivotSwap
 }

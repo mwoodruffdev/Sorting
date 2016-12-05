@@ -17,10 +17,11 @@ protocol SortingViewController {
 
 class BaseSortingViewController: UIViewController, SortingViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
-    internal var sortArray: [Int] = [5,2,5,4,6,8,2,4,6,8,2,4,6];
+    internal var sortArray: [Int] = [5,2,8,4,6,5,2,4,6];
+    internal let kAnimationDuration: TimeInterval = 2;
     internal var sortCollectionView: UICollectionView!
     internal var sortButton: UIButton!;
-    internal var logView: UITextView!;
+    internal var logView: SortLogView!;
     internal var worstCaseLabel: UILabel!;
     internal var averageCaseLabel: UILabel!;
     internal var bestCaseLabel: UILabel!;
@@ -67,7 +68,8 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
     
     internal func setupLogView() {
     
-        logView = UITextView();
+        logView = SortLogView();
+        logView.isEditable = false;
         logView.layer.borderWidth = 1;
         logView.layer.borderColor = UIColor.black.cgColor;
         logView.text = "Press start to begin!";
@@ -121,7 +123,7 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
         sortCollectionView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true;
         sortCollectionView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true;
         
-        heightConstraint = sortCollectionView.heightAnchor.constraint(equalToConstant: view.frame.size.height);
+        heightConstraint = sortCollectionView.heightAnchor.constraint(equalToConstant: 0);
         heightConstraint?.isActive = true;
         
         worstCaseLabel.translatesAutoresizingMaskIntoConstraints = false;
@@ -178,6 +180,7 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
     
     func swap(sender: UIButton) {
         
+        logView.text = "";
         sortButton.setTitle("Stop Sorting", for: .normal);
         if(sender.tag == 0) {
             startAnimations(index: 0);
@@ -198,8 +201,7 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
                 })
             } else if block.1 == .defaultView {
                 
-                UIView.animate(withDuration: 3, animations: animationMoves![index].0, completion: { (didFinish) in
-                    
+                UIView.animate(withDuration: kAnimationDuration, delay: 0, options: .allowUserInteraction, animations: animationMoves![index].0, completion: { (didFinish) in
                     if(didFinish) {
                         self.startAnimations(index: index + 1);
                     }
