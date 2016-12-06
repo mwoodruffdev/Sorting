@@ -77,7 +77,7 @@ class QuickSortViewController: BaseSortingViewController {
                 case .pivotSwap:
                     
                     let textAnimation: Animation = {
-                        self.logView.insertNewLine(text: "YES! Swap with the pivot", color: UIColor.black);
+                        self.logView.insertNewLine(text: "Right pointer has reached the pivot. Swap with the pivot", color: UIColor.black);
                     }
                     
                     let animation: Animation = {

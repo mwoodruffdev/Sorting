@@ -8,8 +8,24 @@
 
 import UIKit
 
-class SortLogView: UITextView {
+class SortLogView: UITextView, UITextViewDelegate {
 
+    var didDrag: Bool = false;
+    
+    init() {
+        
+        super.init(frame: CGRect.zero, textContainer: nil);
+        delegate = self;
+        layoutManager.allowsNonContiguousLayout = false;
+        isEditable = false;
+        layer.borderWidth = 1;
+        layer.borderColor = UIColor.black.cgColor;
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder);
+    }
+    
     func insertNewLine(text: String, color: UIColor) {
         
         let attributedText =  NSMutableAttributedString(string:text);
@@ -21,10 +37,24 @@ class SortLogView: UITextView {
 
         self.attributedText = currentText;
         
-        let bottom = NSMakeRange(currentText.length - 1, 1);
-        DispatchQueue.main.async {
-            self.scrollRangeToVisible(bottom);
-
+        if(!didDrag) {
+            scrollRangeToVisible(NSMakeRange(currentText.length - 1, 1));
+        }
+    }
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        
+        didDrag = true;
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        
+        let scrollViewHeight = frame.size.height;
+        let contentSizeHeight = contentSize.height;
+        let offset = contentOffset.y;
+        
+        if(offset + scrollViewHeight >= contentSizeHeight) {
+            didDrag = false;
         }
     }
 }

@@ -69,10 +69,6 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
     internal func setupLogView() {
     
         logView = SortLogView();
-        logView.bounces = false;
-        logView.isEditable = false;
-        logView.layer.borderWidth = 1;
-        logView.layer.borderColor = UIColor.black.cgColor;
         logView.text = "Press start to begin!";
         view.addSubview(logView);
     }
