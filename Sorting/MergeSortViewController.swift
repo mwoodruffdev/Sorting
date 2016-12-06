@@ -56,8 +56,11 @@ class MergeSortViewController: BaseSortingViewController {
     
     func getRandomRainbowColor(index: Int) -> UIColor {
         
-        let hue: CGFloat = CGFloat(sectionArray[0]) / CGFloat(index);
-        return UIColor(hue: hue, saturation: 1, brightness: 1, alpha: 1);
+        let hue = CGFloat(Int(arc4random() % 256)) / 256;
+        let saturation = CGFloat(Int(arc4random() % 128)) / 256 + 0.5;
+        let brightness = CGFloat(Int(arc4random() % 128)) / 256 + 0.5;
+        
+        return UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1);
     }
     
     func sortCollectionView(moves: [MergeSortMove]) -> [AnimationBlock] {
@@ -92,7 +95,6 @@ class MergeSortViewController: BaseSortingViewController {
                     avG = avG / difference;
                     avB = avB / difference;
                     averageColor = UIColor(red: avR, green: avG, blue: avB, alpha: 1);
-                    averageColor = averageColor?.modified(withAdditionalHue: 1, additionalSaturation: 1, additionalBrightness: 1);
                     
                     for i in sortMove.low!..<sortMove.high! + 1 {
                         
@@ -231,30 +233,5 @@ class MergeSortViewController: BaseSortingViewController {
     
     override func bestCaseText() -> String {
         return "O(n log n)";
-    }
-}
-
-extension UIColor {
-    
-    func modified(withAdditionalHue hue: CGFloat, additionalSaturation: CGFloat, additionalBrightness: CGFloat) -> UIColor {
-        
-        var currentHue: CGFloat = 0.0
-        var currentSaturation: CGFloat = 0.0
-        var currentBrigthness: CGFloat = 0.0
-        var currentAlpha: CGFloat = 0.0
-        
-        if self.getHue(&currentHue, saturation: &currentSaturation, brightness: &currentBrigthness, alpha: &currentAlpha){
-            
-            let newHue = currentHue + hue > 1 ? 1 : currentHue + hue;
-            let newSaturation = currentSaturation + additionalSaturation > 1 ? 1 : currentSaturation + additionalSaturation;
-            let newBrightness = currentBrigthness + additionalBrightness > 1 ? 1 : currentBrigthness + additionalBrightness;
-            
-            return UIColor(hue: newHue,
-                           saturation: newSaturation,
-                           brightness: newBrightness,
-                           alpha: currentAlpha)
-        } else {
-            return self
-        }
     }
 }
