@@ -82,7 +82,7 @@ class MergeSort: SortingAlgorithm {
             moves.append(MergeSortMove.swap(positionOne: arrayPosition, positionTwo: workingPosition));
         }
         var sortedSubArray: [Int] = []
-        for i in 0...high {
+        for i in low...high {
             sortedSubArray.append(a[i]);
         }
         moves.append(MergeSortMove.sorted(left: sortedSubArray));

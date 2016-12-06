@@ -16,10 +16,12 @@ class MergeSortViewController: BaseSortingViewController {
     
     override func viewDidLoad() {
 
-        super.viewDidLoad()
-        
         sectionArray.append(sortArray.count);
         sectionArray.append(0);
+        
+        super.viewDidLoad()
+        
+        
         if let sortingQueue = MergeSort.sort(unsortedArray: sortArray) as? [MergeSortMove] {
             
             animationMoves = sortCollectionView(moves: sortingQueue);
@@ -101,14 +103,22 @@ class MergeSortViewController: BaseSortingViewController {
                     }
                 }
                 
-                let insertSectionAnimation: Animation = {
+                let insertSectionDataAnimation: Animation = {
                     
                     self.sectionArray[1] = sortMove.high! - sortMove.low! + 1;
                     self.workingArray = sortMove.workingArray!;
                     self.sortCollectionView.reloadSections(IndexSet(integer:1));
                 }
                 
+                let addSectionAnimation: Animation = {
+                    
+                    self.view.setNeedsLayout();
+                    self.view.layoutIfNeeded();
+                }
+                
                 let workingColorAnimation: Animation = {
+                    
+                    
                     for i in 0..<self.sectionArray[1] {
                         let cell = self.sortCollectionView.cellForItem(at: IndexPath(row: i, section: 1));
                         cell?.backgroundColor = averageColor;
@@ -116,7 +126,8 @@ class MergeSortViewController: BaseSortingViewController {
                 }
                 
                 animationArray.append((colorAnimation, .defaultView));
-                animationArray.append((insertSectionAnimation, .collectionView));
+                animationArray.append((insertSectionDataAnimation, .collectionView));
+                animationArray.append((addSectionAnimation, .defaultView));
                 animationArray.append((workingColorAnimation, .defaultView));
                 break;
                 
@@ -191,9 +202,17 @@ class MergeSortViewController: BaseSortingViewController {
                     self.sortCollectionView.reloadSections(IndexSet(integer:1));
                 }
                 
+                let removeSectionAnimation: Animation = {
+                    
+                    self.view.setNeedsLayout();
+                    self.view.layoutIfNeeded();
+                }
+                
                 animationArray.append((animation, .collectionView));
+                animationArray.append((removeSectionAnimation, .defaultView));
                 break;
             }
+            
             
         }
         
@@ -229,9 +248,14 @@ extension UIColor {
         var currentAlpha: CGFloat = 0.0
         
         if self.getHue(&currentHue, saturation: &currentSaturation, brightness: &currentBrigthness, alpha: &currentAlpha){
-            return UIColor(hue: currentHue + hue,
-                           saturation: currentSaturation + additionalSaturation,
-                           brightness: currentBrigthness + additionalBrightness,
+            
+            let newHue = currentHue + hue > 1 ? 1 : currentHue + hue;
+            let newSaturation = currentSaturation + additionalSaturation > 1 ? 1 : currentSaturation + additionalSaturation;
+            let newBrightness = currentBrigthness + additionalBrightness > 1 ? 1 : currentBrigthness + additionalBrightness;
+            
+            return UIColor(hue: newHue,
+                           saturation: newSaturation,
+                           brightness: newBrightness,
                            alpha: currentAlpha)
         } else {
             return self

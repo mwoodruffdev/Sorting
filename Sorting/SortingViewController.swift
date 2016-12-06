@@ -106,11 +106,7 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews();
-        
-        if(sortCollectionView.contentSize.height > 0) {
-        
-            heightConstraint?.constant = sortCollectionView.contentSize.height;
-        }
+        heightConstraint?.constant = sortCollectionView.contentSize.height;
     }
     
     internal func applyAutoLayoutConstraints() {
@@ -182,7 +178,6 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
             startAnimations(index: 0);
         }
     }
-    
     
     internal func startAnimations(index: Int) {
         
