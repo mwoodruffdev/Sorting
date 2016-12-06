@@ -31,6 +31,8 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
     typealias Animation = () -> Void
     
     var animationMoves: [AnimationBlock]?;
+    var isAnimating: Bool = false;
+    var animationStep: Int = 0;
     
     override func viewDidLoad() {
         
@@ -174,39 +176,47 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
     
     internal func swap(sender: UIButton) {
         
-        sortButton.setTitle("Stop Sorting", for: .normal);
-        if(sender.tag == 0) {
-            startAnimations(index: 0);
+        if(!isAnimating) {
+            sortButton.setTitle("Stop Sorting", for: .normal);
+            isAnimating = !isAnimating;
+            startAnimations(index: animationStep);
+        } else {
+            isAnimating = !isAnimating;
+            sortButton.setTitle("Continue", for: .normal);
         }
     }
     
     internal func startAnimations(index: Int) {
         
-        if(index < animationMoves!.count) {
+        if(index < animationMoves!.count && isAnimating) {
             
             let block = animationMoves![index];
             if block.1 == .collectionView {
                 self.sortCollectionView.performBatchUpdates(animationMoves![index].0, completion: { (didFinish) in
                     if(didFinish) {
-                        self.startAnimations(index: index + 1)
+                        self.animationStep = self.animationStep + 1;
+                        self.startAnimations(index: self.animationStep);
                     }
                 })
             } else if block.1 == .defaultView {
                 
                 UIView.animate(withDuration: kAnimationDuration, delay: 0, options: .allowUserInteraction, animations: animationMoves![index].0, completion: { (didFinish) in
                     if(didFinish) {
-                        self.startAnimations(index: index + 1);
+                        self.animationStep = self.animationStep + 1;
+                        self.startAnimations(index: self.animationStep);
                     }
                 })
             }
         }
     }
     
+    
+    
     enum AnimationType {
         case collectionView, defaultView;
     }
     
-    //MARK: Complexity
+    //MARK: Complexity UI
     internal func worstCaseText() -> String {
         return "";
     }
