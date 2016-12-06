@@ -31,7 +31,7 @@ class InsertionSortViewController: BaseSortingViewController {
                 case .dontSwap:
                     
                     animationArray.append((checkAnimation(sortMove: sortMove), .defaultView));
-                    animationArray.append((unCheckAnimation(sortMove: sortMove), .defaultView));
+                    animationArray.append((unCheckAnimation(sortMove: sortMove, didSwap: true), .defaultView));
                     break;
                 case .sorted:
                     let sortedAnimation: Animation = {
@@ -45,6 +45,8 @@ class InsertionSortViewController: BaseSortingViewController {
                             cell.sorted = true;
                             i = i - 1;
                         }
+                        
+                        self.logView.insertNewLine(text: "The list is now sorted from index 0 to index \(sortMove.positionOne.index)", color: .black);
                     }
                     
                     animationArray.append((sortedAnimation, .defaultView));
@@ -58,16 +60,11 @@ class InsertionSortViewController: BaseSortingViewController {
                         
                         self.sortCollectionView.moveItem(at: IndexPath(row: sortMove.positionOne.index, section: 0), to: IndexPath(row: sortMove.positionTwo!.index, section: 0))
                         self.sortCollectionView.moveItem(at: IndexPath(row: sortMove.positionTwo!.index, section: 0), to: IndexPath(row: sortMove.positionOne.index, section: 0))
-                        
-                        //TODO: Update Log View
                     }
                     
                     animationArray.append((swapAnimation, .collectionView));
+                    animationArray.append((unCheckAnimation(sortMove: sortMove, didSwap: true), .defaultView));
                     
-                    animationArray.append((unCheckAnimation(sortMove: sortMove), .defaultView));
-                    
-                    break;
-                default:
                     break;
             }
         }
@@ -93,28 +90,36 @@ class InsertionSortViewController: BaseSortingViewController {
             let cell2 = self.sortCollectionView.cellForItem(at: IndexPath(row: sortMove.positionTwo!.index, section: 0));
             cell1?.backgroundColor = UIColor.red;
             cell2?.backgroundColor = UIColor.red;
+            
+            self.logView.insertNewLine(text: "Is \(sortMove.positionOne.value) <= \(sortMove.positionTwo!.value)?", color: .red);
         }
     }
     
-    private func unCheckAnimation(sortMove: InsertionSortMove) -> Animation {
+    private func unCheckAnimation(sortMove: InsertionSortMove, didSwap: Bool) -> Animation {
         return {
             let cell1 = self.sortCollectionView.cellForItem(at: IndexPath(row: sortMove.positionOne.index, section: 0)) as! SortCollectionViewCell;
             let cell2 = self.sortCollectionView.cellForItem(at: IndexPath(row: sortMove.positionTwo!.index, section: 0)) as! SortCollectionViewCell;
             
             if(cell1.sorted) {
                 
-                cell1.backgroundColor = UIColor.green;
+                cell1.backgroundColor = .green;
             } else {
                 
-                cell1.backgroundColor = UIColor.black;
+                cell1.backgroundColor = .black;
             }
             
             if(cell2.sorted) {
                 
-                cell2.backgroundColor = UIColor.green;
+                cell2.backgroundColor = .green;
             } else {
                 
-                cell2.backgroundColor = UIColor.black;
+                cell2.backgroundColor = .black;
+            }
+            
+            if(!didSwap) {
+                self.logView.insertNewLine(text: "NO!", color: .black);
+            } else {
+                self.logView.insertNewLine(text: "YES!", color: .black);
             }
         }
     }

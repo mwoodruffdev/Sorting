@@ -27,13 +27,16 @@ class InsertionSort: SortingAlgorithm {
             if(unsortedArray[y] >= unsortedArray[y-1]) {
                 moves.append(InsertionSortMove.dontSwap(positionOne: InsertionSortMove.Position(index: (y-1), value: unsortedArray[y-1]), positionTwo: InsertionSortMove.Position(index: y, value: unsortedArray[y])));
             }
-            while y > 0 && unsortedArray[y] < unsortedArray[y-1] {
+            
+            while y > 0 && unsortedArray[y] <= unsortedArray[y-1] {
                 
                 (unsortedArray[y-1], unsortedArray[y]) = (unsortedArray[y], unsortedArray[y-1]);
-                moves.append(InsertionSortMove.swap(positionOne: InsertionSortMove.Position(index: (y-1), value: unsortedArray[y-1]), positionTwo: InsertionSortMove.Position(index: y, value: unsortedArray[y])));
+                if(unsortedArray[y] != unsortedArray[y-1]) {
+                    moves.append(InsertionSortMove.swap(positionOne: InsertionSortMove.Position(index: (y-1), value: unsortedArray[y-1]), positionTwo: InsertionSortMove.Position(index: y, value: unsortedArray[y])));
+                }
                 y = y - 1;
             }
-            
+
             moves.append(InsertionSortMove.sorted(positionOne: InsertionSortMove.Position(index: x - 1, value: 0)));
         }
         

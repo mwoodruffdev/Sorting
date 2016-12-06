@@ -212,8 +212,6 @@ class MergeSortViewController: BaseSortingViewController {
                 animationArray.append((removeSectionAnimation, .defaultView));
                 break;
             }
-            
-            
         }
         
         return animationArray;
