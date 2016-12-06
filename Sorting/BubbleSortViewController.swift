@@ -14,7 +14,7 @@ class BubbleSortViewController: BaseSortingViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad();
-        
+        title = "Bubble Sort";
         if let sortingQueue = BubbleSort.sort(unsortedArray: sortArray) as? [BubbleSortMove] {
         
             animationMoves = sortCollectionView(moves: sortingQueue);

@@ -36,6 +36,7 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
         
         super.viewDidLoad();
         view.backgroundColor = UIColor.white;
+        automaticallyAdjustsScrollViewInsets = false;
         setupViews();
         applyAutoLayoutConstraints();
     }
@@ -112,7 +113,7 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
     internal func applyAutoLayoutConstraints() {
         
         sortCollectionView.translatesAutoresizingMaskIntoConstraints = false;
-        sortCollectionView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true;
+        sortCollectionView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor).isActive = true;
         sortCollectionView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true;
         sortCollectionView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true;
         

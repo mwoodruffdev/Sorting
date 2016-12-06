@@ -16,12 +16,10 @@ class MergeSortViewController: BaseSortingViewController {
     
     override func viewDidLoad() {
 
+        super.viewDidLoad();
+        title = "Merge Sort";
         sectionArray.append(sortArray.count);
         sectionArray.append(0);
-        
-        super.viewDidLoad()
-        
-        
         if let sortingQueue = MergeSort.sort(unsortedArray: sortArray) as? [MergeSortMove] {
             
             animationMoves = sortCollectionView(moves: sortingQueue);

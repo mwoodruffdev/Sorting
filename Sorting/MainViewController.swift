@@ -33,7 +33,7 @@ class MainViewController: UIViewController, SideMenuViewControllerDelegate {
     
     func didSelectViewController(viewController: UIViewController) {
         
-        selectedViewController = viewController;
+        selectedViewController = UINavigationController(rootViewController: viewController);
         containerController?.centerViewController = self.selectedViewController;
     }
 }

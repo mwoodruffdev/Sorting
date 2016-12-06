@@ -13,7 +13,7 @@ class QuickSortViewController: BaseSortingViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad();
-    
+        title = "Quick Sort"
         if let sortingQueue = QuickSort.sort(unsortedArray: sortArray) as? [QuickSortMove] {
             animationMoves = sortCollectionView(moves: sortingQueue);
         }

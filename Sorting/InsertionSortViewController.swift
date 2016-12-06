@@ -11,15 +11,14 @@ import UIKit
 
 class InsertionSortViewController: BaseSortingViewController {
     
-    
     override func viewDidLoad() {
         
+        super.viewDidLoad();
+        title = "Insertion Sort";
         if let sortingQueue = InsertionSort.sort(unsortedArray: sortArray) as? [InsertionSortMove] {
             
             animationMoves = sortCollectionView(moves: sortingQueue);
         }
-        
-        super.viewDidLoad();
     }
 
     func sortCollectionView(moves: [InsertionSortMove]) -> [AnimationBlock] {
