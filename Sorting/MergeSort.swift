@@ -38,6 +38,18 @@ class MergeSort: SortingAlgorithm {
             working[i] = a[low + i];
         }
         
+        var leftArray: [Int] = [];
+        for i in low...pivot {
+            leftArray.append(a[i]);
+        }
+        
+        var rightArray: [Int] = [];
+        for i in pivot+1...high {
+            rightArray.append(a[i]);
+        }
+        
+        moves.append(MergeSortMove.merge(left: leftArray, right: rightArray));
+        
         moves.append(MergeSortMove.addWorking(low: low, high: high, workingArray: working));
         var m1 = 0;
         var m2 = pivot-low+1;
@@ -69,6 +81,11 @@ class MergeSort: SortingAlgorithm {
             let arrayPosition: MergeSortMove.Position = MergeSortMove.Position(index: i+low, value: a[i+low]);
             moves.append(MergeSortMove.swap(positionOne: arrayPosition, positionTwo: workingPosition));
         }
+        var sortedSubArray: [Int] = []
+        for i in 0...high {
+            sortedSubArray.append(a[i]);
+        }
+        moves.append(MergeSortMove.sorted(left: sortedSubArray));
         moves.append(MergeSortMove.removeWorking());
     }
 }

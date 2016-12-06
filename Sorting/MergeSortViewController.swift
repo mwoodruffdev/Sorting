@@ -19,6 +19,7 @@ class MergeSortViewController: BaseSortingViewController {
         super.viewDidLoad()
         
         sectionArray.append(sortArray.count);
+        sectionArray.append(0);
         if let sortingQueue = MergeSort.sort(unsortedArray: sortArray) as? [MergeSortMove] {
             
             animationMoves = sortCollectionView(moves: sortingQueue);
@@ -102,10 +103,9 @@ class MergeSortViewController: BaseSortingViewController {
                 
                 let insertSectionAnimation: Animation = {
                     
-                    self.sectionArray.append(0);
                     self.sectionArray[1] = sortMove.high! - sortMove.low! + 1;
                     self.workingArray = sortMove.workingArray!;
-                    self.sortCollectionView.insertSections(IndexSet(integer: 1));
+                    self.sortCollectionView.reloadSections(IndexSet(integer:1));
                 }
                 
                 let workingColorAnimation: Animation = {
@@ -118,6 +118,54 @@ class MergeSortViewController: BaseSortingViewController {
                 animationArray.append((colorAnimation, .defaultView));
                 animationArray.append((insertSectionAnimation, .collectionView));
                 animationArray.append((workingColorAnimation, .defaultView));
+                break;
+                
+            case .merge:
+                let mergeTextAnimation: Animation = {
+                    var arrayOneText = "Array: [";
+                    var arrayTwoText = "Array: [";
+                    
+                    for i in 0..<sortMove.left!.count {
+                        arrayOneText = arrayOneText + "\(sortMove.left![i])";
+                        if(i != sortMove.left!.count-1) {
+                            arrayOneText = arrayOneText + ", "
+                        } else {
+                            arrayOneText = arrayOneText + "]";
+                        }
+                    }
+                    
+                    for i in 0..<sortMove.right!.count {
+                        arrayTwoText = arrayTwoText + "\(sortMove.right![i])";
+                        
+                        if(i != sortMove.right!.count-1) {
+                            arrayTwoText = arrayTwoText + ", "
+                        } else {
+                            arrayTwoText = arrayTwoText + "]";
+                        }
+                    }
+                    
+                    self.logView.insertNewLine(text: "Merge \(arrayOneText) and \(arrayTwoText)", color: UIColor.black);
+                }
+                animationArray.append((mergeTextAnimation, .defaultView));
+                break;
+            
+            case .sorted:
+                let sortedTextAnimation: Animation = {
+                    
+                    var sortedArrayText = "Sorted Array: ["
+                    for i in 0..<sortMove.left!.count {
+                        sortedArrayText = sortedArrayText + "\(sortMove.left![i])";
+                        if(i != sortMove.left!.count - 1) {
+                            sortedArrayText = sortedArrayText + ", ";
+                        } else {
+                            sortedArrayText = sortedArrayText + "]";
+                        }
+                    }
+                    
+                    self.logView.insertNewLine(text: sortedArrayText, color: UIColor.black);
+                }
+                
+                animationArray.append((sortedTextAnimation, .defaultView));
                 break;
                 
             case .swap:
@@ -137,9 +185,10 @@ class MergeSortViewController: BaseSortingViewController {
                 break;
             case .removeWorking:
                 let animation: Animation = {
-                    self.sectionArray.remove(at: 1);
+                
                     self.workingArray = [];
-                    self.sortCollectionView.deleteSections(IndexSet(integer: 1));
+                    self.sectionArray[1] = self.workingArray.count;
+                    self.sortCollectionView.reloadSections(IndexSet(integer:1));
                 }
                 
                 animationArray.append((animation, .collectionView));
@@ -152,8 +201,9 @@ class MergeSortViewController: BaseSortingViewController {
     }
     
     override func swap(sender: UIButton) {
-        
-        super.swap(sender: sender);
+
+        logView.insertNewLine(text: "Array split into \(sortArray.count) sub arrays", color: UIColor.black);
+        super.swap(sender: sender)
     }
     
     override func worstCaseText() -> String {

@@ -14,6 +14,8 @@ class MergeSortMove: SortMove {
     var positionTwo: Position?;
     var low: Int?
     var high: Int?
+    var left: [Int]?
+    var right: [Int]?
     var workingArray: [Int]?
     var moveType: MergeSortMoveType;
     var colorIndex: Int?;
@@ -45,6 +47,18 @@ class MergeSortMove: SortMove {
         self.moveType = moveType;
     }
     
+    init(left: [Int], moveType: MergeSortMoveType) {
+        self.left = left;
+        self.moveType = moveType;
+    }
+    
+    init(left: [Int], right: [Int], moveType: MergeSortMoveType) {
+
+        self.left = left;
+        self.right = right;
+        self.moveType = moveType;
+    }
+    
     init(colorIndex: Int, color: UIColor, moveType: MergeSortMoveType) {
         self.colorIndex = colorIndex;
         self.color = color;
@@ -55,9 +69,17 @@ class MergeSortMove: SortMove {
         return MergeSortMove(low: low, high: high, workingArray: workingArray, moveType: .addWorking);
     }
     
+    static func merge(left: [Int], right: [Int]) -> MergeSortMove {
+        return MergeSortMove(left: left, right: right, moveType: .merge)
+    }
+    
     static func removeWorking() -> MergeSortMove {
         
         return MergeSortMove(moveType: .removeWorking);
+    }
+    
+    static func sorted(left: [Int]) -> MergeSortMove {
+        return MergeSortMove(left: left, moveType: .sorted)
     }
     
     static func swap(positionOne: Position, positionTwo: Position) -> MergeSortMove {
@@ -81,6 +103,8 @@ class MergeSortMove: SortMove {
 enum MergeSortMoveType {
     
     case addWorking
+    case merge
     case removeWorking
+    case sorted
     case swap;
 }

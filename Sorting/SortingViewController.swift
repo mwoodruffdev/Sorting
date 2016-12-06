@@ -175,9 +175,8 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
     
     //MARK: Animations
     
-    func swap(sender: UIButton) {
+    internal func swap(sender: UIButton) {
         
-        logView.text = "";
         sortButton.setTitle("Stop Sorting", for: .normal);
         if(sender.tag == 0) {
             startAnimations(index: 0);
@@ -185,7 +184,7 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
     }
     
     
-    func startAnimations(index: Int) {
+    internal func startAnimations(index: Int) {
         
         if(index < animationMoves!.count) {
             
