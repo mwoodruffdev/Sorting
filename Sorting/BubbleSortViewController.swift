@@ -21,17 +21,17 @@ class BubbleSortViewController: BaseSortingViewController {
         }
     }
     
-    func sortCollectionView(moves: [BubbleSortMove]) -> [AnimationBlock] {
+    func sortCollectionView(moves: [BubbleSortMove]) -> [SortAnimation] {
         
-        var animationArray: [AnimationBlock] = [];
+        var animationArray: [SortAnimation] = [];
 
         for sortMove in moves {
 
             switch(sortMove.moveType) {
 
                 case .checking:
-                    let animation: Animation = {
-                        
+                    
+                    let checkAnimation = SortAnimation(animation: { 
                         let cell1 = self.sortCollectionView.cellForItem(at: IndexPath(row: sortMove.positionOne.index, section: 0));
                         cell1?.backgroundColor = UIColor.red;
                         let cell2 = self.sortCollectionView.cellForItem(at: IndexPath(row: sortMove.positionTwo!.index, section: 0));
@@ -43,21 +43,20 @@ class BubbleSortViewController: BaseSortingViewController {
                                 continue;
                             }
                             if let unHighlightedCell =  self.sortCollectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? SortCollectionViewCell,
-                            unHighlightedCell.sorted == false {
+                                unHighlightedCell.sorted == false {
                                 
                                 unHighlightedCell.backgroundColor = UIColor.black;
                             }
                         }
                         
                         self.logView.insertNewLine(text: "Is \(sortMove.positionTwo!.value) > \(sortMove.positionOne.value)?", color: UIColor.red);
-                    }
+                    }, type: .defaultView);
                     
-                    animationArray.append((animation, .defaultView));
+                    animationArray.append(checkAnimation);
                     break;
                 case .sortedFrom:
 
-                    let animation: Animation = {
-                        
+                    let sortedAnimation = SortAnimation(animation: { 
                         let sortedIndex = sortMove.positionOne.index;
                         
                         var i = 0;
@@ -75,30 +74,28 @@ class BubbleSortViewController: BaseSortingViewController {
                         }
                         
                         self.logView.insertNewLine(text: "The list is now sorted from index \(sortMove.positionOne.index)", color: UIColor.green);
-                    }
+                    }, type: .defaultView);
                     
-                    animationArray.append((animation, .defaultView));
+                    animationArray.append(sortedAnimation);
                     break;
                 case .swap:
                 
-                    let animation: Animation = {
-                        
+                    let swapAnimation = SortAnimation(animation: { 
                         self.sortCollectionView.moveItem(at: IndexPath(row: sortMove.positionOne.index, section: 0), to: IndexPath(row: sortMove.positionTwo!.index, section: 0))
                         self.sortCollectionView.moveItem(at: IndexPath(row: sortMove.positionTwo!.index, section: 0), to: IndexPath(row: sortMove.positionOne.index, section: 0))
                         
                         self.logView.insertNewLine(text: "YES! Swap index \(sortMove.positionTwo!.index) and index \(sortMove.positionOne.index)", color: UIColor.black);
-                    }
+                    }, type: .collectionView);
                     
-                    animationArray.append((animation, .collectionView));
+                    animationArray.append(swapAnimation);
                     break;
                 case .dontSwap:
-                    //TODO: Log View
-                    let animation: Animation = {
-                        
-                        self.logView.insertNewLine(text: "NO!", color: UIColor.black);
-                    }
-                    animationArray.append((animation, .defaultView));
                     
+                    let dontSwapAnimation = SortAnimation(animation: { 
+                        self.logView.insertNewLine(text: "NO!", color: UIColor.black);
+                    }, type: .defaultView);
+                    
+                    animationArray.append(dontSwapAnimation);
                     break;
             }
         }

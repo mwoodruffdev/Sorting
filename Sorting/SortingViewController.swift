@@ -27,10 +27,7 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
     internal var bestCaseLabel: UILabel!;
     internal var heightConstraint: NSLayoutConstraint?;
     
-    typealias AnimationBlock  = (Animation, AnimationType);
-    typealias Animation = () -> Void
-    
-    var animationMoves: [AnimationBlock]?;
+    var animationMoves: [SortAnimation]?;
     var isAnimating: Bool = false;
     var animationStep: Int = 0;
     
@@ -190,30 +187,27 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
         
         if(index < animationMoves!.count && isAnimating) {
             
-            let block = animationMoves![index];
-            if block.1 == .collectionView {
-                self.sortCollectionView.performBatchUpdates(animationMoves![index].0, completion: { (didFinish) in
-                    if(didFinish) {
-                        self.animationStep = self.animationStep + 1;
-                        self.startAnimations(index: self.animationStep);
-                    }
-                })
-            } else if block.1 == .defaultView {
-                
-                UIView.animate(withDuration: kAnimationDuration, delay: 0, options: .allowUserInteraction, animations: animationMoves![index].0, completion: { (didFinish) in
-                    if(didFinish) {
-                        self.animationStep = self.animationStep + 1;
-                        self.startAnimations(index: self.animationStep);
-                    }
-                })
+            let sortAnimation = animationMoves![index];
+            
+            switch(sortAnimation.type) {
+                case .collectionView:
+                    self.sortCollectionView.performBatchUpdates(sortAnimation.animation, completion: { (didFinish) in
+                        if(didFinish) {
+                            self.animationStep = self.animationStep + 1;
+                            self.startAnimations(index: self.animationStep);
+                        }
+                    })
+                    break;
+                case .defaultView:
+                    UIView.animate(withDuration: kAnimationDuration, delay: 0, options: .allowUserInteraction, animations: sortAnimation.animation, completion: { (didFinish) in
+                        if(didFinish) {
+                            self.animationStep = self.animationStep + 1;
+                            self.startAnimations(index: self.animationStep);
+                        }
+                    })
+                    break;
             }
         }
-    }
-    
-    
-    
-    enum AnimationType {
-        case collectionView, defaultView;
     }
     
     //MARK: Complexity UI

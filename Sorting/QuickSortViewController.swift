@@ -46,9 +46,9 @@ class QuickSortViewController: BaseSortingViewController {
         }
     }
     
-    func sortCollectionView(moves: [QuickSortMove]) -> [AnimationBlock] {
+    func sortCollectionView(moves: [QuickSortMove]) -> [SortAnimation] {
         
-        var animationArray: [AnimationBlock] = [];
+        var animationArray: [SortAnimation] = [];
         
         for sortMove in moves {
             
@@ -56,78 +56,77 @@ class QuickSortViewController: BaseSortingViewController {
                 
                 case .check:
                     
-                    let animation: Animation = {
-                        
+                    let checkAnimation = SortAnimation(animation: { 
                         self.logView.insertNewLine(text: "Is \(sortMove.positionOne.value) <= \(sortMove.positionTwo!.value)?", color: UIColor.red);
-                    }
+                    }, type: .defaultView);
                     
-                    animationArray.append((animation, .defaultView));
+                    animationArray.append(checkAnimation);
                     break;
                 
                 case .dontSwap:
-                    let dontSwapAnimation = {
+                    let dontSwapAnimation = SortAnimation(animation: {
                         
                         self.logView.insertNewLine(text: "NO!", color: UIColor.black);
-                    }
+                    }, type: .collectionView);
                     
-                    animationArray.append((dontSwapAnimation, .collectionView));
+                    animationArray.append(dontSwapAnimation);
                     
                     break;
                 
                 case .pivotSwap:
                     
-                    let textAnimation: Animation = {
+                    let textAnimation = SortAnimation(animation: {
                         self.logView.insertNewLine(text: "Right pointer has reached the pivot. Swap with the pivot", color: UIColor.black);
-                    }
+                    }, type: .defaultView);
                     
-                    let animation: Animation = {
+                    let pivotSwapAnimation = SortAnimation(animation: {
                         
                         self.sortCollectionView.moveItem(at: IndexPath(row: sortMove.positionOne.index, section: 0), to: IndexPath(row: sortMove.positionTwo!.index, section: 0))
                         self.sortCollectionView.moveItem(at: IndexPath(row: sortMove.positionTwo!.index, section: 0), to: IndexPath(row: sortMove.positionOne.index, section: 0))
-                    }
+                    }, type: .collectionView);
                     
-                    animationArray.append((textAnimation, .defaultView));
-                    animationArray.append((animation, .collectionView));
+                    animationArray.append(textAnimation);
+                    animationArray.append(pivotSwapAnimation);
                     break;
                 
                 case .swap:
                 
-                    let textAnimation: Animation = {
+                    let textAnimation = SortAnimation(animation: {
                         if(sortMove.positionOne.index != sortMove.positionTwo?.index) {
                             self.logView.insertNewLine(text: "YES! Swap the Left and Right pointers", color: UIColor.black);
                         } else {
                             self.logView.insertNewLine(text: "YES!", color: UIColor.black);
                         }
-                    }
+                    }, type: .defaultView);
                     
-                    let animation: Animation = {
+                    let swapAnimation = SortAnimation(animation: {
                         
                         self.sortCollectionView.moveItem(at: IndexPath(row: sortMove.positionOne.index, section: 0), to: IndexPath(row: sortMove.positionTwo!.index, section: 0))
                         self.sortCollectionView.moveItem(at: IndexPath(row: sortMove.positionTwo!.index, section: 0), to: IndexPath(row: sortMove.positionOne.index, section: 0))
-                    }
+                    }, type: .collectionView);
                     
-                    animationArray.append((textAnimation, .defaultView));
-                    animationArray.append((animation, .collectionView));
+                    animationArray.append(textAnimation);
+                    animationArray.append(swapAnimation);
                     break;
                 
                 case .incrementLeft:
-                    let incrementLeftAnimation: Animation = {
+                    let incrementLeftAnimation = SortAnimation(animation: {
                         self.logView.insertNewLine(text: "Increment Left", color: UIColor.black);
-                    }
+                    }, type: .defaultView);
                     
-                    animationArray.append((incrementLeftAnimation, .defaultView));
+                    animationArray.append(incrementLeftAnimation);
                     break;
                 case .incrementRight:
-                    let incrementRightAnimation: Animation = {
+                    let incrementRightAnimation = SortAnimation(animation: {
                         self.logView.insertNewLine(text: "Increment Right", color: UIColor.black);
-                    }
+                    }, type: .defaultView);
                     
-                    animationArray.append((incrementRightAnimation, .defaultView));
+                    animationArray.append(incrementRightAnimation);
                     break;
                 
                 case .selectPivot:
                 
-                    let animation: Animation = {
+                    let selectPivotAnimation = SortAnimation(animation: {
                         
                         for i in (0 ..< self.sortArray.count) {
                             
@@ -146,14 +145,14 @@ class QuickSortViewController: BaseSortingViewController {
                         cell1?.backgroundColor = UIColor.blue;
                         
                         self.logView.insertNewLine(text: "\(sortMove.positionOne.value) (index \(sortMove.positionOne.index)) is the pivot", color: UIColor.blue);
-                    }
+                    }, type: .defaultView);
                     
-                    animationArray.append((animation, .defaultView));
+                    animationArray.append(selectPivotAnimation);
                     break;
                 
                 case .selectLeftRight:
                 
-                    let animation: Animation = {
+                    let selectLeftRightAnimation = SortAnimation(animation: {
 
                         for i in (0 ..< self.sortArray.count) {
                             
@@ -189,14 +188,14 @@ class QuickSortViewController: BaseSortingViewController {
                             cell1?.backgroundColor = UIColor.orange;
                             cell2?.backgroundColor = UIColor.orange;
                         }
-                    }
+                    }, type: .defaultView);
                     
-                    animationArray.append((animation, .defaultView));
+                    animationArray.append(selectLeftRightAnimation);
                     break;
                 
             case .selectSorted:
-                    let animation: Animation = {
-                        
+                let selectSortedAnimation = SortAnimation(animation: {
+                    
                         for i in (0 ..< self.sortArray.count) {
                             
                             if i == sortMove.positionOne.index || i == sortMove.positionTwo?.index {
@@ -217,9 +216,9 @@ class QuickSortViewController: BaseSortingViewController {
                         cell1?.backgroundColor = UIColor.green;
                         
                         self.logView.insertNewLine(text: "\(sortMove.positionOne.value) (index \(sortMove.positionTwo?.index) is now sorted", color: UIColor.green);
-                    }
+                    }, type: .defaultView);
                     
-                    animationArray.append((animation, .defaultView));
+                    animationArray.append(selectSortedAnimation);
                     break;
             }
         }
