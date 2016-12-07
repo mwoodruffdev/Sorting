@@ -10,7 +10,9 @@ import UIKit
 
 class MergeSort: SortingAlgorithm {
     
-    static func sort(unsortedArray: [Int]) -> [SortMove] {
+    typealias MoveType = MergeSortMove
+
+    static func sort(unsortedArray: [Int]) -> [MoveType] {
         
         var moves: [MergeSortMove] = [];
         

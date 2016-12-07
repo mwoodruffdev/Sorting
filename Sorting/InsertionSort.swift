@@ -10,12 +10,14 @@ import UIKit
 
 class InsertionSort: SortingAlgorithm {
 
-    static func sort(unsortedArray: [Int]) -> [SortMove] {
+    typealias MoveType = InsertionSortMove
+    
+    static func sort(unsortedArray: [Int]) -> [MoveType] {
         
         return insertionSort(unsortedArray: unsortedArray);
     }
     
-    private static func insertionSort(unsortedArray: [Int]) -> [InsertionSortMove] {
+    private static func insertionSort(unsortedArray: [Int]) -> [MoveType] {
         
         var unsortedArray = unsortedArray;
         

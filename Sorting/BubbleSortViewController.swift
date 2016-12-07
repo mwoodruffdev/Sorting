@@ -9,19 +9,18 @@
 import Foundation
 import UIKit
 
-class BubbleSortViewController: BaseSortingViewController {
+class BubbleSortViewController: BaseSortingViewController, SortingController {
+    
+    typealias Algorithm = BubbleSort
     
     override func viewDidLoad() {
         
         super.viewDidLoad();
         title = "Bubble Sort";
-        if let sortingQueue = BubbleSort.sort(unsortedArray: sortArray) as? [BubbleSortMove] {
-        
-            animationMoves = sortCollectionView(moves: sortingQueue);
-        }
+        animationMoves = createAnimations(moves: Algorithm.sort(unsortedArray: sortArray));
     }
     
-    func sortCollectionView(moves: [BubbleSortMove]) -> [SortAnimation] {
+    func createAnimations(moves: [BubbleSortMove]) -> [SortAnimation] {
         
         var animationArray: [SortAnimation] = [];
 

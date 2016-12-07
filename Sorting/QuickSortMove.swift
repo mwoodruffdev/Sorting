@@ -44,7 +44,7 @@ class QuickSortMove: SortMove {
         return QuickSortMove(positionOne: positionOne, moveType: .incrementRight);
     }
     
-    static func pivorSwap(positionOne: Position, positionTwo: Position) -> QuickSortMove {
+    static func pivotSwap(positionOne: Position, positionTwo: Position) -> QuickSortMove {
         return QuickSortMove(positionOne: positionOne, positionTwo: positionTwo, moveType: .pivotSwap);
     }
     

@@ -9,10 +9,10 @@
 import Foundation
 
 class QuickSort: SortingAlgorithm {
-
-    var test:[SortMove] = [];
     
-    static func sort(unsortedArray: [Int]) -> [SortMove] {
+    typealias MoveType = QuickSortMove
+    
+    static func sort(unsortedArray: [Int]) -> [MoveType] {
         
         var unsortedCopy = unsortedArray;
         
@@ -20,7 +20,7 @@ class QuickSort: SortingAlgorithm {
             return [];
         }
         
-        var moves: [QuickSortMove] = [];
+        var moves: [MoveType] = [];
         quicksort(moves: &moves, v: &unsortedCopy, low: 0, high: unsortedArray.count - 1);
         
         return moves;
@@ -75,7 +75,7 @@ class QuickSort: SortingAlgorithm {
         let leftPosition: QuickSortMove.Position = QuickSortMove.Position(index: left, value: v[left]);
         let pivotPosition: QuickSortMove.Position = QuickSortMove.Position(index: high, value: v[high]);
         
-        moves.append(QuickSortMove.pivorSwap(positionOne: leftPosition, positionTwo: pivotPosition));
+        moves.append(QuickSortMove.pivotSwap(positionOne: leftPosition, positionTwo: pivotPosition));
         moves.append(QuickSortMove.selectSorted(positionOne: leftPosition));
         
         return left

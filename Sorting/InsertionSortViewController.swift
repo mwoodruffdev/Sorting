@@ -9,19 +9,18 @@
 import Foundation
 import UIKit
 
-class InsertionSortViewController: BaseSortingViewController {
+class InsertionSortViewController: BaseSortingViewController, SortingController {
+    
+    typealias Algorithm = InsertionSort
     
     override func viewDidLoad() {
         
         super.viewDidLoad();
         title = "Insertion Sort";
-        if let sortingQueue = InsertionSort.sort(unsortedArray: sortArray) as? [InsertionSortMove] {
-            
-            animationMoves = sortCollectionView(moves: sortingQueue);
-        }
+        animationMoves = createAnimations(moves: Algorithm.sort(unsortedArray: sortArray));
     }
 
-    func sortCollectionView(moves: [InsertionSortMove]) -> [SortAnimation] {
+    func createAnimations(moves: [InsertionSortMove]) -> [SortAnimation] {
         
         var animationArray: [SortAnimation] = [];
         for sortMove in moves {

@@ -9,14 +9,14 @@
 import Foundation
 import UIKit
 
-class QuickSortViewController: BaseSortingViewController {
+class QuickSortViewController: BaseSortingViewController, SortingController {
 
+    typealias Algorithm = QuickSort
+    
     override func viewDidLoad() {
         super.viewDidLoad();
         title = "Quick Sort"
-        if let sortingQueue = QuickSort.sort(unsortedArray: sortArray) as? [QuickSortMove] {
-            animationMoves = sortCollectionView(moves: sortingQueue);
-        }
+        animationMoves = createAnimations(moves: Algorithm.sort(unsortedArray: sortArray));
     }
     
     override func createCollectionViewLayout() -> UICollectionViewLayout {
@@ -46,7 +46,7 @@ class QuickSortViewController: BaseSortingViewController {
         }
     }
     
-    func sortCollectionView(moves: [QuickSortMove]) -> [SortAnimation] {
+    func createAnimations(moves: [QuickSortMove]) -> [SortAnimation] {
         
         var animationArray: [SortAnimation] = [];
         

@@ -12,5 +12,6 @@ import UIKit
 
 protocol SortingAlgorithm {
     
-    static func sort(unsortedArray: [Int]) -> [SortMove];
+    associatedtype MoveType: SortMove;
+    static func sort(unsortedArray: [Int]) -> [MoveType];
 }

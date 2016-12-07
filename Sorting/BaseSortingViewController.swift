@@ -9,14 +9,8 @@
 import Foundation
 import UIKit
 
-protocol SortingViewController {
+class BaseSortingViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
-    var sortArray: [Int] {set get}
-    var sortCollectionView: UICollectionView! {set get};
-}
-
-class BaseSortingViewController: UIViewController, SortingViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
-
     internal var sortArray: [Int] = [5,2,8,4,6,5,2,4,6];
     internal let kAnimationDuration: TimeInterval = 0;
     internal var sortCollectionView: UICollectionView!
@@ -67,7 +61,7 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
     }
     
     internal func setupLogView() {
-    
+        
         logView = SortLogView();
         logView.text = "Press start to begin!";
         view.addSubview(logView);
@@ -190,22 +184,22 @@ class BaseSortingViewController: UIViewController, SortingViewController, UIColl
             let sortAnimation = animationMoves![index];
             
             switch(sortAnimation.type) {
-                case .collectionView:
-                    self.sortCollectionView.performBatchUpdates(sortAnimation.animation, completion: { (didFinish) in
-                        if(didFinish) {
-                            self.animationStep = self.animationStep + 1;
-                            self.startAnimations(index: self.animationStep);
-                        }
-                    })
-                    break;
-                case .defaultView:
-                    UIView.animate(withDuration: kAnimationDuration, delay: 0, options: .allowUserInteraction, animations: sortAnimation.animation, completion: { (didFinish) in
-                        if(didFinish) {
-                            self.animationStep = self.animationStep + 1;
-                            self.startAnimations(index: self.animationStep);
-                        }
-                    })
-                    break;
+            case .collectionView:
+                self.sortCollectionView.performBatchUpdates(sortAnimation.animation, completion: { (didFinish) in
+                    if(didFinish) {
+                        self.animationStep = self.animationStep + 1;
+                        self.startAnimations(index: self.animationStep);
+                    }
+                })
+                break;
+            case .defaultView:
+                UIView.animate(withDuration: kAnimationDuration, delay: 0, options: .allowUserInteraction, animations: sortAnimation.animation, completion: { (didFinish) in
+                    if(didFinish) {
+                        self.animationStep = self.animationStep + 1;
+                        self.startAnimations(index: self.animationStep);
+                    }
+                })
+                break;
             }
         }
     }

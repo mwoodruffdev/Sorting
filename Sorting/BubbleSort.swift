@@ -10,7 +10,9 @@ import Foundation
 
 class BubbleSort: SortingAlgorithm {
     
-    static func sort(unsortedArray: [Int]) -> [SortMove] {
+    typealias MoveType = BubbleSortMove
+    
+    static func sort(unsortedArray: [Int]) -> [MoveType] {
     
         var sortedAboveIndex = unsortedArray.count;
         var sortedArray = unsortedArray;

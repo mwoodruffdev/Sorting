@@ -9,7 +9,9 @@
 import Foundation
 import UIKit
 
-class MergeSortViewController: BaseSortingViewController {
+class MergeSortViewController: BaseSortingViewController, SortingController {
+    
+    typealias Algorithm = MergeSort
     
     var sectionArray: [Int] = [];
     var workingArray: [Int] = [];
@@ -17,13 +19,10 @@ class MergeSortViewController: BaseSortingViewController {
     override func viewDidLoad() {
 
         super.viewDidLoad();
-        title = "Merge Sort";
+        title = "Merge Sort"
+        animationMoves = createAnimations(moves: Algorithm.sort(unsortedArray: sortArray));
         sectionArray.append(sortArray.count);
         sectionArray.append(0);
-        if let sortingQueue = MergeSort.sort(unsortedArray: sortArray) as? [MergeSortMove] {
-            
-            animationMoves = sortCollectionView(moves: sortingQueue);
-        }
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -64,7 +63,7 @@ class MergeSortViewController: BaseSortingViewController {
         return UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1);
     }
     
-    func sortCollectionView(moves: [MergeSortMove]) -> [SortAnimation] {
+    func createAnimations(moves: [MergeSortMove]) -> [SortAnimation] {
         
         var animationArray: [SortAnimation] = [];
         
