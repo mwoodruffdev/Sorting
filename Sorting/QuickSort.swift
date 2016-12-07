@@ -36,7 +36,7 @@ class QuickSort: SortingAlgorithm {
         } else if low == high {
             
             let sortedPosition: QuickSortMove.Position = QuickSortMove.Position(index: low, value: v[low]);
-            moves.append(QuickSortMove(positionOne: sortedPosition, moveType: .selectSorted));
+            moves.append(QuickSortMove.selectSorted(positionOne: sortedPosition));
         }
     }
     
@@ -59,13 +59,12 @@ class QuickSort: SortingAlgorithm {
             if v[right] <= pivot {
                 (v[left], v[right]) = (v[right], v[left])
   
-                //Yes. So swap
-                moves.append(QuickSortMove(positionOne: leftPosition, positionTwo: rightPosition, moveType: .swap));
+                moves.append(QuickSortMove.swap(positionOne: leftPosition, positionTwo: rightPosition));
                 moves.append(QuickSortMove.incrementLeft(positionOne: leftPosition));
                 left += 1
             } else {
                 
-                moves.append(QuickSortMove(positionOne: leftPosition, positionTwo: rightPosition, moveType: .dontSwap));
+                moves.append(QuickSortMove.dontSwap(positionOne: leftPosition, positionTwo: rightPosition));
             }
             
             moves.append(QuickSortMove.incrementRight(positionOne: rightPosition));
@@ -76,8 +75,8 @@ class QuickSort: SortingAlgorithm {
         let leftPosition: QuickSortMove.Position = QuickSortMove.Position(index: left, value: v[left]);
         let pivotPosition: QuickSortMove.Position = QuickSortMove.Position(index: high, value: v[high]);
         
-        moves.append(QuickSortMove(positionOne: leftPosition, positionTwo: pivotPosition, moveType: .pivotSwap));
-        moves.append(QuickSortMove(positionOne: leftPosition, moveType: .selectSorted));
+        moves.append(QuickSortMove.pivorSwap(positionOne: leftPosition, positionTwo: pivotPosition));
+        moves.append(QuickSortMove.selectSorted(positionOne: leftPosition));
         
         return left
     }
