@@ -11,8 +11,8 @@ import UIKit
 protocol SortAnimation {
 
     typealias Animation = () -> Void
-    var animation: Animation { get set };
-    var type: AnimationType { get set };
+    var animation: Animation { get };
+    var type: AnimationType { get };
 }
 
 struct CollectionViewSortAnimation: SortAnimation {
