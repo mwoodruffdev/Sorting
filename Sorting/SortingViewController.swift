@@ -18,7 +18,7 @@ protocol SortingViewController {
 class BaseSortingViewController: UIViewController, SortingViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
     internal var sortArray: [Int] = [5,2,8,4,6,5,2,4,6];
-    internal let kAnimationDuration: TimeInterval = 2;
+    internal let kAnimationDuration: TimeInterval = 0;
     internal var sortCollectionView: UICollectionView!
     internal var sortButton: UIButton!;
     internal var logView: SortLogView!;

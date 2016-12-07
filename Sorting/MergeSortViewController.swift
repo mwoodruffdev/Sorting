@@ -50,7 +50,6 @@ class MergeSortViewController: BaseSortingViewController {
                 text = "\(workingArray[indexPath.row])"
                 cell.backgroundColor = UIColor.black;
             }
-            NSPredicate(format: "", "").evaluate(with: self);
             
             cell.valueLabel.text = text
         }
@@ -76,7 +75,7 @@ class MergeSortViewController: BaseSortingViewController {
             case .addWorking:
                 
                 var averageColor: UIColor?;
-                let colorAnimation = SortAnimation(animation: { 
+                let colorAnimation = ViewSortAnimation({
                     var avR: CGFloat = 0;
                     var avG: CGFloat = 0;
                     var avB: CGFloat = 0;
@@ -102,25 +101,25 @@ class MergeSortViewController: BaseSortingViewController {
                         let cell = self.sortCollectionView.cellForItem(at: IndexPath(row: i, section: 0));
                         cell?.backgroundColor = averageColor;
                     }
-                }, type: .defaultView);
+                });
                 
-                let insertSectionDataAnimation = SortAnimation(animation: {
+                let insertSectionDataAnimation = CollectionViewSortAnimation({
                     self.sectionArray[1] = sortMove.high! - sortMove.low! + 1;
                     self.workingArray = sortMove.workingArray!;
                     self.sortCollectionView.reloadSections(IndexSet(integer:1));
-                }, type: .collectionView);
+                });
                 
-                let addSectionAnimation = SortAnimation(animation: { 
+                let addSectionAnimation = ViewSortAnimation({
                     self.view.setNeedsLayout();
                     self.view.layoutIfNeeded();
-                }, type: .defaultView);
+                });
                 
-                let workingColorAnimation = SortAnimation(animation: { 
+                let workingColorAnimation = ViewSortAnimation({
                     for i in 0..<self.sectionArray[1] {
                         let cell = self.sortCollectionView.cellForItem(at: IndexPath(row: i, section: 1));
                         cell?.backgroundColor = averageColor;
                     }
-                }, type: .defaultView);
+                });
                 
                 animationArray.append(colorAnimation);
                 animationArray.append(insertSectionDataAnimation);
@@ -130,7 +129,7 @@ class MergeSortViewController: BaseSortingViewController {
                 
             case .merge:
                 
-                let mergeTextAnimation = SortAnimation(animation: { 
+                let mergeTextAnimation = ViewSortAnimation({
                     var arrayOneText = "Array: [";
                     var arrayTwoText = "Array: [";
                     
@@ -154,14 +153,14 @@ class MergeSortViewController: BaseSortingViewController {
                     }
                     
                     self.logView.insertNewLine(text: "Merge \(arrayOneText) and \(arrayTwoText)", color: UIColor.black);
-                }, type: .defaultView);
+                });
                 
                 animationArray.append(mergeTextAnimation);
                 break;
             
             case .sorted:
                 
-                let sortedTextAnimation = SortAnimation(animation: { 
+                let sortedTextAnimation = ViewSortAnimation({
                     var sortedArrayText = "Sorted Array: ["
                     for i in 0..<sortMove.left!.count {
                         sortedArrayText = sortedArrayText + "\(sortMove.left![i])";
@@ -173,13 +172,13 @@ class MergeSortViewController: BaseSortingViewController {
                     }
                     
                     self.logView.insertNewLine(text: sortedArrayText, color: UIColor.black);
-                }, type: .defaultView);
+                });
                 
                 animationArray.append(sortedTextAnimation);
                 break;
                 
             case .swap:
-                let swapAnimation = SortAnimation(animation: { 
+                let swapAnimation = CollectionViewSortAnimation({
                     let arrayIndex = sortMove.positionOne?.index;
                     let workingIndex = sortMove.positionTwo?.index
                     
@@ -188,22 +187,22 @@ class MergeSortViewController: BaseSortingViewController {
                     
                     self.sortCollectionView.moveItem(at: ip1, to: ip2);
                     self.sortCollectionView.moveItem(at: ip2, to: ip1);
-                }, type: .collectionView);
+                });
                 
                 animationArray.append(swapAnimation);
                 break;
             case .removeWorking:
                 
-                let removeSectionAnimation = SortAnimation(animation: { 
+                let removeSectionAnimation = CollectionViewSortAnimation({
                     self.workingArray = [];
                     self.sectionArray[1] = self.workingArray.count;
                     self.sortCollectionView.reloadSections(IndexSet(integer:1));
-                }, type: .collectionView);
+                });
                 
-                let updateViewSection = SortAnimation(animation: { 
+                let updateViewSection = ViewSortAnimation({
                     self.view.setNeedsLayout();
                     self.view.layoutIfNeeded();
-                }, type: .defaultView);
+                });
                 
                 animationArray.append(removeSectionAnimation);
                 animationArray.append(updateViewSection);

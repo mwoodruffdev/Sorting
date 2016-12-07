@@ -8,13 +8,35 @@
 
 import UIKit
 
-struct SortAnimation {
+protocol SortAnimation {
 
     typealias Animation = () -> Void
-    var animation: Animation;
-    var type: AnimationType;
+    var animation: Animation { get set };
+    var type: AnimationType { get set };
+}
+
+struct CollectionViewSortAnimation: SortAnimation {
     
-    enum AnimationType {
-        case collectionView, defaultView;
+    internal var animation: SortAnimation.Animation
+    internal var type: AnimationType
+
+    init(_ animation: @escaping SortAnimation.Animation) {
+        self.animation = animation;
+        self.type = .collectionView;
     }
+}
+
+struct ViewSortAnimation: SortAnimation {
+    
+    internal var animation: SortAnimation.Animation
+    internal var type: AnimationType
+    
+    init(_ animation: @escaping SortAnimation.Animation) {
+        self.animation = animation;
+        self.type = .defaultView;
+    }
+}
+
+enum AnimationType {
+    case collectionView, defaultView;
 }
