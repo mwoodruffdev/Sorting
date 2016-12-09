@@ -188,27 +188,31 @@ class QuickSortViewController: BaseSortingViewController<QuickSort> {
             case .selectSorted:
                 let selectSortedAnimation = ViewSortAnimation({
                     
-                        for i in (0 ..< self.sortArray.count) {
-                            
-                            if i == sortMove.positionOne.index || i == sortMove.positionTwo?.index {
-                                continue;
-                            }
-                            
-                            if let unHighlightedCell =  self.sortCollectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? QuickSortCollectionViewCell,
-                                unHighlightedCell.isPivot == false, unHighlightedCell.isSorted == false {
-                                
-                                unHighlightedCell.backgroundColor = UIColor.black;
-                                unHighlightedCell.resetLR();
-                            }
+                    for i in (0 ..< self.sortArray.count) {
+                        
+                        if i == sortMove.positionOne.index || i == sortMove.positionTwo?.index {
+                            continue;
                         }
                         
+                        if let unHighlightedCell =  self.sortCollectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? QuickSortCollectionViewCell,
+                            unHighlightedCell.isPivot == false, unHighlightedCell.isSorted == false {
+                            
+                            unHighlightedCell.backgroundColor = UIColor.black;
+                            unHighlightedCell.resetLR();
+                        }
+                    }
+                    
+                    let cell1 = self.sortCollectionView.cellForItem(at: IndexPath(row: sortMove.positionOne.index, section: 0)) as? QuickSortCollectionViewCell;
+                    cell1?.isSorted = !cell1!.isSorted;
+                    if(cell1!.isSorted) {
+                        cell1?.backgroundColor = .green;
+                    } else {
+                        cell1?.backgroundColor = .black
+                    }
+                    
                         
-                        let cell1 = self.sortCollectionView.cellForItem(at: IndexPath(row: sortMove.positionOne.index, section: 0)) as? QuickSortCollectionViewCell;
-                        cell1?.isSorted = true;
-                        cell1?.backgroundColor = UIColor.green;
-                        
-                        self.logView.insertNewLine(text: "\(sortMove.positionOne.value) (index \(sortMove.positionTwo?.index) is now sorted", color: UIColor.green);
-                    });
+                        self.logView.insertNewLine(text: "\(sortMove.positionOne.value) (index \(sortMove.positionOne.index) is now sorted", color: UIColor.green);
+                   });
                     
                     animationArray.append(selectSortedAnimation);
                     break;

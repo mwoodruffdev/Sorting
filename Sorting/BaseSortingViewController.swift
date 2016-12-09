@@ -11,9 +11,11 @@ import UIKit
 
 class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
-    internal var sortArray: [Int] = [5,2,8,4,6,5,2,4,6];
+    internal var sortArray: [Int] = [5,2,8,4];
     internal let kAnimationDuration: TimeInterval = 0;
     internal var sortCollectionView: UICollectionView!
+    internal var minusButton: UIButton;
+    internal var plusButton: UIButton;
     internal var stepBackButton: UIButton;
     internal var stepForwardButton: UIButton;
     internal var sortButton: UIButton;
@@ -28,6 +30,8 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     var animationStep: Int = 0;
     
     init() {
+        minusButton = UIButton();
+        plusButton = UIButton();
         stepBackButton = UIButton();
         stepForwardButton = UIButton();
         sortButton = UIButton();
@@ -39,6 +43,8 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     }
     
     required init?(coder aDecoder: NSCoder) {
+        minusButton = UIButton();
+        plusButton = UIButton();
         stepBackButton = UIButton();
         stepForwardButton = UIButton();
         sortButton = UIButton();
@@ -110,6 +116,22 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     
     internal func setupButtons() {
         
+        minusButton.layer.borderColor = UIColor.white.cgColor
+        minusButton.layer.borderWidth = 1;
+        minusButton.setTitle("Remove", for: .normal);
+        minusButton.addTarget(self, action: #selector(removeElement), for: .touchUpInside);
+        minusButton.backgroundColor = .black;
+        minusButton.setTitleColor(.white, for: .normal);
+        view.addSubview(minusButton);
+        
+        plusButton.layer.borderColor = UIColor.white.cgColor
+        plusButton.layer.borderWidth = 1;
+        plusButton.setTitle("Add", for: .normal);
+        plusButton.addTarget(self, action: #selector(addElement), for: .touchUpInside);
+        plusButton.backgroundColor = .black;
+        plusButton.setTitleColor(.white, for: .normal);
+        view.addSubview(plusButton);
+        
         stepBackButton.layer.borderColor = UIColor.white.cgColor
         stepBackButton.layer.borderWidth = 1;
         stepBackButton.setTitle("Back", for: .normal);
@@ -151,8 +173,20 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         heightConstraint = sortCollectionView.heightAnchor.constraint(equalToConstant: 0);
         heightConstraint?.isActive = true;
         
+        minusButton.translatesAutoresizingMaskIntoConstraints = false;
+        minusButton.topAnchor.constraint(equalTo: sortCollectionView.bottomAnchor, constant: 10).isActive = true;
+        minusButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true;
+        minusButton.heightAnchor.constraint(equalToConstant: 30);
+        minusButton.widthAnchor.constraint(equalToConstant: 30);
+        
+        plusButton.translatesAutoresizingMaskIntoConstraints = false;
+        plusButton.topAnchor.constraint(equalTo: sortCollectionView.bottomAnchor, constant: 10).isActive = true;
+        plusButton.leftAnchor.constraint(equalTo: minusButton.rightAnchor, constant: 10).isActive = true;
+        plusButton.heightAnchor.constraint(equalToConstant: 30);
+        plusButton.widthAnchor.constraint(equalToConstant: 30);
+        
         worstCaseLabel.translatesAutoresizingMaskIntoConstraints = false;
-        worstCaseLabel.topAnchor.constraint(equalTo: sortCollectionView.bottomAnchor, constant: 10).isActive = true
+        worstCaseLabel.topAnchor.constraint(equalTo: plusButton.bottomAnchor, constant: 10).isActive = true
         worstCaseLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true;
         
         averageCaseLabel.translatesAutoresizingMaskIntoConstraints = false;
@@ -213,7 +247,21 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     }
     
     //MARK: Animations
+
+    internal func removeElement() {
+        
+        if(sortArray.count > 3) {
+            sortArray.removeLast();
+            animateRemoveLastElement();
+        }
+    }
     
+    internal func addElement() {
+        let randomNumber = Int(arc4random_uniform(50));
+        sortArray.append(randomNumber);
+        animateAppendElement();
+    }
+
     internal func createAnimations(moves: [Algorithm.MoveType]) -> [SortAnimation] {
         preconditionFailure("This method must be overridden!");
     }
@@ -221,15 +269,11 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     internal func sort() {
         
         if(!isAnimating) {
-            stepBackButton.isEnabled = false;
-            stepForwardButton.isEnabled = false;
             sortButton.setTitle("Stop Sorting", for: .normal);
-            isAnimating = !isAnimating;
+            isAnimating = true;
             performForwardAnimation(step: animationStep, completion: nil);
         } else {
-            stepBackButton.isEnabled = true;
-            stepForwardButton.isEnabled = true;
-            isAnimating = !isAnimating;
+            stopAnimating();
             sortButton.setTitle("Continue", for: .normal);
         }
     }
@@ -237,9 +281,9 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     internal func stepBack() {
      
         if(!isAnimating) {
-            isAnimating = !isAnimating;
+            isAnimating = true;
             performBackwardAnimation(step: animationStep-1, completion: {
-                self.isAnimating = !self.isAnimating;
+                self.stopAnimating();
             });
         }
     }
@@ -247,16 +291,19 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     internal func stepForward() {
         
         if(!isAnimating) {
-            isAnimating = !isAnimating;
+            isAnimating = true;
             performForwardAnimation(step: animationStep, completion: {
-                self.isAnimating = !self.isAnimating;
+                self.stopAnimating();
             })
         }
     }
     
-    internal func performForwardAnimation(step: Int, completion: (()->Void)?) {
+    private func performForwardAnimation(step: Int, completion: (()->Void)?) {
         
         if(step < animationMoves!.count && isAnimating) {
+            
+            stepBackButton.isEnabled = false;
+            stepForwardButton.isEnabled = false;
             
             let sortAnimation = animationMoves![step];
             
@@ -283,16 +330,16 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
                     break;
             }
         } else {
-            isAnimating = !isAnimating;
-            stepBackButton.isEnabled = true;
-            stepForwardButton.isEnabled = true;
+            stopAnimating()
         }
     }
     
-    internal func performBackwardAnimation(step: Int, completion: (()->Void)?) {
+    private func performBackwardAnimation(step: Int, completion: (()->Void)?) {
         
         if(step >= 0 && step < animationMoves!.count && isAnimating) {
             
+            stepBackButton.isEnabled = false;
+            stepForwardButton.isEnabled = false;
             let sortAnimation = animationMoves![step];
             
             switch(sortAnimation.type) {
@@ -318,9 +365,36 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
                     break;
                 }
         } else {
-            isAnimating = !isAnimating;
-            stepBackButton.isEnabled = true;
-            stepForwardButton.isEnabled = true;
+            stopAnimating();
         }
+    }
+    
+    private func stopAnimating() {
+        
+        isAnimating = false;
+        stepBackButton.isEnabled = true;
+        stepForwardButton.isEnabled = true;
+    }
+    
+    private func animateRemoveLastElement() {
+        sortCollectionView.performBatchUpdates({
+            self.sortCollectionView.deleteItems(at: [IndexPath(row: self.sortArray.count, section: 0)])
+        }, completion: { (didComplete) in
+            UIView.animate(withDuration: 0.5, animations: {
+                self.view.setNeedsLayout();
+                self.view.layoutIfNeeded();
+            })
+        })
+    }
+    
+    private func animateAppendElement() {
+        sortCollectionView.performBatchUpdates({
+            self.sortCollectionView.insertItems(at: [IndexPath(row: self.sortArray.count-1, section: 0)]);
+        }, completion: { (didComplete) in
+            UIView.animate(withDuration: 0.5, animations: {
+                self.view.setNeedsLayout();
+                self.view.layoutIfNeeded();
+            })
+        })
     }
 }
