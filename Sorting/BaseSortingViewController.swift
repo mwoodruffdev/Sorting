@@ -14,16 +14,40 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     internal var sortArray: [Int] = [5,2,8,4,6,5,2,4,6];
     internal let kAnimationDuration: TimeInterval = 0;
     internal var sortCollectionView: UICollectionView!
-    internal var sortButton: UIButton!;
-    internal var logView: SortLogView!;
-    internal var worstCaseLabel: UILabel!;
-    internal var averageCaseLabel: UILabel!;
-    internal var bestCaseLabel: UILabel!;
+    internal var stepBackButton: UIButton;
+    internal var stepForwardButton: UIButton;
+    internal var sortButton: UIButton;
+    internal var logView: SortLogView;
+    internal var worstCaseLabel: UILabel;
+    internal var averageCaseLabel: UILabel;
+    internal var bestCaseLabel: UILabel;
     internal var heightConstraint: NSLayoutConstraint?;
     
     var animationMoves: [SortAnimation]?;
     var isAnimating: Bool = false;
     var animationStep: Int = 0;
+    
+    init() {
+        stepBackButton = UIButton();
+        stepForwardButton = UIButton();
+        sortButton = UIButton();
+        logView = SortLogView();
+        worstCaseLabel = UILabel();
+        averageCaseLabel = UILabel();
+        bestCaseLabel = UILabel();
+        super.init(nibName: nil, bundle: nil);
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        stepBackButton = UIButton();
+        stepForwardButton = UIButton();
+        sortButton = UIButton();
+        logView = SortLogView();
+        worstCaseLabel = UILabel();
+        averageCaseLabel = UILabel();
+        bestCaseLabel = UILabel();
+        super.init(coder: aDecoder);
+    }
     
     override func viewDidLoad() {
         
@@ -46,9 +70,10 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     }
     
     internal func setupViews() {
+        
         setupCollectionView(layout: createCollectionViewLayout());
         setupComplexityLabels()
-        setupSortButton();
+        setupButtons();
         setupLogView();
     }
     
@@ -64,37 +89,48 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     
     internal func setupLogView() {
         
-        logView = SortLogView();
         logView.text = "Press start to begin!";
         view.addSubview(logView);
     }
     
     internal func setupComplexityLabels() {
         
-        worstCaseLabel = UILabel();
-        worstCaseLabel.text = "Worst Case: \(worstCaseText())";
+        worstCaseLabel.text = "Worst Case: \(Algorithm.worstComplexity)";
         worstCaseLabel.textColor = UIColor.black;
         view.addSubview(worstCaseLabel);
         
-        averageCaseLabel = UILabel();
-        averageCaseLabel.text = "Average Case: \(averageCaseText())";
+        averageCaseLabel.text = "Average Case: \(Algorithm.averageComplexity)";
         averageCaseLabel.textColor = UIColor.black;
         view.addSubview(averageCaseLabel);
         
-        bestCaseLabel = UILabel();
-        bestCaseLabel.text = "Best Case: \(bestCaseText())";
+        bestCaseLabel.text = "Best Case: \(Algorithm.bestComplexity)";
         bestCaseLabel.textColor = UIColor.black;
         view.addSubview(bestCaseLabel);
     }
     
-    internal func setupSortButton() {
+    internal func setupButtons() {
         
-        sortButton = UIButton();
+        stepBackButton.layer.borderColor = UIColor.white.cgColor
+        stepBackButton.layer.borderWidth = 1;
+        stepBackButton.setTitle("Back", for: .normal);
+        stepBackButton.addTarget(self, action: #selector(stepBack), for: .touchUpInside);
+        stepBackButton.backgroundColor = .black;
+        stepBackButton.setTitleColor(.white, for: .normal);
+        view.addSubview(stepBackButton);
+
+        
+        stepForwardButton.layer.borderColor = UIColor.white.cgColor
+        stepForwardButton.layer.borderWidth = 1;
+        stepForwardButton.setTitle("Next", for: .normal);
+        stepForwardButton.addTarget(self, action: #selector(stepForward), for: .touchUpInside);
+        stepForwardButton.backgroundColor = .black;
+        stepForwardButton.setTitleColor(.white, for: .normal);
+        view.addSubview(stepForwardButton);
+        
         sortButton.setTitle("START", for: .normal);
-        sortButton.tag = 0;
-        sortButton.addTarget(self, action: #selector(swap), for: .touchUpInside);
-        sortButton.backgroundColor = UIColor.black;
-        sortButton.setTitleColor(UIColor.white, for: .normal);
+        sortButton.addTarget(self, action: #selector(sort), for: .touchUpInside);
+        sortButton.backgroundColor = .black;
+        sortButton.setTitleColor(.white, for: .normal);
         view.addSubview(sortButton);
     }
     
@@ -131,7 +167,19 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         logView.topAnchor.constraint(equalTo: bestCaseLabel.bottomAnchor, constant: 20).isActive = true;
         logView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true;
         logView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true;
-        logView.bottomAnchor.constraint(equalTo: sortButton.topAnchor, constant: -10).isActive = true;
+        logView.bottomAnchor.constraint(equalTo: stepBackButton.topAnchor, constant: -10).isActive = true;
+        
+        stepBackButton.translatesAutoresizingMaskIntoConstraints = false;
+        stepBackButton.bottomAnchor.constraint(equalTo: sortButton.topAnchor).isActive = true;
+        stepBackButton.rightAnchor.constraint(equalTo: stepForwardButton.leftAnchor).isActive = true;
+        stepBackButton.heightAnchor.constraint(equalToConstant: 50).isActive = true;
+        stepBackButton.widthAnchor.constraint(equalToConstant: 50).isActive = true;
+        
+        stepForwardButton.translatesAutoresizingMaskIntoConstraints = false;
+        stepForwardButton.bottomAnchor.constraint(equalTo: sortButton.topAnchor).isActive = true;
+        stepForwardButton.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true;
+        stepForwardButton.widthAnchor.constraint(equalTo: stepBackButton.widthAnchor, multiplier: 1).isActive = true;
+        stepForwardButton.heightAnchor.constraint(equalTo: stepBackButton.heightAnchor, multiplier: 1).isActive = true;
         
         sortButton.translatesAutoresizingMaskIntoConstraints = false;
         sortButton.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true;
@@ -157,7 +205,6 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         return 1;
     }
     
-    
     internal func setupCell(indexPath: IndexPath, cell: UICollectionViewCell) {
         if let cell = cell as? SortCollectionViewCell {
             cell.backgroundColor = UIColor.black;
@@ -168,59 +215,67 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     //MARK: Animations
     
     internal func createAnimations(moves: [Algorithm.MoveType]) -> [SortAnimation] {
-        print("TODO!");
-        return [];
+        preconditionFailure("This method must be overridden!");
     }
     
-    internal func swap(sender: UIButton) {
+    internal func sort() {
         
         if(!isAnimating) {
+            stepBackButton.isEnabled = false;
+            stepForwardButton.isEnabled = false;
             sortButton.setTitle("Stop Sorting", for: .normal);
             isAnimating = !isAnimating;
-            startAnimations(index: animationStep);
+            performAnimation(step: animationStep, completion: nil);
         } else {
+            stepBackButton.isEnabled = true;
+            stepForwardButton.isEnabled = true;
             isAnimating = !isAnimating;
             sortButton.setTitle("Continue", for: .normal);
         }
     }
     
-    internal func startAnimations(index: Int) {
+    internal func stepBack() {
         
-        if(index < animationMoves!.count && isAnimating) {
-            
-            let sortAnimation = animationMoves![index];
-            
-            switch(sortAnimation.type) {
-            case .collectionView:
-                self.sortCollectionView.performBatchUpdates(sortAnimation.animation, completion: { (didFinish) in
-                    if(didFinish) {
-                        self.animationStep = self.animationStep + 1;
-                        self.startAnimations(index: self.animationStep);
-                    }
-                })
-                break;
-            case .defaultView:
-                UIView.animate(withDuration: kAnimationDuration, delay: 0, options: .allowUserInteraction, animations: sortAnimation.animation, completion: { (didFinish) in
-                    if(didFinish) {
-                        self.animationStep = self.animationStep + 1;
-                        self.startAnimations(index: self.animationStep);
-                    }
-                })
-                break;
-            }
+    }
+    
+    internal func stepForward() {
+        
+        if(!isAnimating) {
+            isAnimating = !isAnimating;
+            performAnimation(step: animationStep, completion: { 
+                self.isAnimating = !self.isAnimating;
+            })
         }
     }
     
-    //MARK: Complexity UI
-    private func worstCaseText() -> String {
-        return Algorithm.worstComplexity;
-    }
-    
-    private func averageCaseText() -> String {
-        return Algorithm.averageComplexity;
-    }
-    
-    private func bestCaseText() -> String {
-        return Algorithm.bestComplexity;
+    internal func performAnimation(step: Int, completion: (()->Void)?) {
+        
+        if(step < animationMoves!.count && isAnimating) {
+            
+            let sortAnimation = animationMoves![step];
+            
+            switch(sortAnimation.type) {
+                case .collectionView:
+                    self.sortCollectionView.performBatchUpdates(sortAnimation.animation, completion: { (didFinish) in
+                        self.animationStep = self.animationStep + 1;
+                        if(completion != nil) {
+                            completion!();
+                        } else {
+                            self.performAnimation(step: self.animationStep, completion: nil);
+                        }
+                    })
+                    break;
+                case .defaultView:
+                    UIView.animate(withDuration: kAnimationDuration, delay: 0, options: .allowUserInteraction, animations: sortAnimation.animation, completion: { (didFinish) in
+                        self.animationStep = self.animationStep + 1;
+                        if(completion != nil) {
+                            completion!();
+                        } else {
+                            self.performAnimation(step: self.animationStep, completion: nil);
+                        }
+                    })
+                    break;
+                }
+        }
     }
 }

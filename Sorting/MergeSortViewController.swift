@@ -208,9 +208,9 @@ class MergeSortViewController: BaseSortingViewController<MergeSort> {
         return animationArray;
     }
     
-    override func swap(sender: UIButton) {
+    override func sort() {
 
         logView.insertNewLine(text: "Array split into \(sortArray.count) sub arrays", color: UIColor.black);
-        super.swap(sender: sender)
+        super.sort()
     }
 }
