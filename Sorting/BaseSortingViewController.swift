@@ -10,21 +10,23 @@ import Foundation
 import UIKit
 
 class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
-    
-    internal lazy var sortArray: [Int] = {
-        var tempArray = [Int]();
-        
-        for i in 0...4 {
-            let randomNumber = Int(arc4random_uniform(50));
-            tempArray.append(randomNumber);
-        }
-        
-        return tempArray;
-    }();
 
+    //consts
     internal let kAnimationDuration: TimeInterval = 0;
     internal let kMaxAmount: Int = 50;
-
+    
+    //Data
+    internal var sortArray: [Int] = [] {
+        didSet {
+            animationMoves = createAnimations(moves: Algorithm.sort(unsortedArray: sortArray));
+        }
+    }
+    
+    var animationMoves: [SortAnimation] = [];
+    var isAnimating: Bool = false;
+    var animationStep: Int = 0;
+    
+    //UI
     internal var sortCollectionView: UICollectionView!
     internal var minusButton: UIButton;
     internal var plusButton: UIButton;
@@ -36,12 +38,10 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     internal var averageCaseLabel: UILabel;
     internal var bestCaseLabel: UILabel;
     internal var heightConstraint: NSLayoutConstraint?;
-    
-    var animationMoves: [SortAnimation]?;
-    var isAnimating: Bool = false;
-    var animationStep: Int = 0;
+
     
     init() {
+    
         minusButton = UIButton();
         plusButton = UIButton();
         stepBackButton = UIButton();
@@ -55,6 +55,7 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     }
     
     required init?(coder aDecoder: NSCoder) {
+        
         minusButton = UIButton();
         plusButton = UIButton();
         stepBackButton = UIButton();
@@ -67,15 +68,29 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         super.init(coder: aDecoder);
     }
     
+    
+    
     override func viewDidLoad() {
         
         super.viewDidLoad();
+        
         title = Algorithm.name;
         view.backgroundColor = UIColor.white;
         automaticallyAdjustsScrollViewInsets = false;
+        
+        setupInitialSortingArray();
         setupViews();
         applyAutoLayoutConstraints();
-        animationMoves = createAnimations(moves: Algorithm.sort(unsortedArray: sortArray));
+    }
+    
+    internal func setupInitialSortingArray() {
+        var tempArray = [Int]();
+        
+        for _ in 0...4 {
+            let randomNumber = Int(arc4random_uniform(50));
+            tempArray.append(randomNumber);
+        }
+        sortArray = tempArray;
     }
     
     internal func createCollectionViewLayout() -> UICollectionViewLayout {
@@ -312,12 +327,12 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     
     private func performForwardAnimation(step: Int, completion: (()->Void)?) {
         
-        if(step < animationMoves!.count && isAnimating) {
+        if(step < animationMoves.count && isAnimating) {
             
             stepBackButton.isEnabled = false;
             stepForwardButton.isEnabled = false;
             
-            let sortAnimation = animationMoves![step];
+            let sortAnimation = animationMoves[step];
             
             switch(sortAnimation.type) {
                 case .collectionView:
@@ -348,11 +363,11 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     
     private func performBackwardAnimation(step: Int, completion: (()->Void)?) {
         
-        if(step >= 0 && step < animationMoves!.count && isAnimating) {
+        if(step >= 0 && step < animationMoves.count && isAnimating) {
             
             stepBackButton.isEnabled = false;
             stepForwardButton.isEnabled = false;
-            let sortAnimation = animationMoves![step];
+            let sortAnimation = animationMoves[step];
             
             switch(sortAnimation.type) {
                 case .collectionView:
