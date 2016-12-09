@@ -11,8 +11,20 @@ import UIKit
 
 class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
-    internal var sortArray: [Int] = [5,2,8,4];
+    internal lazy var sortArray: [Int] = {
+        var tempArray = [Int]();
+        
+        for i in 0...4 {
+            let randomNumber = Int(arc4random_uniform(50));
+            tempArray.append(randomNumber);
+        }
+        
+        return tempArray;
+    }();
+
     internal let kAnimationDuration: TimeInterval = 0;
+    internal let kMaxAmount: Int = 50;
+
     internal var sortCollectionView: UICollectionView!
     internal var minusButton: UIButton;
     internal var plusButton: UIButton;
