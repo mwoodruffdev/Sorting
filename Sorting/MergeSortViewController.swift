@@ -11,14 +11,22 @@ import UIKit
 
 class MergeSortViewController: BaseSortingViewController<MergeSort> {
     
+    override internal var sortArray: [Int] {
+        didSet {
+            sectionArray[0] = sortArray.count;
+            animationMoves = createAnimations(moves: MergeSort.sort(unsortedArray: sortArray));
+        }
+    }
+    
     var sectionArray: [Int] = [];
     var workingArray: [Int] = [];
     
     override func viewDidLoad() {
 
-        super.viewDidLoad();
+        //TODO: improve coupled logic here
         sectionArray.append(sortArray.count);
         sectionArray.append(0);
+        super.viewDidLoad();
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
