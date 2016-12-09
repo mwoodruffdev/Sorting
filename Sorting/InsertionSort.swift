@@ -11,6 +11,10 @@ import UIKit
 class InsertionSort: SortingAlgorithm {
 
     typealias MoveType = InsertionSortMove
+    static var name = "Insertion  Sort";
+    static var worstComplexity = "O(n^2)";
+    static var averageComplexity = "O(n^2)";
+    static var bestComplexity = "O(n)";
     
     static func sort(unsortedArray: [Int]) -> [MoveType] {
         

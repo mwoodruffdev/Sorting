@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class BaseSortingViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     internal var sortArray: [Int] = [5,2,8,4,6,5,2,4,6];
     internal let kAnimationDuration: TimeInterval = 0;
@@ -28,10 +28,12 @@ class BaseSortingViewController: UIViewController, UICollectionViewDelegateFlowL
     override func viewDidLoad() {
         
         super.viewDidLoad();
+        title = Algorithm.name;
         view.backgroundColor = UIColor.white;
         automaticallyAdjustsScrollViewInsets = false;
         setupViews();
         applyAutoLayoutConstraints();
+        animationMoves = createAnimations(moves: Algorithm.sort(unsortedArray: sortArray));
     }
     
     internal func createCollectionViewLayout() -> UICollectionViewLayout {
@@ -165,6 +167,11 @@ class BaseSortingViewController: UIViewController, UICollectionViewDelegateFlowL
     
     //MARK: Animations
     
+    internal func createAnimations(moves: [Algorithm.MoveType]) -> [SortAnimation] {
+        print("TODO!");
+        return [];
+    }
+    
     internal func swap(sender: UIButton) {
         
         if(!isAnimating) {
@@ -205,15 +212,15 @@ class BaseSortingViewController: UIViewController, UICollectionViewDelegateFlowL
     }
     
     //MARK: Complexity UI
-    internal func worstCaseText() -> String {
-        return "";
+    private func worstCaseText() -> String {
+        return Algorithm.worstComplexity;
     }
     
-    internal func averageCaseText() -> String {
-        return "";
+    private func averageCaseText() -> String {
+        return Algorithm.averageComplexity;
     }
     
-    internal func bestCaseText() -> String {
-        return "";
+    private func bestCaseText() -> String {
+        return Algorithm.bestComplexity;
     }
 }

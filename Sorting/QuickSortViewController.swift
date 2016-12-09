@@ -9,15 +9,7 @@
 import Foundation
 import UIKit
 
-class QuickSortViewController: BaseSortingViewController, SortingController {
-
-    typealias Algorithm = QuickSort
-    
-    override func viewDidLoad() {
-        super.viewDidLoad();
-        title = "Quick Sort"
-        animationMoves = createAnimations(moves: Algorithm.sort(unsortedArray: sortArray));
-    }
+class QuickSortViewController: BaseSortingViewController<QuickSort> {
     
     override func createCollectionViewLayout() -> UICollectionViewLayout {
         
@@ -46,7 +38,7 @@ class QuickSortViewController: BaseSortingViewController, SortingController {
         }
     }
     
-    func createAnimations(moves: [QuickSortMove]) -> [SortAnimation] {
+    override func createAnimations(moves: [QuickSortMove]) -> [SortAnimation] {
         
         var animationArray: [SortAnimation] = [];
         
@@ -224,18 +216,6 @@ class QuickSortViewController: BaseSortingViewController, SortingController {
         }
         
         return animationArray;
-    }
-    
-    override func worstCaseText() -> String {
-        return "O(n^2)";
-    }
-    
-    override func averageCaseText() -> String {
-        return "O(n log n)";
-    }
-    
-    override func bestCaseText() -> String {
-        return "O(n log n)";
     }
 }
 

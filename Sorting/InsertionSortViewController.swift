@@ -9,18 +9,9 @@
 import Foundation
 import UIKit
 
-class InsertionSortViewController: BaseSortingViewController, SortingController {
-    
-    typealias Algorithm = InsertionSort
-    
-    override func viewDidLoad() {
-        
-        super.viewDidLoad();
-        title = "Insertion Sort";
-        animationMoves = createAnimations(moves: Algorithm.sort(unsortedArray: sortArray));
-    }
+class InsertionSortViewController: BaseSortingViewController<InsertionSort> {
 
-    func createAnimations(moves: [InsertionSortMove]) -> [SortAnimation] {
+    override func createAnimations(moves: [InsertionSortMove]) -> [SortAnimation] {
         
         var animationArray: [SortAnimation] = [];
         for sortMove in moves {
@@ -68,18 +59,6 @@ class InsertionSortViewController: BaseSortingViewController, SortingController 
         }
         
         return animationArray;
-    }
-    
-    override func worstCaseText() -> String {
-        return "O(n^2)";
-    }
-    
-    override func averageCaseText() -> String {
-        return "O(n^2)";
-    }
-    
-    override func bestCaseText() -> String {
-        return "O(n)";
     }
     
     private func checkAnimation(sortMove: InsertionSortMove) -> SortAnimation {

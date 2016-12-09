@@ -11,6 +11,10 @@ import Foundation
 class BubbleSort: SortingAlgorithm {
     
     typealias MoveType = BubbleSortMove
+    static var name = "Bubble Sort";
+    static var worstComplexity = "O(n^2)";
+    static var averageComplexity = "O(n^2)";
+    static var bestComplexity = "O(n)";
     
     static func sort(unsortedArray: [Int]) -> [MoveType] {
     

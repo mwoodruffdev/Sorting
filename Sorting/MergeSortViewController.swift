@@ -9,9 +9,7 @@
 import Foundation
 import UIKit
 
-class MergeSortViewController: BaseSortingViewController, SortingController {
-    
-    typealias Algorithm = MergeSort
+class MergeSortViewController: BaseSortingViewController<MergeSort> {
     
     var sectionArray: [Int] = [];
     var workingArray: [Int] = [];
@@ -19,8 +17,6 @@ class MergeSortViewController: BaseSortingViewController, SortingController {
     override func viewDidLoad() {
 
         super.viewDidLoad();
-        title = "Merge Sort"
-        animationMoves = createAnimations(moves: Algorithm.sort(unsortedArray: sortArray));
         sectionArray.append(sortArray.count);
         sectionArray.append(0);
     }
@@ -63,7 +59,7 @@ class MergeSortViewController: BaseSortingViewController, SortingController {
         return UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1);
     }
     
-    func createAnimations(moves: [MergeSortMove]) -> [SortAnimation] {
+    override func createAnimations(moves: [MergeSortMove]) -> [SortAnimation] {
         
         var animationArray: [SortAnimation] = [];
         
@@ -216,17 +212,5 @@ class MergeSortViewController: BaseSortingViewController, SortingController {
 
         logView.insertNewLine(text: "Array split into \(sortArray.count) sub arrays", color: UIColor.black);
         super.swap(sender: sender)
-    }
-    
-    override func worstCaseText() -> String {
-        return "O(n log n)";
-    }
-    
-    override func averageCaseText() -> String {
-        return "O(n log n)";
-    }
-    
-    override func bestCaseText() -> String {
-        return "O(n log n)";
     }
 }

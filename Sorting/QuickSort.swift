@@ -11,6 +11,10 @@ import Foundation
 class QuickSort: SortingAlgorithm {
     
     typealias MoveType = QuickSortMove
+    static var name = "Quick Sort";
+    static var worstComplexity = "O(n^2)";
+    static var averageComplexity = "O(nLogn)";
+    static var bestComplexity = "O(nLogn)";
     
     static func sort(unsortedArray: [Int]) -> [MoveType] {
         

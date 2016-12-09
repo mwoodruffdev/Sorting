@@ -11,7 +11,11 @@ import UIKit
 class MergeSort: SortingAlgorithm {
     
     typealias MoveType = MergeSortMove
-
+    static var name = "Merge Sort";
+    static var worstComplexity = "O(nLogn)";
+    static var averageComplexity = "O(nLogn)";
+    static var bestComplexity = "O(nLogn)";
+    
     static func sort(unsortedArray: [Int]) -> [MoveType] {
         
         var moves: [MergeSortMove] = [];

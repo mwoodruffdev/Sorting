@@ -13,5 +13,11 @@ import UIKit
 protocol SortingAlgorithm {
     
     associatedtype MoveType: SortMove;
+    static var name: String {get};
+    static var worstComplexity: String {get};
+    static var averageComplexity: String {get};
+    static var bestComplexity: String {get};
+    
     static func sort(unsortedArray: [Int]) -> [MoveType];
+
 }

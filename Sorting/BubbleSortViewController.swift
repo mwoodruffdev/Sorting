@@ -9,18 +9,9 @@
 import Foundation
 import UIKit
 
-class BubbleSortViewController: BaseSortingViewController, SortingController {
+class BubbleSortViewController: BaseSortingViewController<BubbleSort> {
     
-    typealias Algorithm = BubbleSort
-    
-    override func viewDidLoad() {
-        
-        super.viewDidLoad();
-        title = "Bubble Sort";
-        animationMoves = createAnimations(moves: Algorithm.sort(unsortedArray: sortArray));
-    }
-    
-    func createAnimations(moves: [BubbleSortMove]) -> [SortAnimation] {
+    override func createAnimations(moves: [BubbleSortMove]) -> [SortAnimation] {
         
         var animationArray: [SortAnimation] = [];
 
@@ -100,17 +91,5 @@ class BubbleSortViewController: BaseSortingViewController, SortingController {
         }
         
         return animationArray;
-    }
-    
-    override func worstCaseText() -> String {
-        return "O(n^2)";
-    }
-    
-    override func averageCaseText() -> String {
-        return "O(n^2)";
-    }
-    
-    override func bestCaseText() -> String {
-        return "O(n)";
     }
 }
