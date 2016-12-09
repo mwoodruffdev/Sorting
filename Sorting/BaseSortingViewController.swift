@@ -225,7 +225,7 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
             stepForwardButton.isEnabled = false;
             sortButton.setTitle("Stop Sorting", for: .normal);
             isAnimating = !isAnimating;
-            performAnimation(step: animationStep, completion: nil);
+            performForwardAnimation(step: animationStep, completion: nil);
         } else {
             stepBackButton.isEnabled = true;
             stepForwardButton.isEnabled = true;
@@ -235,20 +235,26 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     }
     
     internal func stepBack() {
-        
+     
+        if(!isAnimating) {
+            isAnimating = !isAnimating;
+            performBackwardAnimation(step: animationStep-1, completion: {
+                self.isAnimating = !self.isAnimating;
+            });
+        }
     }
     
     internal func stepForward() {
         
         if(!isAnimating) {
             isAnimating = !isAnimating;
-            performAnimation(step: animationStep, completion: { 
+            performForwardAnimation(step: animationStep, completion: {
                 self.isAnimating = !self.isAnimating;
             })
         }
     }
     
-    internal func performAnimation(step: Int, completion: (()->Void)?) {
+    internal func performForwardAnimation(step: Int, completion: (()->Void)?) {
         
         if(step < animationMoves!.count && isAnimating) {
             
@@ -261,7 +267,7 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
                         if(completion != nil) {
                             completion!();
                         } else {
-                            self.performAnimation(step: self.animationStep, completion: nil);
+                            self.performForwardAnimation(step: self.animationStep, completion: nil);
                         }
                     })
                     break;
@@ -271,11 +277,50 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
                         if(completion != nil) {
                             completion!();
                         } else {
-                            self.performAnimation(step: self.animationStep, completion: nil);
+                            self.performForwardAnimation(step: self.animationStep, completion: nil);
+                        }
+                    })
+                    break;
+            }
+        } else {
+            isAnimating = !isAnimating;
+            stepBackButton.isEnabled = true;
+            stepForwardButton.isEnabled = true;
+        }
+    }
+    
+    internal func performBackwardAnimation(step: Int, completion: (()->Void)?) {
+        
+        if(step >= 0 && step < animationMoves!.count && isAnimating) {
+            
+            let sortAnimation = animationMoves![step];
+            
+            switch(sortAnimation.type) {
+                case .collectionView:
+                    self.sortCollectionView.performBatchUpdates(sortAnimation.animation, completion: { (didFinish) in
+                        self.animationStep = self.animationStep - 1;
+                        if(completion != nil) {
+                            completion!();
+                        } else {
+                            self.performBackwardAnimation(step: self.animationStep, completion: nil);
+                        }
+                    })
+                    break;
+                case .defaultView:
+                    UIView.animate(withDuration: kAnimationDuration, delay: 0, options: .allowUserInteraction, animations: sortAnimation.animation, completion: { (didFinish) in
+                        self.animationStep = self.animationStep - 1;
+                        if(completion != nil) {
+                            completion!();
+                        } else {
+                            self.performBackwardAnimation(step: self.animationStep, completion: nil);
                         }
                     })
                     break;
                 }
+        } else {
+            isAnimating = !isAnimating;
+            stepBackButton.isEnabled = true;
+            stepForwardButton.isEnabled = true;
         }
     }
 }
