@@ -12,7 +12,7 @@ import UIKit
 class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
     //consts
-    internal let kAnimationDuration: TimeInterval = 0;
+    internal let kAnimationDuration: TimeInterval = 0.5;
     internal let kMaxAmount: Int = 50;
     
     //Data
@@ -145,7 +145,7 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         
         minusButton.layer.borderColor = UIColor.white.cgColor
         minusButton.layer.borderWidth = 1;
-        minusButton.setTitle("Remove", for: .normal);
+        minusButton.setTitle("-", for: .normal);
         minusButton.addTarget(self, action: #selector(removeElement), for: .touchUpInside);
         minusButton.backgroundColor = .black;
         minusButton.setTitleColor(.white, for: .normal);
@@ -153,7 +153,7 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         
         plusButton.layer.borderColor = UIColor.white.cgColor
         plusButton.layer.borderWidth = 1;
-        plusButton.setTitle("Add", for: .normal);
+        plusButton.setTitle("+", for: .normal);
         plusButton.addTarget(self, action: #selector(addElement), for: .touchUpInside);
         plusButton.backgroundColor = .black;
         plusButton.setTitleColor(.white, for: .normal);
@@ -187,6 +187,8 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews();
+        
+        //TODO: need to handle the case when the height increases (after pressing add) and it makes the log view dissapear
         heightConstraint?.constant = sortCollectionView.contentSize.height;
     }
     
@@ -195,25 +197,26 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         sortCollectionView.translatesAutoresizingMaskIntoConstraints = false;
         sortCollectionView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor).isActive = true;
         sortCollectionView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true;
-        sortCollectionView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true;
         
         heightConstraint = sortCollectionView.heightAnchor.constraint(equalToConstant: 0);
         heightConstraint?.isActive = true;
         
         minusButton.translatesAutoresizingMaskIntoConstraints = false;
-        minusButton.topAnchor.constraint(equalTo: sortCollectionView.bottomAnchor, constant: 10).isActive = true;
-        minusButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true;
-        minusButton.heightAnchor.constraint(equalToConstant: 30);
-        minusButton.widthAnchor.constraint(equalToConstant: 30);
+        minusButton.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 10).isActive = true;
+        minusButton.leftAnchor.constraint(equalTo: sortCollectionView.rightAnchor, constant: 10).isActive = true;
+        minusButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true;
+        minusButton.heightAnchor.constraint(equalToConstant: 30).isActive = true;
+        minusButton.widthAnchor.constraint(equalToConstant: 30).isActive = true;
         
         plusButton.translatesAutoresizingMaskIntoConstraints = false;
-        plusButton.topAnchor.constraint(equalTo: sortCollectionView.bottomAnchor, constant: 10).isActive = true;
-        plusButton.leftAnchor.constraint(equalTo: minusButton.rightAnchor, constant: 10).isActive = true;
-        plusButton.heightAnchor.constraint(equalToConstant: 30);
-        plusButton.widthAnchor.constraint(equalToConstant: 30);
+        plusButton.topAnchor.constraint(equalTo: minusButton.bottomAnchor).isActive = true;
+        plusButton.leftAnchor.constraint(equalTo: minusButton.leftAnchor).isActive = true;
+        plusButton.rightAnchor.constraint(equalTo: minusButton.rightAnchor).isActive = true;
+        plusButton.heightAnchor.constraint(equalToConstant: 30).isActive = true;
+        plusButton.widthAnchor.constraint(equalToConstant: 30).isActive = true;
         
         worstCaseLabel.translatesAutoresizingMaskIntoConstraints = false;
-        worstCaseLabel.topAnchor.constraint(equalTo: plusButton.bottomAnchor, constant: 10).isActive = true
+        worstCaseLabel.topAnchor.constraint(equalTo: sortCollectionView.bottomAnchor, constant: 10).isActive = true
         worstCaseLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true;
         
         averageCaseLabel.translatesAutoresizingMaskIntoConstraints = false;
