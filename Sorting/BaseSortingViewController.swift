@@ -370,11 +370,19 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
             
             stepBackButton.isEnabled = false;
             stepForwardButton.isEnabled = false;
-            let sortAnimation = animationMoves[step];
             
-            switch(sortAnimation.type) {
+            let animationMove = animationMoves[step];
+            var animation: SortAnimation.Animation;
+            
+            if animationMove.backAnimation != nil {
+                animation = animationMoves[step].backAnimation!;
+            } else {
+                animation = animationMoves[step].animation;
+            }
+            
+            switch(animationMove.type) {
                 case .collectionView:
-                    self.sortCollectionView.performBatchUpdates(sortAnimation.animation, completion: { (didFinish) in
+                    self.sortCollectionView.performBatchUpdates(animation, completion: { (didFinish) in
                         self.animationStep = self.animationStep - 1;
                         if(completion != nil) {
                             completion!();
@@ -384,7 +392,7 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
                     })
                     break;
                 case .defaultView:
-                    UIView.animate(withDuration: kAnimationDuration, delay: 0, options: .allowUserInteraction, animations: sortAnimation.animation, completion: { (didFinish) in
+                    UIView.animate(withDuration: kAnimationDuration, delay: 0, options: .allowUserInteraction, animations: animation, completion: { (didFinish) in
                         self.animationStep = self.animationStep - 1;
                         if(completion != nil) {
                             completion!();

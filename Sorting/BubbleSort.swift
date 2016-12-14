@@ -33,9 +33,6 @@ class BubbleSort: SortingAlgorithm {
                     swap(&sortedArray[i], &sortedArray[i-1])
                     moves.append(BubbleSortMove.swap(positionOne: firstPosition, positionTwo: secondPosition));
                     lastSwapIndex = i
-                } else {
-                    
-                    moves.append(BubbleSortMove.dontSwap(positionOne: firstPosition, positionTwo: secondPosition));
                 }
             }
             

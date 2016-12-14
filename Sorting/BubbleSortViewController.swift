@@ -46,13 +46,16 @@ class BubbleSortViewController: BaseSortingViewController<BubbleSort> {
                     break;
                 case .sortedFrom:
 
-                    let sortedAnimation = ViewSortAnimation({
-                        let sortedIndex = sortMove.positionOne.index;
+                    let sortedIndex = sortMove.positionOne.index;
+                    var oldColors:[UIColor] = [];
+                    
+                    var sortedAnimation = ViewSortAnimation({
                         
                         var i = 0;
                         while i < self.sortArray.count {
                             
                             let cell = self.sortCollectionView.cellForItem(at: IndexPath(row: i, section: 0)) as! SortCollectionViewCell;
+                            oldColors.append(cell.backgroundColor!);
                             if(i < sortedIndex) {
                                 cell.backgroundColor = UIColor.black;
                                 cell.sorted = false;
@@ -63,29 +66,60 @@ class BubbleSortViewController: BaseSortingViewController<BubbleSort> {
                             i = i + 1;
                         }
                         
-                        self.logView.insertNewLine(text: "The list is now sorted from index \(sortMove.positionOne.index)", color: UIColor.green);
+                        self.logView.insertNewLine(text: "The list is now sorted from index \(sortedIndex)", color: UIColor.green);
                     });
+                    
+                    sortedAnimation.backAnimation = {
+                        
+                        var i = 0;
+                        while i < self.sortArray.count {
+                            let cell = self.sortCollectionView.cellForItem(at: IndexPath(row: i, section: 0)) as! SortCollectionViewCell;
+                            if(oldColors[i] != UIColor.green) {
+                                cell.backgroundColor = oldColors[i];
+                                cell.sorted = false;
+                            }
+                            i = i + 1;
+                        }
+                        
+                        self.logView.insertNewLine(text: "The list is no longer sorted from index \(sortedIndex)", color: UIColor.red);
+                    };
                     
                     animationArray.append(sortedAnimation);
                     break;
                 case .swap:
                 
-                    let swapAnimation = CollectionViewSortAnimation({
+                    var swapAnimation = CollectionViewSortAnimation({
                         self.sortCollectionView.moveItem(at: IndexPath(row: sortMove.positionOne.index, section: 0), to: IndexPath(row: sortMove.positionTwo!.index, section: 0))
                         self.sortCollectionView.moveItem(at: IndexPath(row: sortMove.positionTwo!.index, section: 0), to: IndexPath(row: sortMove.positionOne.index, section: 0))
                         
                         self.logView.insertNewLine(text: "YES! Swap index \(sortMove.positionTwo!.index) and index \(sortMove.positionOne.index)", color: UIColor.black);
                     });
                     
+                    let backAnimation = {
+                        let cell1 = self.sortCollectionView.cellForItem(at: IndexPath(row: sortMove.positionOne.index, section: 0));
+                        cell1?.backgroundColor = UIColor.red;
+                        let cell2 = self.sortCollectionView.cellForItem(at: IndexPath(row: sortMove.positionTwo!.index, section: 0));
+                        cell2?.backgroundColor = UIColor.red;
+                        
+                        self.sortCollectionView.moveItem(at: IndexPath(row: sortMove.positionOne.index, section: 0), to: IndexPath(row: sortMove.positionTwo!.index, section: 0))
+                        self.sortCollectionView.moveItem(at: IndexPath(row: sortMove.positionTwo!.index, section: 0), to: IndexPath(row: sortMove.positionOne.index, section: 0))
+                        
+                        for i in (0 ..< self.sortArray.count) {
+                            
+                            if i == sortMove.positionOne.index || i == sortMove.positionTwo?.index {
+                                continue;
+                            }
+                            if let unHighlightedCell =  self.sortCollectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? SortCollectionViewCell,
+                                unHighlightedCell.sorted == false {
+                                
+                                unHighlightedCell.backgroundColor = UIColor.black;
+                            }
+                        }
+                    }
+                    
+                    swapAnimation.backAnimation = backAnimation;
+                    
                     animationArray.append(swapAnimation);
-                    break;
-                case .dontSwap:
-                    
-                    let dontSwapAnimation = ViewSortAnimation({
-                        self.logView.insertNewLine(text: "NO!", color: UIColor.black);
-                    });
-                    
-                    animationArray.append(dontSwapAnimation);
                     break;
             }
         }

@@ -32,10 +32,6 @@ struct BubbleSortMove: SortMove {
         return BubbleSortMove(positionOne: positionOne, positionTwo: positionTwo, moveType: .swap);
     }
     
-    static func dontSwap(positionOne: Position, positionTwo: Position) -> BubbleSortMove {
-        return BubbleSortMove(positionOne: positionOne, positionTwo: positionTwo, moveType: .dontSwap);
-    }
-    
     static func checking(positionOne: Position, positionTwo: Position) -> BubbleSortMove {
         
         return BubbleSortMove(positionOne: positionOne, positionTwo: positionTwo, moveType: .checking);
@@ -63,6 +59,5 @@ enum BubbleSortMoveType {
     
     case swap
     case checking
-    case dontSwap
     case sortedFrom
 }
