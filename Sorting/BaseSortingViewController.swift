@@ -59,6 +59,9 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         minusButton = UIButton();
         plusButton = UIButton();
         stepBackButton = UIButton();
+        /* Hide back feature for now */
+        stepBackButton.isHidden = true;
+        /* Hide back feature for now */
         stepForwardButton = UIButton();
         sortButton = UIButton();
         logView = SortLogView();
