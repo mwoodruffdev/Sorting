@@ -188,8 +188,13 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews();
         
-        //TODO: need to handle the case when the height increases (after pressing add) and it makes the log view dissapear
-        heightConstraint?.constant = sortCollectionView.contentSize.height;
+        //Do not let the collection view to take up too much screen space...
+        if(sortCollectionView.contentSize.height < view.frame.size.height / 2) {
+            heightConstraint?.constant = sortCollectionView.contentSize.height;
+        } else {
+            
+            sortCollectionView.scrollToItem(at: IndexPath(row: sortCollectionView.numberOfItems(inSection: 0) - 1, section: 0), at: .bottom, animated: true);
+        }
     }
     
     internal func applyAutoLayoutConstraints() {
@@ -202,18 +207,18 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         heightConstraint?.isActive = true;
         
         minusButton.translatesAutoresizingMaskIntoConstraints = false;
-        minusButton.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 10).isActive = true;
+        minusButton.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 6).isActive = true;
         minusButton.leftAnchor.constraint(equalTo: sortCollectionView.rightAnchor, constant: 10).isActive = true;
         minusButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true;
-        minusButton.heightAnchor.constraint(equalToConstant: 30).isActive = true;
-        minusButton.widthAnchor.constraint(equalToConstant: 30).isActive = true;
+        minusButton.heightAnchor.constraint(equalToConstant: 40).isActive = true;
+        minusButton.widthAnchor.constraint(equalToConstant: 40).isActive = true;
         
         plusButton.translatesAutoresizingMaskIntoConstraints = false;
         plusButton.topAnchor.constraint(equalTo: minusButton.bottomAnchor).isActive = true;
         plusButton.leftAnchor.constraint(equalTo: minusButton.leftAnchor).isActive = true;
         plusButton.rightAnchor.constraint(equalTo: minusButton.rightAnchor).isActive = true;
-        plusButton.heightAnchor.constraint(equalToConstant: 30).isActive = true;
-        plusButton.widthAnchor.constraint(equalToConstant: 30).isActive = true;
+        plusButton.heightAnchor.constraint(equalToConstant: 40).isActive = true;
+        plusButton.widthAnchor.constraint(equalToConstant: 40).isActive = true;
         
         worstCaseLabel.translatesAutoresizingMaskIntoConstraints = false;
         worstCaseLabel.topAnchor.constraint(equalTo: sortCollectionView.bottomAnchor, constant: 10).isActive = true
@@ -235,7 +240,7 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         
         stepBackButton.translatesAutoresizingMaskIntoConstraints = false;
         stepBackButton.bottomAnchor.constraint(equalTo: sortButton.topAnchor).isActive = true;
-        stepBackButton.rightAnchor.constraint(equalTo: stepForwardButton.leftAnchor).isActive = true;
+        stepBackButton.rightAnchor.constraint(equalTo: stepForwardButton.leftAnchor, constant: -20).isActive = true;
         stepBackButton.heightAnchor.constraint(equalToConstant: 50).isActive = true;
         stepBackButton.widthAnchor.constraint(equalToConstant: 50).isActive = true;
         
