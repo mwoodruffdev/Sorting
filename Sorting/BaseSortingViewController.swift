@@ -32,11 +32,16 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     internal var plusButton: UIButton;
     internal var stepBackButton: UIButton;
     internal var stepForwardButton: UIButton;
+    internal var randomiseButton: UIButton;
+    internal var resetButton: UIButton;
     internal var sortButton: UIButton;
     internal var logView: SortLogView;
     internal var worstCaseLabel: UILabel;
+    internal var worstCaseShowMe: UIButton;
     internal var averageCaseLabel: UILabel;
+    internal var averageCaseShowMe: UIButton;
     internal var bestCaseLabel: UILabel;
+    internal var bestCaseShowMe: UIButton;
     internal var heightConstraint: NSLayoutConstraint?;
 
     
@@ -46,11 +51,16 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         plusButton = UIButton();
         stepBackButton = UIButton();
         stepForwardButton = UIButton();
+        randomiseButton = UIButton();
+        resetButton = UIButton();
         sortButton = UIButton();
         logView = SortLogView();
         worstCaseLabel = UILabel();
+        worstCaseShowMe = UIButton();
         averageCaseLabel = UILabel();
+        averageCaseShowMe = UIButton();
         bestCaseLabel = UILabel();
+        bestCaseShowMe = UIButton();
         super.init(nibName: nil, bundle: nil);
     }
     
@@ -59,15 +69,17 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         minusButton = UIButton();
         plusButton = UIButton();
         stepBackButton = UIButton();
-        /* Hide back feature for now */
-        stepBackButton.isHidden = true;
-        /* Hide back feature for now */
         stepForwardButton = UIButton();
+        randomiseButton = UIButton();
+        resetButton = UIButton();
         sortButton = UIButton();
         logView = SortLogView();
         worstCaseLabel = UILabel();
+        worstCaseShowMe = UIButton();
         averageCaseLabel = UILabel();
+        averageCaseShowMe = UIButton();
         bestCaseLabel = UILabel();
+        bestCaseShowMe = UIButton();
         super.init(coder: aDecoder);
     }
     
@@ -162,9 +174,27 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         plusButton.setTitleColor(.white, for: .normal);
         view.addSubview(plusButton);
         
+        worstCaseShowMe.setTitle("Show Me!", for: .normal);
+        worstCaseShowMe.addTarget(self, action: #selector(showMe), for: .touchUpInside);
+        worstCaseShowMe.setTitleColor(.blue, for: .normal);
+        view.addSubview(worstCaseShowMe);
+        
+        averageCaseShowMe.setTitle("Show Me!", for: .normal);
+        averageCaseShowMe.addTarget(self, action: #selector(showMe), for: .touchUpInside);
+        averageCaseShowMe.setTitleColor(.blue, for: .normal);
+        view.addSubview(averageCaseShowMe);
+        
+        bestCaseShowMe.setTitle("Show Me!", for: .normal);
+        bestCaseShowMe.addTarget(self, action: #selector(showMe), for: .touchUpInside);
+        bestCaseShowMe.setTitleColor(.blue, for: .normal);
+        view.addSubview(bestCaseShowMe);
+        
+        /* Hide back feature for now */
+        stepBackButton.isHidden = true;
+        /* Hide back feature for now */
         stepBackButton.layer.borderColor = UIColor.white.cgColor
         stepBackButton.layer.borderWidth = 1;
-        stepBackButton.setTitle("Back", for: .normal);
+        stepBackButton.setTitle("BACK", for: .normal);
         stepBackButton.addTarget(self, action: #selector(stepBack), for: .touchUpInside);
         stepBackButton.backgroundColor = .black;
         stepBackButton.setTitleColor(.white, for: .normal);
@@ -173,11 +203,27 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         
         stepForwardButton.layer.borderColor = UIColor.white.cgColor
         stepForwardButton.layer.borderWidth = 1;
-        stepForwardButton.setTitle("Next", for: .normal);
+        stepForwardButton.setTitle("NEXt", for: .normal);
         stepForwardButton.addTarget(self, action: #selector(stepForward), for: .touchUpInside);
         stepForwardButton.backgroundColor = .black;
         stepForwardButton.setTitleColor(.white, for: .normal);
         view.addSubview(stepForwardButton);
+        
+        randomiseButton.layer.borderColor = UIColor.white.cgColor
+        randomiseButton.layer.borderWidth = 1;
+        randomiseButton.setTitle("RANDOMISE", for: .normal);
+        randomiseButton.addTarget(self, action: #selector(randomise), for: .touchUpInside);
+        randomiseButton.backgroundColor = .black;
+        randomiseButton.setTitleColor(.white, for: .normal);
+        view.addSubview(randomiseButton);
+        
+        resetButton.layer.borderColor = UIColor.white.cgColor
+        resetButton.layer.borderWidth = 1;
+        resetButton.setTitle("RESET", for: .normal);
+        resetButton.addTarget(self, action: #selector(reset), for: .touchUpInside);
+        resetButton.backgroundColor = .black;
+        resetButton.setTitleColor(.white, for: .normal);
+        view.addSubview(resetButton);
         
         sortButton.setTitle("START", for: .normal);
         sortButton.addTarget(self, action: #selector(sort), for: .touchUpInside);
@@ -227,6 +273,21 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         worstCaseLabel.topAnchor.constraint(equalTo: sortCollectionView.bottomAnchor, constant: 10).isActive = true
         worstCaseLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true;
         
+        worstCaseShowMe.translatesAutoresizingMaskIntoConstraints = false;
+        worstCaseShowMe.centerYAnchor.constraint(equalTo: worstCaseLabel.centerYAnchor).isActive = true;
+        worstCaseShowMe.leftAnchor.constraint(equalTo: worstCaseLabel.rightAnchor, constant: 10).isActive = true;
+        worstCaseShowMe.rightAnchor.constraint(lessThanOrEqualTo: view.rightAnchor, constant: -10).isActive = true;
+        
+        averageCaseShowMe.translatesAutoresizingMaskIntoConstraints = false;
+        averageCaseShowMe.centerYAnchor.constraint(equalTo: averageCaseLabel.centerYAnchor).isActive = true;
+        averageCaseShowMe.leftAnchor.constraint(equalTo: averageCaseLabel.rightAnchor, constant: 10).isActive = true;
+        averageCaseShowMe.rightAnchor.constraint(lessThanOrEqualTo: view.rightAnchor, constant: -10).isActive = true;
+        
+        bestCaseShowMe.translatesAutoresizingMaskIntoConstraints = false;
+        bestCaseShowMe.centerYAnchor.constraint(equalTo: bestCaseLabel.centerYAnchor).isActive = true;
+        bestCaseShowMe.leftAnchor.constraint(equalTo: bestCaseLabel.rightAnchor, constant: 10).isActive = true;
+        bestCaseShowMe.rightAnchor.constraint(lessThanOrEqualTo: view.rightAnchor, constant: -10).isActive = true;
+        
         averageCaseLabel.translatesAutoresizingMaskIntoConstraints = false;
         averageCaseLabel.topAnchor.constraint(equalTo: worstCaseLabel.bottomAnchor, constant: 10).isActive = true
         averageCaseLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true;
@@ -252,6 +313,19 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         stepForwardButton.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true;
         stepForwardButton.widthAnchor.constraint(equalTo: stepBackButton.widthAnchor, multiplier: 1).isActive = true;
         stepForwardButton.heightAnchor.constraint(equalTo: stepBackButton.heightAnchor, multiplier: 1).isActive = true;
+        
+        resetButton.translatesAutoresizingMaskIntoConstraints = false;
+        resetButton.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true;
+        resetButton.bottomAnchor.constraint(equalTo: sortButton.topAnchor).isActive = true;
+        resetButton.heightAnchor.constraint(equalToConstant: 50).isActive = true;
+        resetButton.widthAnchor.constraint(equalToConstant: view.frame.size.width / 4).isActive = true;
+        
+        randomiseButton.translatesAutoresizingMaskIntoConstraints = false;
+        randomiseButton.leftAnchor.constraint(equalTo: resetButton.rightAnchor).isActive = true;
+        randomiseButton.bottomAnchor.constraint(equalTo: sortButton.topAnchor).isActive = true;
+        randomiseButton.heightAnchor.constraint(equalToConstant: 50).isActive = true;
+        randomiseButton.widthAnchor.constraint(equalToConstant: view.frame.size.width / 4).isActive = true;
+        
         
         sortButton.translatesAutoresizingMaskIntoConstraints = false;
         sortButton.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true;
@@ -299,6 +373,10 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         sortArray.append(randomNumber);
         animateAppendElement();
     }
+    
+    internal func showMe() {
+        print("pressed show me");
+    }
 
     internal func createAnimations(moves: [Algorithm.MoveType]) -> [SortAnimation] {
         preconditionFailure("This method must be overridden!");
@@ -314,6 +392,19 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
             stopAnimating();
             sortButton.setTitle("Continue", for: .normal);
         }
+    }
+    
+    internal func randomise() {
+        
+        setupInitialSortingArray();
+        sortCollectionView.reloadData();
+    }
+    
+    internal func reset() {
+        
+        let sortArrayCopy = sortArray.map { $0 };
+        sortArray = sortArrayCopy;
+        sortCollectionView.reloadData();
     }
     
     internal func stepBack() {
