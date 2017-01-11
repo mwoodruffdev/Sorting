@@ -58,20 +58,36 @@ class QuickSortCollectionViewCell: UICollectionViewCell {
     func setAsL() {
         lrLabel.fadeTransition(duration: 1);
         lrLabel.text = "L";
+        backgroundColor = .orange
     }
     
     func setAsR() {
         lrLabel.fadeTransition(duration: 1);
         lrLabel.text = "R";
+        backgroundColor = .orange
     }
     
     func setAsLAndR() {
         lrLabel.fadeTransition(duration: 1);
         lrLabel.text = "LR";
+        backgroundColor = .orange
     }
     
-    func resetLR() {
+    func reset() {
         lrLabel.fadeTransition(duration: 1);
         lrLabel.text = "";
+        backgroundColor = .black;
+    }
+    
+    func setAsPivot() {
+        lrLabel.fadeTransition(duration: 1);
+        lrLabel.text = "P";
+        backgroundColor = .blue;
+    }
+    
+    func setAsSorted() {
+        lrLabel.fadeTransition(duration: 1);
+        lrLabel.text = "";
+        backgroundColor = .green;
     }
 }
