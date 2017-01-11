@@ -93,15 +93,15 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         view.backgroundColor = UIColor.white;
         automaticallyAdjustsScrollViewInsets = false;
         
-        setupInitialSortingArray();
+        setupSortingArray(length: 5);
         setupViews();
         applyAutoLayoutConstraints();
     }
     
-    internal func setupInitialSortingArray() {
+    internal func setupSortingArray(length: Int) {
         var tempArray = [Int]();
         
-        for _ in 0...4 {
+        for _ in 0...length-1 {
             let randomNumber = Int(arc4random_uniform(50));
             tempArray.append(randomNumber);
         }
@@ -385,18 +385,20 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     internal func sort() {
         
         if(!isAnimating) {
+            
             sortButton.setTitle("Stop Sorting", for: .normal);
-            isAnimating = true;
+            willStartAnimating(true);
             performForwardAnimation(step: animationStep, completion: nil);
         } else {
-            stopAnimating();
+            
+            willStartAnimating(false);
             sortButton.setTitle("Continue", for: .normal);
         }
     }
     
     internal func randomise() {
         
-        setupInitialSortingArray();
+        setupSortingArray(length: sortCollectionView.numberOfItems(inSection: 0));
         sortCollectionView.reloadData();
     }
     
@@ -410,9 +412,10 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     internal func stepBack() {
      
         if(!isAnimating) {
-            isAnimating = true;
+            
+            willStartAnimating(true);
             performBackwardAnimation(step: animationStep-1, completion: {
-                self.stopAnimating();
+                self.willStartAnimating(false);
             });
         }
     }
@@ -420,9 +423,9 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     internal func stepForward() {
         
         if(!isAnimating) {
-            isAnimating = true;
+            willStartAnimating(true);
             performForwardAnimation(step: animationStep, completion: {
-                self.stopAnimating();
+                self.willStartAnimating(false);
             })
         }
     }
@@ -430,9 +433,6 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     private func performForwardAnimation(step: Int, completion: (()->Void)?) {
         
         if(step < animationMoves.count && isAnimating) {
-            
-            stepBackButton.isEnabled = false;
-            stepForwardButton.isEnabled = false;
             
             let sortAnimation = animationMoves[step];
             
@@ -443,6 +443,7 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
                         if(completion != nil) {
                             completion!();
                         } else {
+                            
                             self.performForwardAnimation(step: self.animationStep, completion: nil);
                         }
                     })
@@ -459,16 +460,13 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
                     break;
             }
         } else {
-            stopAnimating()
+            willStartAnimating(false);
         }
     }
     
     private func performBackwardAnimation(step: Int, completion: (()->Void)?) {
         
         if(step >= 0 && step < animationMoves.count && isAnimating) {
-            
-            stepBackButton.isEnabled = false;
-            stepForwardButton.isEnabled = false;
             
             let animationMove = animationMoves[step];
             var animation: SortAnimation.Animation;
@@ -502,15 +500,20 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
                     break;
                 }
         } else {
-            stopAnimating();
+            willStartAnimating(false);
         }
     }
     
-    private func stopAnimating() {
+    private func willStartAnimating(_ willStart: Bool) {
+     
+        isAnimating = willStart;
+        stepBackButton.isEnabled = !willStart;
+        stepForwardButton.isEnabled = !willStart;
+        plusButton.isEnabled = !willStart;
+        minusButton.isEnabled = !willStart;
+        resetButton.isEnabled = !willStart;
+        randomiseButton.isEnabled = !willStart;
         
-        isAnimating = false;
-        stepBackButton.isEnabled = true;
-        stepForwardButton.isEnabled = true;
     }
     
     private func animateRemoveLastElement() {
