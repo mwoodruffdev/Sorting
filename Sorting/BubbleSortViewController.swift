@@ -39,7 +39,7 @@ class BubbleSortViewController: BaseSortingViewController<BubbleSort> {
                             }
                         }
                         
-                        self.logView.insertNewLine(text: "Is \(sortMove.positionTwo!.value) > \(sortMove.positionOne.value)?", color: UIColor.red);
+                        self.logView.insertComparison(first: sortMove.positionTwo!.value, second: sortMove.positionOne.value, sign: ">");
                     });
                     
                     animationArray.append(checkAnimation);
@@ -66,7 +66,7 @@ class BubbleSortViewController: BaseSortingViewController<BubbleSort> {
                             i = i + 1;
                         }
                         
-                        self.logView.insertNewLine(text: "The list is now sorted from index \(sortedIndex)", color: UIColor.green);
+                        self.logView.insertSorted(text: "From index \(sortedIndex)");
                     });
                     
                     sortedAnimation.backAnimation = {
@@ -92,7 +92,7 @@ class BubbleSortViewController: BaseSortingViewController<BubbleSort> {
                         self.sortCollectionView.moveItem(at: IndexPath(row: sortMove.positionOne.index, section: 0), to: IndexPath(row: sortMove.positionTwo!.index, section: 0))
                         self.sortCollectionView.moveItem(at: IndexPath(row: sortMove.positionTwo!.index, section: 0), to: IndexPath(row: sortMove.positionOne.index, section: 0))
                         
-                        self.logView.insertNewLine(text: "YES! Swap index \(sortMove.positionTwo!.index) and index \(sortMove.positionOne.index)", color: UIColor.black);
+                        self.logView.insertSwap(first: sortMove.positionTwo!.index, second: sortMove.positionOne.index);
                     });
                     
                     let backAnimation = {

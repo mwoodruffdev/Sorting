@@ -49,7 +49,7 @@ class QuickSortViewController: BaseSortingViewController<QuickSort> {
                 case .check:
                     
                     let checkAnimation = ViewSortAnimation({
-                        self.logView.insertNewLine(text: "Is \(sortMove.positionOne.value) <= \(sortMove.positionTwo!.value)?", color: UIColor.red);
+                        self.logView.insertComparison(first: sortMove.positionOne.value, second: sortMove.positionTwo!.value, sign: "<=");
                     });
                     
                     animationArray.append(checkAnimation);
@@ -68,7 +68,7 @@ class QuickSortViewController: BaseSortingViewController<QuickSort> {
                 case .pivotSwap:
                     
                     let textAnimation = ViewSortAnimation({
-                        self.logView.insertNewLine(text: "Right pointer has reached the pivot. Swap with the pivot", color: UIColor.black);
+                        self.logView.insertSwap(text: "Right pointer has reached the pivot. Swap with the pivot");
                     });
                     
                     let pivotSwapAnimation = CollectionViewSortAnimation({
@@ -85,9 +85,8 @@ class QuickSortViewController: BaseSortingViewController<QuickSort> {
                 
                     let textAnimation = ViewSortAnimation({
                         if(sortMove.positionOne.index != sortMove.positionTwo?.index) {
-                            self.logView.insertNewLine(text: "YES! Swap the Left and Right pointers", color: UIColor.black);
-                        } else {
-                            self.logView.insertNewLine(text: "YES!", color: UIColor.black);
+                            
+                            self.logView.insertSwap(text: "YES! Swap the Left and Right pointers");
                         }
                     });
                     
@@ -103,14 +102,14 @@ class QuickSortViewController: BaseSortingViewController<QuickSort> {
                 
                 case .incrementLeft:
                     let incrementLeftAnimation = ViewSortAnimation({
-                        self.logView.insertNewLine(text: "Increment Left", color: UIColor.black);
+                        self.logView.insertLPointer(text: "Increment by one");
                     });
                     
                     animationArray.append(incrementLeftAnimation);
                     break;
                 case .incrementRight:
                     let incrementRightAnimation = ViewSortAnimation({
-                        self.logView.insertNewLine(text: "Increment Right", color: UIColor.black);
+                        self.logView.insertRPointer(text: "Increment by one");
                     });
                     
                     animationArray.append(incrementRightAnimation);
@@ -136,7 +135,7 @@ class QuickSortViewController: BaseSortingViewController<QuickSort> {
                         cell1?.isPivot = true;
                         cell1?.backgroundColor = UIColor.blue;
                         
-                        self.logView.insertNewLine(text: "\(sortMove.positionOne.value) (index \(sortMove.positionOne.index)) is the pivot", color: UIColor.blue);
+                        self.logView.insertPivot(text: "\(sortMove.positionOne.value) (index: \(sortMove.positionOne.index))");
                     });
                     
                     animationArray.append(selectPivotAnimation);
@@ -166,16 +165,16 @@ class QuickSortViewController: BaseSortingViewController<QuickSort> {
                         
                         if(sortMove.positionOne.index == sortMove.positionTwo!.index) {
                         
-                            self.logView.insertNewLine(text: "\(sortMove.positionOne.value) (index \(sortMove.positionOne.index)) is the left and right pointer", color: UIColor.orange);
+                            self.logView.insertLRPointer(text: "\(sortMove.positionOne.value) (index \(sortMove.positionOne.index))");
                             cell1?.setAsLAndR();
                             cell1?.backgroundColor = UIColor.orange;
                         } else {
                         
                             cell1?.setAsL();
-                            self.logView.insertNewLine(text: "\(sortMove.positionOne.value) (index \(sortMove.positionOne.index)) is the left pointer", color: UIColor.orange);
+                            self.logView.insertLPointer(text: "\(sortMove.positionOne.value) (index \(sortMove.positionOne.index))");
                             
                             cell2?.setAsR();
-                            self.logView.insertNewLine(text: "\(sortMove.positionTwo!.value) (index \(sortMove.positionTwo!.index)) is the right pointer", color: UIColor.orange);
+                            self.logView.insertRPointer(text: "\(sortMove.positionTwo!.value) (index \(sortMove.positionTwo!.index))");
                             
                             cell1?.backgroundColor = UIColor.orange;
                             cell2?.backgroundColor = UIColor.orange;
@@ -211,7 +210,7 @@ class QuickSortViewController: BaseSortingViewController<QuickSort> {
                     }
                     
                         
-                        self.logView.insertNewLine(text: "\(sortMove.positionOne.value) (index \(sortMove.positionOne.index) is now sorted", color: UIColor.green);
+                        self.logView.insertNewLine(text: "SORTED: \(sortMove.positionOne.value) (index \(sortMove.positionOne.index)", color: UIColor.green);
                    });
                     
                     animationArray.append(selectSortedAnimation);
