@@ -12,9 +12,9 @@ class MergeSort: SortingAlgorithm {
     
     typealias MoveType = MergeSortMove
     static var name = "Merge Sort";
-    static var worstComplexity = "O(nLogn)";
-    static var averageComplexity = "O(nLogn)";
-    static var bestComplexity = "O(nLogn)";
+    static var worstComplexity = BigOhStringFormatter.bigOhOfNLogN()
+    static var averageComplexity = BigOhStringFormatter.bigOhOfNLogN()
+    static var bestComplexity = BigOhStringFormatter.bigOhOfNLogN()
     
     static func sort(unsortedArray: [Int]) -> [MoveType] {
         

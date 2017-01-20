@@ -7,17 +7,19 @@
 //
 
 import Foundation
+import UIKit
 
 class BubbleSort: SortingAlgorithm {
     
     typealias MoveType = BubbleSortMove
     static var name = "Bubble Sort";
-    static var worstComplexity = "O(n^2)";
-    static var averageComplexity = "O(n^2)";
-    static var bestComplexity = "O(n)";
+    
+    static var worstComplexity = BigOhStringFormatter.bigOhOfNSquared();
+    static var averageComplexity = BigOhStringFormatter.bigOhOfNSquared();
+    static var bestComplexity = BigOhStringFormatter.bigOofN();
     
     static func sort(unsortedArray: [Int]) -> [MoveType] {
-    
+     
         var sortedAboveIndex = unsortedArray.count;
         var sortedArray = unsortedArray;
         var moves: [BubbleSortMove] = [];
@@ -40,7 +42,6 @@ class BubbleSort: SortingAlgorithm {
             let sortedAbovePosition: BubbleSortMove.Position = BubbleSortMove.Position(index: sortedAboveIndex, value: sortedArray[sortedAboveIndex]);
             moves.append(BubbleSortMove.sortedFrom(sortedPosition: sortedAbovePosition));
         } while (sortedAboveIndex != 0)
-        
         
         return moves;
     }

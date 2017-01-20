@@ -14,9 +14,9 @@ protocol SortingAlgorithm {
     
     associatedtype MoveType: SortMove;
     static var name: String {get};
-    static var worstComplexity: String {get};
-    static var averageComplexity: String {get};
-    static var bestComplexity: String {get};
+    static var worstComplexity: NSAttributedString {get};
+    static var averageComplexity: NSAttributedString {get};
+    static var bestComplexity: NSAttributedString {get};
     
     static func sort(unsortedArray: [Int]) -> [MoveType];
 

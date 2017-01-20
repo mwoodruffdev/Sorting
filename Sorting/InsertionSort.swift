@@ -12,9 +12,9 @@ class InsertionSort: SortingAlgorithm {
 
     typealias MoveType = InsertionSortMove
     static var name = "Insertion  Sort";
-    static var worstComplexity = "O(n^2)";
-    static var averageComplexity = "O(n^2)";
-    static var bestComplexity = "O(n)";
+    static var worstComplexity = BigOhStringFormatter.bigOhOfNSquared();
+    static var averageComplexity = BigOhStringFormatter.bigOhOfNSquared();
+    static var bestComplexity = BigOhStringFormatter.bigOofN();
     
     static func sort(unsortedArray: [Int]) -> [MoveType] {
         

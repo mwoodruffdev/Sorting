@@ -112,15 +112,21 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     
     internal func setupComplexityLabels() {
         
-        worstCaseLabel.text = "Worst Case: \(Algorithm.worstComplexity)";
+        let worstCase = NSMutableAttributedString(string: "Worst Case: ");
+        worstCase.append(Algorithm.worstComplexity);
+        worstCaseLabel.attributedText = worstCase;
         worstCaseLabel.textColor = UIColor.black;
         view.addSubview(worstCaseLabel);
         
-        averageCaseLabel.text = "Average Case: \(Algorithm.averageComplexity)";
+        let averageCase = NSMutableAttributedString(string: "Average Case: ");
+        averageCase.append(Algorithm.averageComplexity);
+        averageCaseLabel.attributedText = averageCase;
         averageCaseLabel.textColor = UIColor.black;
         view.addSubview(averageCaseLabel);
         
-        bestCaseLabel.text = "Best Case: \(Algorithm.bestComplexity)";
+        let bestCase = NSMutableAttributedString(string: "Base Case: ");
+        bestCase.append(Algorithm.bestComplexity);
+        bestCaseLabel.attributedText = bestCase;
         bestCaseLabel.textColor = UIColor.black;
         view.addSubview(bestCaseLabel);
     }

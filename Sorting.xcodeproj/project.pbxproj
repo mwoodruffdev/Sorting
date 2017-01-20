@@ -16,6 +16,7 @@
 		2752BC6D1DC48E2C00837BCF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2752BC6B1DC48E2C00837BCF /* Main.storyboard */; };
 		2752BC6F1DC48E2C00837BCF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2752BC6E1DC48E2C00837BCF /* Assets.xcassets */; };
 		2752BC721DC48E2C00837BCF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2752BC701DC48E2C00837BCF /* LaunchScreen.storyboard */; };
+		27545DBD1E32069600025032 /* BigOhStringFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27545DBC1E32069600025032 /* BigOhStringFormatter.swift */; };
 		275592B61DD995B000A5F093 /* QuickSort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275592B51DD995B000A5F093 /* QuickSort.swift */; };
 		275592BA1DD9B61700A5F093 /* QuickSortMove.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275592B91DD9B61700A5F093 /* QuickSortMove.swift */; };
 		275592BC1DDAD27400A5F093 /* QuickSortCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275592BB1DDAD27400A5F093 /* QuickSortCollectionViewCell.swift */; };
@@ -46,6 +47,7 @@
 		2752BC6E1DC48E2C00837BCF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2752BC711DC48E2C00837BCF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2752BC731DC48E2C00837BCF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		27545DBC1E32069600025032 /* BigOhStringFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BigOhStringFormatter.swift; sourceTree = "<group>"; };
 		275592B51DD995B000A5F093 /* QuickSort.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuickSort.swift; sourceTree = "<group>"; };
 		275592B91DD9B61700A5F093 /* QuickSortMove.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuickSortMove.swift; sourceTree = "<group>"; };
 		275592BB1DDAD27400A5F093 /* QuickSortCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuickSortCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -156,9 +158,18 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		27545DBB1E32068700025032 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				27545DBC1E32069600025032 /* BigOhStringFormatter.swift */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
 		2776F4AC1DC49892000AE6E5 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				27545DBB1E32068700025032 /* Helpers */,
 				2776F4B41DC49986000AE6E5 /* SortingControllers */,
 				278480941DC9E246002ADF3D /* Views */,
 				2752BC6B1DC48E2C00837BCF /* Main.storyboard */,
@@ -371,6 +382,7 @@
 				278480871DC99F73002ADF3D /* InsertionSortViewController.swift in Sources */,
 				275592B61DD995B000A5F093 /* QuickSort.swift in Sources */,
 				271AF4EC1DF7C1EE00B3FB02 /* SortAnimation.swift in Sources */,
+				27545DBD1E32069600025032 /* BigOhStringFormatter.swift in Sources */,
 				278480891DC99FB2002ADF3D /* MergeSortViewController.swift in Sources */,
 				2784808F1DC9A228002ADF3D /* AppDelegate.swift in Sources */,
 				2784807F1DC9962E002ADF3D /* BubbleSortMove.swift in Sources */,

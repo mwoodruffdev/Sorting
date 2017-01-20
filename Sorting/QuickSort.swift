@@ -7,14 +7,15 @@
 //
 
 import Foundation
+import UIKit
 
 class QuickSort: SortingAlgorithm {
     
     typealias MoveType = QuickSortMove
     static var name = "Quick Sort";
-    static var worstComplexity = "O(n^2)";
-    static var averageComplexity = "O(nLogn)";
-    static var bestComplexity = "O(nLogn)";
+    static var worstComplexity = BigOhStringFormatter.bigOhOfNSquared();
+    static var averageComplexity = BigOhStringFormatter.bigOhOfNLogN();
+    static var bestComplexity = BigOhStringFormatter.bigOhOfNLogN();
     
     static func sort(unsortedArray: [Int]) -> [MoveType] {
         
