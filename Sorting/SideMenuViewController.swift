@@ -38,27 +38,23 @@ class SideMenuViewController: UITableViewController {
     
     internal func didUpdateIndex() {
         
-        var selectedViewController: UIViewController;
-        
         switch(selectedIndex) {
-            case 0:
-
-                selectedViewController = BubbleSortViewController();
-                break;
-            case 1:
-                selectedViewController = QuickSortViewController();
-                break;
-            case 2:
-                selectedViewController = MergeSortViewController();
-                break;
-            case 3:
-                selectedViewController = InsertionSortViewController();
-                break;
-            default:
-                selectedViewController = BubbleSortViewController();
-                break;
+        case 0:
+            
+            delegate?.didSelectViewController(viewController: BubbleSortViewController());
+            break;
+        case 1:
+            delegate?.didSelectViewController(viewController: QuickSortViewController());
+            break;
+        case 2:
+            delegate?.didSelectViewController(viewController: MergeSortViewController());
+            break;
+        case 3:
+            delegate?.didSelectViewController(viewController: InsertionSortViewController());
+            break;
+        default:
+            delegate?.didSelectViewController(viewController: BubbleSortViewController());
+            break;
         }
-        
-        delegate?.didSelectViewController(viewController: selectedViewController);
     }
 }

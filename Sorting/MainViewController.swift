@@ -33,7 +33,19 @@ class MainViewController: UIViewController, SideMenuViewControllerDelegate {
     
     func didSelectViewController(viewController: UIViewController) {
         
-        selectedViewController = UINavigationController(rootViewController: viewController);
-        containerController?.centerViewController = self.selectedViewController;
+        let navController = UINavigationController(rootViewController: viewController);
+        viewController.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Menu", style: .plain, target: self, action: #selector(pressedMenu));
+        
+        selectedViewController = navController;
+        containerController?.centerViewController = selectedViewController;
+    }
+    
+    internal func pressedMenu() {
+        
+        if(containerController?.menuState == MFSideMenuStateClosed) {
+            containerController?.menuState = MFSideMenuStateLeftMenuOpen;
+        } else {
+            containerController?.menuState = MFSideMenuStateClosed;
+        }
     }
 }

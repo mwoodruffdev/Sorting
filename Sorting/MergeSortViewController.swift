@@ -22,7 +22,7 @@ class MergeSortViewController: BaseSortingViewController<MergeSort> {
     var workingArray: [Int] = [];
     
     override func viewDidLoad() {
-
+        
         //TODO: improve coupled logic here
         sectionArray.append(sortArray.count);
         sectionArray.append(0);
@@ -46,7 +46,7 @@ class MergeSortViewController: BaseSortingViewController<MergeSort> {
             if (indexPath.section == 0) {
                 
                 text = "\(sortArray[indexPath.row])"
-
+                
                 cell.backgroundColor = getRandomRainbowColor(index: indexPath.row);
             } else {
                 
@@ -133,8 +133,8 @@ class MergeSortViewController: BaseSortingViewController<MergeSort> {
             case .merge:
                 
                 let mergeTextAnimation = ViewSortAnimation({
-                    var arrayOneText = "Array: [";
-                    var arrayTwoText = "Array: [";
+                    var arrayOneText = "[";
+                    var arrayTwoText = "[";
                     
                     for i in 0..<sortMove.left!.count {
                         arrayOneText = arrayOneText + "\(sortMove.left![i])";
@@ -155,16 +155,16 @@ class MergeSortViewController: BaseSortingViewController<MergeSort> {
                         }
                     }
                     
-                    self.logView.insertNewLine(text: "Merge \(arrayOneText) and \(arrayTwoText)", color: UIColor.black);
+                    self.logView.insertNewLine(text: "MERGE: \(arrayOneText) and \(arrayTwoText)", color: UIColor.black);
                 });
                 
                 animationArray.append(mergeTextAnimation);
                 break;
-            
+                
             case .sorted:
                 
                 let sortedTextAnimation = ViewSortAnimation({
-                    var sortedArrayText = "Sorted Array: ["
+                    var sortedArrayText = "SORTED: ["
                     for i in 0..<sortMove.left!.count {
                         sortedArrayText = sortedArrayText + "\(sortMove.left![i])";
                         if(i != sortMove.left!.count - 1) {
@@ -217,8 +217,8 @@ class MergeSortViewController: BaseSortingViewController<MergeSort> {
     }
     
     override func sort() {
-
-        logView.insertNewLine(text: "Array split into \(sortArray.count) sub arrays", color: UIColor.black);
+        
+        logView.insertNewLine(text: "SPLIT: Into \(sortArray.count) sub arrays", color: UIColor.black);
         super.sort()
     }
 }

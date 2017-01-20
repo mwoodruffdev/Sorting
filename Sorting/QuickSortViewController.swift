@@ -46,144 +46,143 @@ class QuickSortViewController: BaseSortingViewController<QuickSort> {
             
             switch(sortMove.moveType) {
                 
-                case .check:
-                    
-                    let checkAnimation = ViewSortAnimation({
-                        self.logView.insertNewLine(text: "Is \(sortMove.positionOne.value) <= \(sortMove.positionTwo!.value)?", color: UIColor.red);
-                    });
-                    
-                    animationArray.append(checkAnimation);
-                    break;
+            case .check:
                 
-                case .dontSwap:
-                    let dontSwapAnimation = CollectionViewSortAnimation({
+                let checkAnimation = ViewSortAnimation({
+                    self.logView.insertComparison(first: sortMove.positionOne.value, second: sortMove.positionTwo!.value, sign: "<=");
+                });
+                
+                animationArray.append(checkAnimation);
+                break;
+                
+            case .dontSwap:
+                let dontSwapAnimation = CollectionViewSortAnimation({
+                    
+                    self.logView.insertNewLine(text: "NO!", color: UIColor.black);
+                });
+                
+                animationArray.append(dontSwapAnimation);
+                
+                break;
+                
+            case .pivotSwap:
+                
+                let textAnimation = ViewSortAnimation({
+                    self.logView.insertSwap(text: "Right pointer has reached the pivot. Swap with the pivot");
+                });
+                
+                let pivotSwapAnimation = CollectionViewSortAnimation({
+                    
+                    self.sortCollectionView.moveItem(at: IndexPath(row: sortMove.positionOne.index, section: 0), to: IndexPath(row: sortMove.positionTwo!.index, section: 0))
+                    self.sortCollectionView.moveItem(at: IndexPath(row: sortMove.positionTwo!.index, section: 0), to: IndexPath(row: sortMove.positionOne.index, section: 0))
+                });
+                
+                animationArray.append(textAnimation);
+                animationArray.append(pivotSwapAnimation);
+                break;
+                
+            case .swap:
+                
+                let textAnimation = ViewSortAnimation({
+                    if(sortMove.positionOne.index != sortMove.positionTwo?.index) {
                         
-                        self.logView.insertNewLine(text: "NO!", color: UIColor.black);
-                    });
-                    
-                    animationArray.append(dontSwapAnimation);
-                    
-                    break;
+                        self.logView.insertSwap(text: "YES! Swap the Left and Right pointers");
+                    }
+                });
                 
-                case .pivotSwap:
+                let swapAnimation = CollectionViewSortAnimation({
                     
-                    let textAnimation = ViewSortAnimation({
-                        self.logView.insertNewLine(text: "Right pointer has reached the pivot. Swap with the pivot", color: UIColor.black);
-                    });
+                    self.sortCollectionView.moveItem(at: IndexPath(row: sortMove.positionOne.index, section: 0), to: IndexPath(row: sortMove.positionTwo!.index, section: 0))
+                    self.sortCollectionView.moveItem(at: IndexPath(row: sortMove.positionTwo!.index, section: 0), to: IndexPath(row: sortMove.positionOne.index, section: 0))
+                });
+                
+                animationArray.append(textAnimation);
+                animationArray.append(swapAnimation);
+                break;
+                
+            case .incrementLeft:
+                let incrementLeftAnimation = ViewSortAnimation({
+                    self.logView.insertLPointer(text: "Increment by one");
+                });
+                
+                animationArray.append(incrementLeftAnimation);
+                break;
+            case .incrementRight:
+                let incrementRightAnimation = ViewSortAnimation({
+                    self.logView.insertRPointer(text: "Increment by one");
+                });
+                
+                animationArray.append(incrementRightAnimation);
+                break;
+                
+            case .selectPivot:
+                
+                let selectPivotAnimation = ViewSortAnimation({
                     
-                    let pivotSwapAnimation = CollectionViewSortAnimation({
+                    for i in (0 ..< self.sortArray.count) {
                         
-                        self.sortCollectionView.moveItem(at: IndexPath(row: sortMove.positionOne.index, section: 0), to: IndexPath(row: sortMove.positionTwo!.index, section: 0))
-                        self.sortCollectionView.moveItem(at: IndexPath(row: sortMove.positionTwo!.index, section: 0), to: IndexPath(row: sortMove.positionOne.index, section: 0))
-                    });
-                    
-                    animationArray.append(textAnimation);
-                    animationArray.append(pivotSwapAnimation);
-                    break;
-                
-                case .swap:
-                
-                    let textAnimation = ViewSortAnimation({
-                        if(sortMove.positionOne.index != sortMove.positionTwo?.index) {
-                            self.logView.insertNewLine(text: "YES! Swap the Left and Right pointers", color: UIColor.black);
-                        } else {
-                            self.logView.insertNewLine(text: "YES!", color: UIColor.black);
+                        if i == sortMove.positionOne.index || i == sortMove.positionTwo?.index {
+                            continue;
                         }
-                    });
-                    
-                    let swapAnimation = CollectionViewSortAnimation({
-                        
-                        self.sortCollectionView.moveItem(at: IndexPath(row: sortMove.positionOne.index, section: 0), to: IndexPath(row: sortMove.positionTwo!.index, section: 0))
-                        self.sortCollectionView.moveItem(at: IndexPath(row: sortMove.positionTwo!.index, section: 0), to: IndexPath(row: sortMove.positionOne.index, section: 0))
-                    });
-                    
-                    animationArray.append(textAnimation);
-                    animationArray.append(swapAnimation);
-                    break;
-                
-                case .incrementLeft:
-                    let incrementLeftAnimation = ViewSortAnimation({
-                        self.logView.insertNewLine(text: "Increment Left", color: UIColor.black);
-                    });
-                    
-                    animationArray.append(incrementLeftAnimation);
-                    break;
-                case .incrementRight:
-                    let incrementRightAnimation = ViewSortAnimation({
-                        self.logView.insertNewLine(text: "Increment Right", color: UIColor.black);
-                    });
-                    
-                    animationArray.append(incrementRightAnimation);
-                    break;
-                
-                case .selectPivot:
-                
-                    let selectPivotAnimation = ViewSortAnimation({
-                        
-                        for i in (0 ..< self.sortArray.count) {
+                        if let unHighlightedCell =  self.sortCollectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? QuickSortCollectionViewCell, unHighlightedCell.isSorted == false {
                             
-                            if i == sortMove.positionOne.index || i == sortMove.positionTwo?.index {
-                                continue;
-                            }
-                            if let unHighlightedCell =  self.sortCollectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? QuickSortCollectionViewCell, unHighlightedCell.isSorted == false {
-                                
-                                unHighlightedCell.backgroundColor = UIColor.black;
-                                unHighlightedCell.resetLR();
-                            }
+                            unHighlightedCell.backgroundColor = UIColor.black;
+                            unHighlightedCell.resetLR();
                         }
-                        
-                        let cell1 = self.sortCollectionView.cellForItem(at: IndexPath(row: sortMove.positionOne.index, section: 0)) as? QuickSortCollectionViewCell;
-                        cell1?.isPivot = true;
-                        cell1?.backgroundColor = UIColor.blue;
-                        
-                        self.logView.insertNewLine(text: "\(sortMove.positionOne.value) (index \(sortMove.positionOne.index)) is the pivot", color: UIColor.blue);
-                    });
+                    }
                     
-                    animationArray.append(selectPivotAnimation);
-                    break;
+                    let cell1 = self.sortCollectionView.cellForItem(at: IndexPath(row: sortMove.positionOne.index, section: 0)) as? QuickSortCollectionViewCell;
+                    cell1?.isPivot = true;
+                    cell1?.backgroundColor = UIColor.blue;
+                    
+                    self.logView.insertPivot(text: "\(sortMove.positionOne.value) (index: \(sortMove.positionOne.index))");
+                });
                 
-                case .selectLeftRight:
+                animationArray.append(selectPivotAnimation);
+                break;
                 
-                    let selectLeftRightAnimation = ViewSortAnimation({
-
-                        for i in (0 ..< self.sortArray.count) {
-                            
-                            if i == sortMove.positionOne.index || i == sortMove.positionTwo?.index {
-                                continue;
-                            }
-                            
-                            if let unHighlightedCell =  self.sortCollectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? QuickSortCollectionViewCell,
-                                unHighlightedCell.isPivot == false, unHighlightedCell.isSorted == false {
-                                
-                                unHighlightedCell.backgroundColor = UIColor.black;
-                                unHighlightedCell.resetLR();
-                            }
+            case .selectLeftRight:
+                
+                let selectLeftRightAnimation = ViewSortAnimation({
+                    
+                    for i in (0 ..< self.sortArray.count) {
+                        
+                        if i == sortMove.positionOne.index || i == sortMove.positionTwo?.index {
+                            continue;
                         }
                         
-                        
-                        let cell1 = self.sortCollectionView.cellForItem(at: IndexPath(row: sortMove.positionOne.index, section: 0)) as? QuickSortCollectionViewCell;
-                        let cell2 = self.sortCollectionView.cellForItem(at: IndexPath(row: sortMove.positionTwo!.index, section: 0)) as? QuickSortCollectionViewCell;
-                        
-                        if(sortMove.positionOne.index == sortMove.positionTwo!.index) {
-                        
-                            self.logView.insertNewLine(text: "\(sortMove.positionOne.value) (index \(sortMove.positionOne.index)) is the left and right pointer", color: UIColor.orange);
-                            cell1?.setAsLAndR();
-                            cell1?.backgroundColor = UIColor.orange;
-                        } else {
-                        
-                            cell1?.setAsL();
-                            self.logView.insertNewLine(text: "\(sortMove.positionOne.value) (index \(sortMove.positionOne.index)) is the left pointer", color: UIColor.orange);
+                        if let unHighlightedCell =  self.sortCollectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? QuickSortCollectionViewCell,
+                            unHighlightedCell.isPivot == false, unHighlightedCell.isSorted == false {
                             
-                            cell2?.setAsR();
-                            self.logView.insertNewLine(text: "\(sortMove.positionTwo!.value) (index \(sortMove.positionTwo!.index)) is the right pointer", color: UIColor.orange);
-                            
-                            cell1?.backgroundColor = UIColor.orange;
-                            cell2?.backgroundColor = UIColor.orange;
+                            unHighlightedCell.backgroundColor = UIColor.black;
+                            unHighlightedCell.resetLR();
                         }
-                    });
+                    }
                     
-                    animationArray.append(selectLeftRightAnimation);
-                    break;
+                    
+                    let cell1 = self.sortCollectionView.cellForItem(at: IndexPath(row: sortMove.positionOne.index, section: 0)) as? QuickSortCollectionViewCell;
+                    let cell2 = self.sortCollectionView.cellForItem(at: IndexPath(row: sortMove.positionTwo!.index, section: 0)) as? QuickSortCollectionViewCell;
+                    
+                    if(sortMove.positionOne.index == sortMove.positionTwo!.index) {
+                        
+                        self.logView.insertLRPointer(text: "\(sortMove.positionOne.value) (index \(sortMove.positionOne.index))");
+                        cell1?.setAsLAndR();
+                        cell1?.backgroundColor = UIColor.orange;
+                    } else {
+                        
+                        cell1?.setAsL();
+                        self.logView.insertLPointer(text: "\(sortMove.positionOne.value) (index \(sortMove.positionOne.index))");
+                        
+                        cell2?.setAsR();
+                        self.logView.insertRPointer(text: "\(sortMove.positionTwo!.value) (index \(sortMove.positionTwo!.index))");
+                        
+                        cell1?.backgroundColor = UIColor.orange;
+                        cell2?.backgroundColor = UIColor.orange;
+                    }
+                });
+                
+                animationArray.append(selectLeftRightAnimation);
+                break;
                 
             case .selectSorted:
                 let selectSortedAnimation = ViewSortAnimation({
@@ -210,12 +209,12 @@ class QuickSortViewController: BaseSortingViewController<QuickSort> {
                         cell1?.backgroundColor = .black
                     }
                     
-                        
-                        self.logView.insertNewLine(text: "\(sortMove.positionOne.value) (index \(sortMove.positionOne.index) is now sorted", color: UIColor.green);
-                   });
                     
-                    animationArray.append(selectSortedAnimation);
-                    break;
+                    self.logView.insertNewLine(text: "SORTED: \(sortMove.positionOne.value) (index \(sortMove.positionOne.index)", color: UIColor.green);
+                });
+                
+                animationArray.append(selectSortedAnimation);
+                break;
             }
         }
         
