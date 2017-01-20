@@ -26,14 +26,14 @@ class QuickSortViewController: BaseSortingViewController<QuickSort> {
         sortCollectionView.dataSource = self
         sortCollectionView.delegate = self
         sortCollectionView.register(QuickSortCollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
-        sortCollectionView.backgroundColor = UIColor.white
+        sortCollectionView.backgroundColor = .white
         self.view.addSubview(sortCollectionView)
     }
     
     override func setupCell(indexPath: IndexPath, cell: UICollectionViewCell) {
         
         if let cell = cell as? QuickSortCollectionViewCell {
-            cell.backgroundColor = UIColor.black;
+            cell.backgroundColor = .black;
             cell.valueLabel.text = "\(sortArray[indexPath.row])";
         }
     }
@@ -58,7 +58,7 @@ class QuickSortViewController: BaseSortingViewController<QuickSort> {
             case .dontSwap:
                 let dontSwapAnimation = CollectionViewSortAnimation({
                     
-                    self.logView.insertNewLine(text: "NO!", color: UIColor.black);
+                    self.logView.insertNewLine(text: "NO!", color: .black);
                 });
                 
                 animationArray.append(dontSwapAnimation);
@@ -126,14 +126,13 @@ class QuickSortViewController: BaseSortingViewController<QuickSort> {
                         }
                         if let unHighlightedCell =  self.sortCollectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? QuickSortCollectionViewCell, unHighlightedCell.isSorted == false {
                             
-                            unHighlightedCell.backgroundColor = UIColor.black;
-                            unHighlightedCell.resetLR();
+                            unHighlightedCell.reset();
                         }
                     }
                     
                     let cell1 = self.sortCollectionView.cellForItem(at: IndexPath(row: sortMove.positionOne.index, section: 0)) as? QuickSortCollectionViewCell;
                     cell1?.isPivot = true;
-                    cell1?.backgroundColor = UIColor.blue;
+                    cell1?.setAsPivot();
                     
                     self.logView.insertPivot(text: "\(sortMove.positionOne.value) (index: \(sortMove.positionOne.index))");
                 });
@@ -154,8 +153,7 @@ class QuickSortViewController: BaseSortingViewController<QuickSort> {
                         if let unHighlightedCell =  self.sortCollectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? QuickSortCollectionViewCell,
                             unHighlightedCell.isPivot == false, unHighlightedCell.isSorted == false {
                             
-                            unHighlightedCell.backgroundColor = UIColor.black;
-                            unHighlightedCell.resetLR();
+                            unHighlightedCell.reset();
                         }
                     }
                     
@@ -167,7 +165,6 @@ class QuickSortViewController: BaseSortingViewController<QuickSort> {
                         
                         self.logView.insertLRPointer(text: "\(sortMove.positionOne.value) (index \(sortMove.positionOne.index))");
                         cell1?.setAsLAndR();
-                        cell1?.backgroundColor = UIColor.orange;
                     } else {
                         
                         cell1?.setAsL();
@@ -175,9 +172,6 @@ class QuickSortViewController: BaseSortingViewController<QuickSort> {
                         
                         cell2?.setAsR();
                         self.logView.insertRPointer(text: "\(sortMove.positionTwo!.value) (index \(sortMove.positionTwo!.index))");
-                        
-                        cell1?.backgroundColor = UIColor.orange;
-                        cell2?.backgroundColor = UIColor.orange;
                     }
                 });
                 
@@ -196,21 +190,19 @@ class QuickSortViewController: BaseSortingViewController<QuickSort> {
                         if let unHighlightedCell =  self.sortCollectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? QuickSortCollectionViewCell,
                             unHighlightedCell.isPivot == false, unHighlightedCell.isSorted == false {
                             
-                            unHighlightedCell.backgroundColor = UIColor.black;
-                            unHighlightedCell.resetLR();
+                            unHighlightedCell.reset();
                         }
                     }
                     
                     let cell1 = self.sortCollectionView.cellForItem(at: IndexPath(row: sortMove.positionOne.index, section: 0)) as? QuickSortCollectionViewCell;
                     cell1?.isSorted = !cell1!.isSorted;
                     if(cell1!.isSorted) {
-                        cell1?.backgroundColor = .green;
+                        cell1?.setAsSorted();
                     } else {
-                        cell1?.backgroundColor = .black
+                        cell1?.reset();
                     }
                     
-                    
-                    self.logView.insertNewLine(text: "SORTED: \(sortMove.positionOne.value) (index \(sortMove.positionOne.index)", color: UIColor.green);
+                    self.logView.insertSorted(text: "\(sortMove.positionOne.value) (index \(sortMove.positionOne.index))");
                 });
                 
                 animationArray.append(selectSortedAnimation);
