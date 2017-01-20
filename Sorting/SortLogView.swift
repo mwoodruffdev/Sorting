@@ -62,6 +62,9 @@ class SortLogView: UITextView, UITextViewDelegate {
         insertNewLine(text: "PIVOT: \(text)", color: .blue);
     }
     
+    func clear() {
+        text = "";
+    }
     func insertNewLine(text: String, color: UIColor) {
         
         let attributedText =  NSMutableAttributedString(string:text);

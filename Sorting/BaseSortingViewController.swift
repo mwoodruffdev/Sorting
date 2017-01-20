@@ -37,6 +37,7 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     internal var randomiseButton = UIButton();
     internal var resetButton = UIButton();
     internal var sortButton = UIButton();
+    internal var clearButton = UIButton();
     internal var logView = SortLogView();
     internal var worstCaseLabel = UILabel();
     internal var worstCaseShowMe = UIButton()
@@ -89,8 +90,8 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         
         setupCollectionView(layout: createCollectionViewLayout());
         setupComplexityLabels()
-        setupButtons();
         setupLogView();
+        setupButtons();
     }
     
     internal func setupCollectionView(layout: UICollectionViewLayout) {
@@ -125,6 +126,11 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     }
     
     internal func setupButtons() {
+        
+        clearButton.setTitle("Clear", for: .normal);
+        clearButton.setTitleColor(.blue, for: .normal);
+        clearButton.addTarget(self, action: #selector(clear), for: .touchUpInside);
+        view.addSubview(clearButton);
         
         minusButton.layer.borderColor = UIColor.white.cgColor
         minusButton.layer.borderWidth = 1;
@@ -258,6 +264,10 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         logView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true;
         logView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true;
         logView.bottomAnchor.constraint(equalTo: stepBackButton.topAnchor, constant: -10).isActive = true;
+        
+        clearButton.translatesAutoresizingMaskIntoConstraints = false;
+        clearButton.topAnchor.constraint(equalTo: logView.topAnchor).isActive = true;
+        clearButton.rightAnchor.constraint(equalTo: logView.rightAnchor, constant: -10).isActive = true;
         
         stepBackButton.translatesAutoresizingMaskIntoConstraints = false;
         stepBackButton.bottomAnchor.constraint(equalTo: sortButton.topAnchor).isActive = true;
@@ -513,6 +523,10 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
                 self.view.layoutIfNeeded();
             })
         })
+    }
+    
+    internal func clear() {
+        logView.clear();
     }
     
     internal func pressedMenu() {
