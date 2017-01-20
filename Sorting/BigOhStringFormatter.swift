@@ -22,6 +22,6 @@ class BigOhStringFormatter {
     }
     
     static func bigOhOfNLogN() -> NSAttributedString {
-        return NSAttributedString(string: "O(nLogn)");
+        return NSAttributedString(string: "O(n Log n)");
     }
 }
