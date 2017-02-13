@@ -280,7 +280,7 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         stepBackButton.bottomAnchor.constraint(equalTo: sortButton.topAnchor).isActive = true;
         stepBackButton.rightAnchor.constraint(equalTo: stepForwardButton.leftAnchor, constant: -20).isActive = true;
         stepBackButton.heightAnchor.constraint(equalToConstant: 50).isActive = true;
-        stepBackButton.widthAnchor.constraint(equalToConstant: 50).isActive = true;
+        stepBackButton.widthAnchor.constraint(equalToConstant: view.frame.size.width / 6).isActive = true;
         
         stepForwardButton.translatesAutoresizingMaskIntoConstraints = false;
         stepForwardButton.bottomAnchor.constraint(equalTo: sortButton.topAnchor).isActive = true;
@@ -292,13 +292,13 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         resetButton.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true;
         resetButton.bottomAnchor.constraint(equalTo: sortButton.topAnchor).isActive = true;
         resetButton.heightAnchor.constraint(equalToConstant: 50).isActive = true;
-        resetButton.widthAnchor.constraint(equalToConstant: view.frame.size.width / 4).isActive = true;
+        resetButton.widthAnchor.constraint(equalToConstant: view.frame.size.width / 3).isActive = true;
         
         randomiseButton.translatesAutoresizingMaskIntoConstraints = false;
         randomiseButton.leftAnchor.constraint(equalTo: resetButton.rightAnchor).isActive = true;
         randomiseButton.bottomAnchor.constraint(equalTo: sortButton.topAnchor).isActive = true;
         randomiseButton.heightAnchor.constraint(equalToConstant: 50).isActive = true;
-        randomiseButton.widthAnchor.constraint(equalToConstant: view.frame.size.width / 4).isActive = true;
+        randomiseButton.widthAnchor.constraint(greaterThanOrEqualToConstant: view.frame.size.width / 3).isActive = true;
         
         
         sortButton.translatesAutoresizingMaskIntoConstraints = false;
@@ -389,6 +389,7 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         if(didFinish) {
             reset()
             didFinish = false;
+            return;
         }
         
         if(!isAnimating) {
@@ -411,6 +412,7 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     internal func reset() {
         
         logView.pressedReset();
+        sortButton.setTitle("START", for: .normal);
         resetWith(newArray:  sortArray.map { $0 });
     }
     
@@ -520,20 +522,20 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     
     private func didStartSort() {
      
-        sortButton.setTitle("Stop Sorting", for: .normal);
+        sortButton.setTitle("STOP", for: .normal);
         willStartAnimating(true);
     }
     
     private func didPauseSort() {
      
         willStartAnimating(false);
-        sortButton.setTitle("Continue", for: .normal);
+        sortButton.setTitle("CONTINUE", for: .normal);
     }
     
     private func didFinishSort() {
         
         didFinish = true;
-        sortButton.setTitle("Start Again", for: .normal);
+        sortButton.setTitle("RESET", for: .normal);
         willStartAnimating(false);
     }
     
