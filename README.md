@@ -1,10 +1,11 @@
 # SortMeOut
 
-SortMeOut is a simple app to allow students and developers to learn and understand basic fundamental Computer Science Algorithms and concepts.
+SortMeOut is a simple app to allow students and developers to learn and understand basic fundamental Computer Science sorting algorithms.
+
+You may test and play around with input arrays however you like and also proceed through the algorithm step by step so you can learn and understand the algorithm at your own pace. Also, a log of all the sorting algorithm's operations is available so can see what exactly the algorithm is doing.
 
 Presently, SortMeOut supports four basic sorting algorithms:
 
-##Contents
 [Bubble Sort] (#bubblesort)
 
 [Merge Sort] (#mergesort)
@@ -35,6 +36,10 @@ Presently, SortMeOut supports four basic sorting algorithms:
 ##Coming Next
 
 In the future, we plan to support more Algorithms and Computer Science Concepts, such as;
+- Radix Sort
+- Selection Sort
+- Heap Sort
+- Bogosort
 
 <a name="bugsandsupport"/>
 ##Bugs & Supports
