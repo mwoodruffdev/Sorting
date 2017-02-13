@@ -14,10 +14,6 @@ Presently, SortMeOut supports four basic sorting algorithms:
 
 [Insertion Sort] (#insertionsort)
 
-[Coming Next] (#comingnext)
-
-[Bugs & Support] (#bugsandsupport)
-
 <a name="bubblesort" />
 ##Bubble Sort
 
