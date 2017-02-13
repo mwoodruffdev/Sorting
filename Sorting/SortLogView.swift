@@ -62,6 +62,34 @@ class SortLogView: UITextView, UITextViewDelegate {
         insertNewLine(text: "PIVOT: \(text)", color: .blue);
     }
     
+    func pressedReset() {
+        insertNewLine(text: "Resetting input array to original input", color: .black);
+    }
+    
+    func pressedRandomise(array: [Int]) {
+        insertNewLine(text: "Resetting input array to a new, randomised input: \(stringifyArray(array: array))", color: .black);
+    }
+    
+    func pressedBest(array: [Int]) {
+        insertNewLine(text: "Changing input array to an example of the Algorithm's best case: \(stringifyArray(array: array))", color: .black);
+    }
+    
+    func pressedWorst(array: [Int]) {
+        insertNewLine(text: "Changing input array to an example of the Algorithm's worst case: \(stringifyArray(array: array))", color: .black);
+    }
+    
+    func stringifyArray(array: [Int]) -> String {
+        var outputString = "[";
+        array.forEach({
+            outputString = outputString + "\($0), ";
+        });
+        
+        let start = outputString.index(outputString.endIndex, offsetBy: -2)
+        let end = outputString.index(outputString.endIndex, offsetBy: 0)
+        
+        return outputString.replacingCharacters(in: start..<end, with: "]");
+    }
+    
     func clear() {
         text = "";
     }

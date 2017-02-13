@@ -26,6 +26,7 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     
     var animationMoves: [SortAnimation] = [];
     var isAnimating: Bool = false;
+    var didFinish: Bool = false;
     var animationStep: Int = 0;
     
     //UI
@@ -178,7 +179,7 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         
         stepForwardButton.layer.borderColor = UIColor.white.cgColor
         stepForwardButton.layer.borderWidth = 1;
-        stepForwardButton.setTitle("NEXt", for: .normal);
+        stepForwardButton.setTitle("Next", for: .normal);
         stepForwardButton.addTarget(self, action: #selector(stepForward), for: .touchUpInside);
         stepForwardButton.backgroundColor = .black;
         stepForwardButton.setTitleColor(.white, for: .normal);
@@ -370,11 +371,13 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     internal func showMeBest() {
         
         resetWith(newArray: Algorithm.bestCase);
+        logView.pressedBest(array: Algorithm.bestCase);
     }
     
     internal func showMeWorst() {
         
         resetWith(newArray: Algorithm.worstCase);
+        logView.pressedWorst(array: Algorithm.bestCase);
     }
     
     internal func createAnimations(moves: [Algorithm.MoveType]) -> [SortAnimation] {
@@ -383,31 +386,37 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     
     internal func sort() {
         
+        if(didFinish) {
+            reset()
+            didFinish = false;
+        }
+        
         if(!isAnimating) {
             
-            sortButton.setTitle("Stop Sorting", for: .normal);
-            willStartAnimating(true);
+            didStartSort();
             performForwardAnimation(step: animationStep, completion: nil);
         } else {
             
-            willStartAnimating(false);
-            sortButton.setTitle("Continue", for: .normal);
+            didPauseSort();
         }
     }
     
     internal func randomise() {
         
         setupSortingArray(length: sortCollectionView.numberOfItems(inSection: 0));
+        logView.pressedRandomise(array: sortArray);
         sortCollectionView.reloadData();
     }
     
     internal func reset() {
         
+        logView.pressedReset();
         resetWith(newArray:  sortArray.map { $0 });
     }
     
     internal func resetWith(newArray: [Int]) {
         
+        animationStep = 0;
         sortArray = newArray;
         sortCollectionView.reloadData();
     }
@@ -462,8 +471,10 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
                 })
                 break;
             }
+        } else if (step >= animationMoves.count) {
+            didFinishSort();
         } else {
-            willStartAnimating(false);
+            didPauseSort();
         }
     }
     
@@ -507,6 +518,25 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         }
     }
     
+    private func didStartSort() {
+     
+        sortButton.setTitle("Stop Sorting", for: .normal);
+        willStartAnimating(true);
+    }
+    
+    private func didPauseSort() {
+     
+        willStartAnimating(false);
+        sortButton.setTitle("Continue", for: .normal);
+    }
+    
+    private func didFinishSort() {
+        
+        didFinish = true;
+        sortButton.setTitle("Start Again", for: .normal);
+        willStartAnimating(false);
+    }
+    
     private func willStartAnimating(_ willStart: Bool) {
         
         isAnimating = willStart;
@@ -516,7 +546,6 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         minusButton.isEnabled = !willStart;
         resetButton.isEnabled = !willStart;
         randomiseButton.isEnabled = !willStart;
-        
     }
     
     private func animateRemoveLastElement() {
