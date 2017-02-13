@@ -22,13 +22,14 @@ Presently, SortMeOut supports four basic sorting algorithms:
 <a name="mergesort" />
 ##Merge Sort
 
-![alt text](https://github.com/mwoodruffdev/Sorting/blob/feature/readmegifs/gifs/insertionsort.gif "Bubble Sort")
-
 <a name="quicksort" />
 ##Quick Sort
 
 <a name="insertionsort" />
 ##Insertion Sort
+
+![alt text](https://github.com/mwoodruffdev/Sorting/blob/feature/readmegifs/gifs/insertionsort.gif "Insertion Sort")
+
 
 <a name="comingnext" />
 ##Coming Next
