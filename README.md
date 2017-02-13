@@ -2,22 +2,39 @@
 
 SortMeOut is a simple app to allow students and developers to learn and understand basic fundamental Computer Science Algorithms and concepts.
 
-Presently, SortMeOut supports four basic Sorting Algorithms:
+Presently, SortMeOut supports four basic sorting algorithms:
 
-- Bubble Sort
-- Merge Sort
-- Quick Sort
-- Insertion Sort
+##Contents
+[Bubble Sort] (#bubblesort)
 
-#Bubble Sort
-#Merge Sort
-#Quick Sort
-#Insertion Sort
+[Merge Sort] (#mergesort)
 
-#Coming Next
+[Quick Sort] (#quicksort)
+
+[Insertion Sort] (#insertionsort)
+
+[Coming Next] (#comingnext)
+
+[Bugs & Support] (#bugsandsupport)
+
+<a name="bubblesort" />
+##Bubble Sort
+
+<a name="mergesort" />
+##Merge Sort
+
+<a name="quicksort" />
+##Quick Sort
+
+<a name="insertionsort" />
+##Insertion Sort
+
+<a name="comingnext" />
+##Coming Next
 
 In the future, we plan to support more Algorithms and Computer Science Concepts, such as;
 
-#Bugs & Supports
+<a name="bugsandsupport"/>
+##Bugs & Supports
 
 If you would like to support this app, report bugs or anything else, please contact abc@def.com
