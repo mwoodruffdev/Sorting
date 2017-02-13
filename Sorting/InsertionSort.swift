@@ -45,7 +45,7 @@ class InsertionSort: SortingAlgorithm {
                 y = y - 1;
             }
 
-            moves.append(InsertionSortMove.sorted(positionOne: InsertionSortMove.Position(index: x - 1, value: 0)));
+            moves.append(InsertionSortMove.sorted(positionOne: InsertionSortMove.Position(index: x, value: 0)));
         }
         
         return moves;
