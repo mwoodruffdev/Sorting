@@ -2,7 +2,7 @@
 
 SortMeOut is a simple app to allow students and developers to learn and understand basic fundamental Computer Science sorting algorithms.
 
-You may test and play around with input arrays however you like and also proceed through the algorithm step by step so you can learn and understand the algorithm at your own pace. Also, a log of all the sorting algorithm's operations is available so can see what exactly the algorithm is doing.
+SortMeOut doesn't just show you the algorithm, it allows you to test and play around with input arrays however you like and also proceed through the algorithm step by step so you can learn and understand the algorithm at your own pace. Also, a log of all the sorting algorithm's operations is available so you can see what exactly the algorithm is doing.
 
 Presently, SortMeOut supports four basic sorting algorithms:
 
@@ -35,11 +35,15 @@ Presently, SortMeOut supports four basic sorting algorithms:
 <a name="comingnext" />
 ##Coming Next
 
-In the future, we plan to support more Algorithms and Computer Science Concepts, such as;
+SortMeOut will soon support more Algorithms and Computer Science Concepts, such as;
 - Radix Sort
 - Selection Sort
 - Heap Sort
 - Bogosort
+
+Furthermore, the following features are also to be implemented to enhance learning capabilities:
+- Rewind function
+- Code highlighting
 
 <a name="bugsandsupport"/>
 ##Bugs & Supports
