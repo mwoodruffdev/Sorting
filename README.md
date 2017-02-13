@@ -20,6 +20,8 @@ Presently, SortMeOut supports four basic sorting algorithms:
 <a name="bubblesort" />
 ##Bubble Sort
 
+![alt text](https://github.com/mwoodruffdev/Sorting/blob/develop/gifs/bubblesort.gif "Bubble Sort")
+
 <a name="mergesort" />
 ##Merge Sort
 
