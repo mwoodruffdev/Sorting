@@ -17,6 +17,8 @@ class BubbleSort: SortingAlgorithm {
     static var worstComplexity = BigOhStringFormatter.bigOhOfNSquared();
     static var averageComplexity = BigOhStringFormatter.bigOhOfNSquared();
     static var bestComplexity = BigOhStringFormatter.bigOofN();
+    static var worstCase: [Int] = [4, 3, 2, 1, 0];
+    static var bestCase:[Int] = [0, 1, 2, 3, 4];
     
     static func sort(unsortedArray: [Int]) -> [MoveType] {
      

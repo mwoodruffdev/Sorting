@@ -124,7 +124,7 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         averageCaseLabel.textColor = UIColor.black;
         view.addSubview(averageCaseLabel);
         
-        let bestCase = NSMutableAttributedString(string: "Base Case: ");
+        let bestCase = NSMutableAttributedString(string: "Best Case: ");
         bestCase.append(Algorithm.bestComplexity);
         bestCaseLabel.attributedText = bestCase;
         bestCaseLabel.textColor = UIColor.black;
@@ -155,12 +155,12 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         view.addSubview(plusButton);
         
         worstCaseShowMe.setTitle("Show Me!", for: .normal);
-        worstCaseShowMe.addTarget(self, action: #selector(showMe), for: .touchUpInside);
+        worstCaseShowMe.addTarget(self, action: #selector(showMeWorst), for: .touchUpInside);
         worstCaseShowMe.setTitleColor(.blue, for: .normal);
         view.addSubview(worstCaseShowMe);
         
         bestCaseShowMe.setTitle("Show Me!", for: .normal);
-        bestCaseShowMe.addTarget(self, action: #selector(showMe), for: .touchUpInside);
+        bestCaseShowMe.addTarget(self, action: #selector(showMeBest), for: .touchUpInside);
         bestCaseShowMe.setTitleColor(.blue, for: .normal);
         view.addSubview(bestCaseShowMe);
         
@@ -367,8 +367,14 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         }
     }
     
-    internal func showMe() {
-        print("pressed show me");
+    internal func showMeBest() {
+        
+        resetWith(newArray: Algorithm.bestCase);
+    }
+    
+    internal func showMeWorst() {
+        
+        resetWith(newArray: Algorithm.worstCase);
     }
     
     internal func createAnimations(moves: [Algorithm.MoveType]) -> [SortAnimation] {
@@ -397,8 +403,12 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     
     internal func reset() {
         
-        let sortArrayCopy = sortArray.map { $0 };
-        sortArray = sortArrayCopy;
+        resetWith(newArray:  sortArray.map { $0 });
+    }
+    
+    internal func resetWith(newArray: [Int]) {
+        
+        sortArray = newArray;
         sortCollectionView.reloadData();
     }
     

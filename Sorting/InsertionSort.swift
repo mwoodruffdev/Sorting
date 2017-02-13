@@ -15,6 +15,8 @@ class InsertionSort: SortingAlgorithm {
     static var worstComplexity = BigOhStringFormatter.bigOhOfNSquared();
     static var averageComplexity = BigOhStringFormatter.bigOhOfNSquared();
     static var bestComplexity = BigOhStringFormatter.bigOofN();
+    static var worstCase: [Int] = [5, 4, 3, 2, 1];
+    static var bestCase:[Int] = [1, 2, 3, 4, 5];
     
     static func sort(unsortedArray: [Int]) -> [MoveType] {
         

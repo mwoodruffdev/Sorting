@@ -17,7 +17,8 @@ protocol SortingAlgorithm {
     static var worstComplexity: NSAttributedString {get};
     static var averageComplexity: NSAttributedString {get};
     static var bestComplexity: NSAttributedString {get};
-    
+    static var worstCase: [Int] {get};
+    static var bestCase:[Int] {get};
     static func sort(unsortedArray: [Int]) -> [MoveType];
 
 }

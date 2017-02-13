@@ -35,7 +35,7 @@ class InsertionSortViewController: BaseSortingViewController<InsertionSort> {
                             i = i - 1;
                         }
                         
-                        self.logView.insertNewLine(text: "The list is now sorted from index 0 to index \(sortMove.positionOne.index)", color: .black);
+                        self.logView.insertSorted(text: "The list is now sorted up to index \(sortMove.positionOne.index)");
                     });
                     
                     animationArray.append(sortedAnimation);
@@ -68,7 +68,7 @@ class InsertionSortViewController: BaseSortingViewController<InsertionSort> {
             cell1?.backgroundColor = UIColor.red;
             cell2?.backgroundColor = UIColor.red;
             
-            self.logView.insertNewLine(text: "Is \(sortMove.positionOne.value) <= \(sortMove.positionTwo!.value)?", color: .red);
+            self.logView.insertComparison(first: sortMove.positionOne.value, second: sortMove.positionTwo!.value, sign: "<=");
         });
     }
     
