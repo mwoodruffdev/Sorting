@@ -66,13 +66,19 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     }
     
     internal func setupSortingArray(length: Int) {
+
+        sortArray = createRandomArray(length: length);
+    }
+    
+    internal func createRandomArray(length: Int) -> [Int] {
+
         var tempArray = [Int]();
         
         for _ in 0...length-1 {
             let randomNumber = Int(arc4random_uniform(50));
             tempArray.append(randomNumber);
         }
-        sortArray = tempArray;
+        return tempArray;
     }
     
     internal func createCollectionViewLayout() -> UICollectionViewLayout {
@@ -404,9 +410,9 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     
     internal func randomise() {
         
-        setupSortingArray(length: sortCollectionView.numberOfItems(inSection: 0));
         logView.pressedRandomise(array: sortArray);
-        sortCollectionView.reloadData();
+        sortButton.setTitle("START", for: .normal);
+        resetWith(newArray: createRandomArray(length: sortArray.count))
     }
     
     internal func reset() {
