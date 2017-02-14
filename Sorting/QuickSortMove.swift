@@ -10,86 +10,65 @@ import UIKit
 
 class QuickSortMove: SortMove {
 
-    var positionOne: Position;
-    var positionTwo: Position?;
-    var moveType: QuickSortMoveType;
+    var moveAnimation: ViewSortAnimation?
+    var moveType: QuickSortMoveType
     
-    init(positionOne: Position, positionTwo: Position, moveType: QuickSortMoveType) {
+    init(moveType: QuickSortMoveType) {
         
-        self.positionOne = positionOne;
-        self.positionTwo = positionTwo;
-        self.moveType = moveType;
-    }
-    
-    init(positionOne: Position, moveType: QuickSortMoveType) {
-        
-        self.positionOne = positionOne;
         self.moveType = moveType;
     }
 
     static func check(positionOne: Position, positionTwo: Position) -> QuickSortMove {
         
-        return QuickSortMove(positionOne: positionOne, positionTwo: positionTwo, moveType: .check);
+        return QuickSortMove(moveType: .check(positionOne, positionTwo));
     }
     
     static func dontSwap(positionOne: Position, positionTwo: Position) -> QuickSortMove {
-        return QuickSortMove(positionOne: positionOne, positionTwo: positionTwo, moveType: .dontSwap);
+        return QuickSortMove(moveType: .dontSwap(positionOne, positionTwo));
     }
     
     static func incrementLeft(positionOne: Position) -> QuickSortMove {
-        return QuickSortMove(positionOne: positionOne, moveType: .incrementLeft);
+        return QuickSortMove(moveType: .incrementLeft(positionOne));
     }
     
     static func incrementRight(positionOne: Position) -> QuickSortMove {
-        return QuickSortMove(positionOne: positionOne, moveType: .incrementRight);
+        return QuickSortMove(moveType: .incrementRight(positionOne));
     }
     
     static func pivotSwap(positionOne: Position, positionTwo: Position) -> QuickSortMove {
-        return QuickSortMove(positionOne: positionOne, positionTwo: positionTwo, moveType: .pivotSwap);
+        return QuickSortMove(moveType: .pivotSwap(positionOne, positionTwo));
     }
     
     static func swap(positionOne: Position, positionTwo: Position) -> QuickSortMove {
         
-        return QuickSortMove(positionOne: positionOne, positionTwo: positionTwo, moveType: .swap);
+        return QuickSortMove(moveType: .swap(positionOne, positionTwo));
     }
     
     static func selectSorted(positionOne: Position) -> QuickSortMove {
         
-        return QuickSortMove(positionOne: positionOne, moveType: .selectSorted);
+        return QuickSortMove(moveType: .selectSorted(positionOne));
     }
     
     static func selectPivot(positionOne: Position) -> QuickSortMove {
         
-        return QuickSortMove(positionOne: positionOne, moveType: .selectPivot);
+        return QuickSortMove(moveType: .selectPivot(positionOne));
     }
     
     static func selectLeftRight(positionOne: Position, positionTwo: Position) -> QuickSortMove {
         
-        return QuickSortMove(positionOne: positionOne, positionTwo: positionTwo, moveType: .selectLeftRight);
-    }
-    
-    struct Position {
-        
-        var index: Int;
-        var value: Int;
-        
-        init(index: Int, value: Int) {
-            
-            self.index  = index;
-            self.value = value;
-        }
+        return QuickSortMove(moveType: .selectLeftRight(positionOne, positionTwo));
     }
 }
 
 enum QuickSortMoveType {
     
-    case check
-    case dontSwap
-    case incrementLeft
-    case incrementRight
-    case selectLeftRight
-    case swap
-    case selectPivot
-    case selectSorted
-    case pivotSwap
+    case check(Position, Position)
+    case dontSwap(Position, Position)
+    case incrementLeft(Position)
+    case incrementRight(Position)
+    case pivotSwap(Position, Position)
+    case swap(Position, Position)
+    case selectSorted(Position)
+    case selectLeftRight(Position, Position)
+    case selectPivot(Position)
 }

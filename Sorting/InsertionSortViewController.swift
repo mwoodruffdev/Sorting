@@ -17,15 +17,15 @@ class InsertionSortViewController: BaseSortingViewController<InsertionSort> {
         for sortMove in moves {
             switch(sortMove.moveType) {
                 
-                case .dontSwap:
+                case .dontSwap(let positionOne, let positionTwo):
                     
-                    animationArray.append(checkAnimation(sortMove: sortMove));
-                    animationArray.append(unCheckAnimation(sortMove: sortMove, didSwap: true));
+                    animationArray.append(checkAnimation(positionOne: positionOne, positionTwo: positionTwo));
+                    animationArray.append(unCheckAnimation(positionOne: positionOne, positionTwo: positionTwo, didSwap: true));
                     break;
-                case .sorted:
+                case .sorted(let sortedPosition):
                     let sortedAnimation = ViewSortAnimation({
                         
-                        let sortedIndex = sortMove.positionOne.index;
+                        let sortedIndex = sortedPosition.index;
                         var i = sortedIndex;
                         while i >= 0 {
                             
@@ -35,24 +35,24 @@ class InsertionSortViewController: BaseSortingViewController<InsertionSort> {
                             i = i - 1;
                         }
                         
-                        self.logView.insertSorted(text: "The list is now sorted up to index \(sortMove.positionOne.index)");
+                        self.logView.insertSorted(text: "The list is now sorted up to index \(sortedPosition.index)");
                     });
                     
                     animationArray.append(sortedAnimation);
                     
                     break;
-                case .swap:
+                case .swap(let positionOne, let positionTwo):
                     
-                    animationArray.append(checkAnimation(sortMove: sortMove));
+                    animationArray.append(checkAnimation(positionOne: positionOne, positionTwo: positionTwo));
                     
                     let swapAnimation = CollectionViewSortAnimation({
                         
-                        self.sortCollectionView.moveItem(at: IndexPath(row: sortMove.positionOne.index, section: 0), to: IndexPath(row: sortMove.positionTwo!.index, section: 0))
-                        self.sortCollectionView.moveItem(at: IndexPath(row: sortMove.positionTwo!.index, section: 0), to: IndexPath(row: sortMove.positionOne.index, section: 0))
+                        self.sortCollectionView.moveItem(at: IndexPath(row: positionOne.index, section: 0), to: IndexPath(row: positionTwo.index, section: 0))
+                        self.sortCollectionView.moveItem(at: IndexPath(row: positionTwo.index, section: 0), to: IndexPath(row: positionOne.index, section: 0))
                     });
                     
                     animationArray.append(swapAnimation);
-                    animationArray.append(unCheckAnimation(sortMove: sortMove, didSwap: true));
+                    animationArray.append(unCheckAnimation(positionOne: positionOne, positionTwo: positionTwo, didSwap: true));
                     
                     break;
             }
@@ -61,21 +61,21 @@ class InsertionSortViewController: BaseSortingViewController<InsertionSort> {
         return animationArray;
     }
     
-    private func checkAnimation(sortMove: InsertionSortMove) -> SortAnimation {
+    private func checkAnimation(positionOne: Position, positionTwo: Position) -> SortAnimation {
         return ViewSortAnimation({
-            let cell1 = self.sortCollectionView.cellForItem(at: IndexPath(row: sortMove.positionOne.index, section: 0));
-            let cell2 = self.sortCollectionView.cellForItem(at: IndexPath(row: sortMove.positionTwo!.index, section: 0));
+            let cell1 = self.sortCollectionView.cellForItem(at: IndexPath(row: positionOne.index, section: 0));
+            let cell2 = self.sortCollectionView.cellForItem(at: IndexPath(row: positionTwo.index, section: 0));
             cell1?.backgroundColor = UIColor.red;
             cell2?.backgroundColor = UIColor.red;
             
-            self.logView.insertComparison(first: sortMove.positionOne.value, second: sortMove.positionTwo!.value, sign: "<=");
+            self.logView.insertComparison(first: positionOne.value, second: positionTwo.value, sign: "<=");
         });
     }
     
-    private func unCheckAnimation(sortMove: InsertionSortMove, didSwap: Bool) -> SortAnimation {
+    private func unCheckAnimation(positionOne: Position, positionTwo: Position, didSwap: Bool) -> SortAnimation {
         return ViewSortAnimation({
-            let cell1 = self.sortCollectionView.cellForItem(at: IndexPath(row: sortMove.positionOne.index, section: 0)) as! SortCollectionViewCell;
-            let cell2 = self.sortCollectionView.cellForItem(at: IndexPath(row: sortMove.positionTwo!.index, section: 0)) as! SortCollectionViewCell;
+            let cell1 = self.sortCollectionView.cellForItem(at: IndexPath(row: positionOne.index, section: 0)) as! SortCollectionViewCell;
+            let cell2 = self.sortCollectionView.cellForItem(at: IndexPath(row: positionTwo.index, section: 0)) as! SortCollectionViewCell;
             
             if(cell1.sorted) {
                 

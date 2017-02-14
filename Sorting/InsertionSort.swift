@@ -33,19 +33,19 @@ class InsertionSort: SortingAlgorithm {
             
             var y = x;
             if(unsortedArray[y] >= unsortedArray[y-1]) {
-                moves.append(InsertionSortMove.dontSwap(positionOne: InsertionSortMove.Position(index: (y-1), value: unsortedArray[y-1]), positionTwo: InsertionSortMove.Position(index: y, value: unsortedArray[y])));
+                moves.append(InsertionSortMove.dontSwap(positionOne: Position(index: (y-1), value: unsortedArray[y-1]), positionTwo: Position(index: y, value: unsortedArray[y])));
             }
             
             while y > 0 && unsortedArray[y] <= unsortedArray[y-1] {
                 
                 (unsortedArray[y-1], unsortedArray[y]) = (unsortedArray[y], unsortedArray[y-1]);
                 if(unsortedArray[y] != unsortedArray[y-1]) {
-                    moves.append(InsertionSortMove.swap(positionOne: InsertionSortMove.Position(index: (y-1), value: unsortedArray[y-1]), positionTwo: InsertionSortMove.Position(index: y, value: unsortedArray[y])));
+                    moves.append(InsertionSortMove.swap(positionOne: Position(index: (y-1), value: unsortedArray[y-1]), positionTwo: Position(index: y, value: unsortedArray[y])));
                 }
                 y = y - 1;
             }
 
-            moves.append(InsertionSortMove.sorted(positionOne: InsertionSortMove.Position(index: x, value: 0)));
+            moves.append(InsertionSortMove.sorted(positionOne: Position(index: x, value: 0)));
         }
         
         return moves;

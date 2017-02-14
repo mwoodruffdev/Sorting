@@ -63,30 +63,30 @@ class MergeSort: SortingAlgorithm {
         var m2 = pivot-low+1;
         for i in 0..<length {
             
-            var workingPosition: MergeSortMove.Position;
+            var workingPosition: Position;
             
             if(m2 <= high-low) {
                 if(m1 <= pivot - low) {
                     if(working[m1] > working[m2]) {
                         a[i+low] = working[m2];
-                        workingPosition = MergeSortMove.Position(index: m2, value: working[m2]);
+                        workingPosition = Position(index: m2, value: working[m2]);
                         m2 += 1;
                     } else {
                         a[i+low] = working[m1];
-                        workingPosition = MergeSortMove.Position(index: m1, value: working[m1]);
+                        workingPosition = Position(index: m1, value: working[m1]);
                         m1 += 1;
                     }
                 } else {
                     a[i+low] = working[m2]
-                    workingPosition = MergeSortMove.Position(index: m2, value: working[m2]);
+                    workingPosition = Position(index: m2, value: working[m2]);
                     m2 += 1
                 }
             } else {
                 a[i + low] = working[m1];
-                workingPosition = MergeSortMove.Position(index: m1, value: working[m1]);
+                workingPosition = Position(index: m1, value: working[m1]);
                 m1 += 1;
             }
-            let arrayPosition: MergeSortMove.Position = MergeSortMove.Position(index: i+low, value: a[i+low]);
+            let arrayPosition: Position = Position(index: i+low, value: a[i+low]);
             moves.append(MergeSortMove.swap(positionOne: arrayPosition, positionTwo: workingPosition));
         }
         var sortedSubArray: [Int] = []

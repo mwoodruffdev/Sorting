@@ -10,4 +10,19 @@ import Foundation
 
 protocol SortMove {
     
+    associatedtype MoveType    
+    var moveAnimation: ViewSortAnimation? {get set};
+    var moveType: MoveType {get set};
+}
+
+struct Position {
+    
+    var index: Int;
+    var value: Int;
+    
+    init(index: Int, value: Int) {
+        
+        self.index  = index;
+        self.value = value;
+    }
 }

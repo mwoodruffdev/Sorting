@@ -42,7 +42,7 @@ class QuickSort: SortingAlgorithm {
             quicksort(moves: &moves, v: &v, low: pivot + 1, high: high)
         } else if low == high {
             
-            let sortedPosition: QuickSortMove.Position = QuickSortMove.Position(index: low, value: v[low]);
+            let sortedPosition: Position = Position(index: low, value: v[low]);
             moves.append(QuickSortMove.selectSorted(positionOne: sortedPosition));
         }
     }
@@ -50,14 +50,14 @@ class QuickSort: SortingAlgorithm {
     internal static func partition(moves: inout [QuickSortMove], v: inout [Int], low: Int, high: Int) -> Int {
         
         let pivot = v[high]
-        let selectPivot: QuickSortMove.Position = QuickSortMove.Position(index: high, value: pivot);
+        let selectPivot: Position = Position(index: high, value: pivot);
         moves.append(QuickSortMove.selectPivot(positionOne: selectPivot));
         
         var left = low
         for right in low..<high {
             
-            let leftPosition: QuickSortMove.Position = QuickSortMove.Position(index: left, value: v[left]);
-            let rightPosition: QuickSortMove.Position = QuickSortMove.Position(index: right, value: v[right]);
+            let leftPosition: Position = Position(index: left, value: v[left]);
+            let rightPosition: Position = Position(index: right, value: v[right]);
             
             //Highlight the left / right positions
             moves.append(QuickSortMove.selectLeftRight(positionOne: leftPosition, positionTwo: rightPosition));
@@ -79,8 +79,8 @@ class QuickSort: SortingAlgorithm {
         
         (v[left], v[high]) = (v[high], v[left])
         
-        let leftPosition: QuickSortMove.Position = QuickSortMove.Position(index: left, value: v[left]);
-        let pivotPosition: QuickSortMove.Position = QuickSortMove.Position(index: high, value: v[high]);
+        let leftPosition: Position = Position(index: left, value: v[left]);
+        let pivotPosition: Position = Position(index: high, value: v[high]);
         
         moves.append(QuickSortMove.pivotSwap(positionOne: leftPosition, positionTwo: pivotPosition));
         moves.append(QuickSortMove.selectSorted(positionOne: leftPosition));
