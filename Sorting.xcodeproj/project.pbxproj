@@ -34,6 +34,7 @@
 		278480911DC9A302002ADF3D /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278480901DC9A302002ADF3D /* MainViewController.swift */; };
 		278480931DC9C443002ADF3D /* SortMove.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278480921DC9C443002ADF3D /* SortMove.swift */; };
 		27B74B8B1DF8030100DFD30F /* BaseSortingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B74B8A1DF8030100DFD30F /* BaseSortingViewController.swift */; };
+		27BC66671E5314F5000C2B5F /* InputArrays.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BC66661E5314F5000C2B5F /* InputArrays.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +67,7 @@
 		278480901DC9A302002ADF3D /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		278480921DC9C443002ADF3D /* SortMove.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortMove.swift; sourceTree = "<group>"; };
 		27B74B8A1DF8030100DFD30F /* BaseSortingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseSortingViewController.swift; sourceTree = "<group>"; };
+		27BC66661E5314F5000C2B5F /* InputArrays.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputArrays.swift; sourceTree = "<group>"; };
 		39F50848D72ACC04E57D61CA /* Pods_Sorting.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sorting.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BFB77BFFE991217998F02A2 /* Pods-Sorting.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sorting.release.xcconfig"; path = "Pods/Target Support Files/Pods-Sorting/Pods-Sorting.release.xcconfig"; sourceTree = "<group>"; };
 		E149BA7F8AD5EB1C4BC3913D /* Pods-Sorting.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sorting.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Sorting/Pods-Sorting.debug.xcconfig"; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 		278480781DC9957A002ADF3D /* Algorithms */ = {
 			isa = PBXGroup;
 			children = (
+				27BC66651E5314C6000C2B5F /* Helpers */,
 				278480791DC995A9002ADF3D /* SortingAlgorithm.swift */,
 				278480801DC9967A002ADF3D /* BubbleSort.swift */,
 				271AF4C51DEE92FD00B3FB02 /* InsertionSort.swift */,
@@ -231,6 +234,14 @@
 				271AF4E81DF554C600B3FB02 /* Helpers */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		27BC66651E5314C6000C2B5F /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				27BC66661E5314F5000C2B5F /* InputArrays.swift */,
+			);
+			name = Helpers;
 			sourceTree = "<group>";
 		};
 		6127772B9533C4369C54BD3A /* Frameworks */ = {
@@ -387,6 +398,7 @@
 				2784808F1DC9A228002ADF3D /* AppDelegate.swift in Sources */,
 				2784807F1DC9962E002ADF3D /* BubbleSortMove.swift in Sources */,
 				278480811DC9967A002ADF3D /* BubbleSort.swift in Sources */,
+				27BC66671E5314F5000C2B5F /* InputArrays.swift in Sources */,
 				275592BA1DD9B61700A5F093 /* QuickSortMove.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

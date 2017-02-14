@@ -67,18 +67,7 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     
     internal func setupSortingArray(length: Int) {
 
-        sortArray = createRandomArray(length: length);
-    }
-    
-    internal func createRandomArray(length: Int) -> [Int] {
-
-        var tempArray = [Int]();
-        
-        for _ in 0...length-1 {
-            let randomNumber = Int(arc4random_uniform(50));
-            tempArray.append(randomNumber);
-        }
-        return tempArray;
+        sortArray = InputArrays.randomInputArray(length: length);
     }
     
     internal func createCollectionViewLayout() -> UICollectionViewLayout {
@@ -212,6 +201,8 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         sortButton.backgroundColor = .blue;
         sortButton.setTitleColor(.white, for: .normal);
         view.addSubview(sortButton);
+        
+        resetButtonState();
     }
     
     //MARK: Autolayout
@@ -314,6 +305,19 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         sortButton.heightAnchor.constraint(equalToConstant: 50).isActive = true;
     }
     
+    internal func resetButtonState() {
+        
+        worstCaseShowMe.isEnabled = true;
+        bestCaseShowMe.isEnabled = true;
+        minusButton.isEnabled = true;
+        plusButton.isEnabled = true;
+        resetButton.isEnabled = false;
+        randomiseButton.isEnabled = true;
+        stepBackButton.isEnabled = false;
+        stepForwardButton.isEnabled = true;
+        sortButton.isEnabled = true;
+    }
+    
     //MARK: Collection View
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -412,7 +416,7 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         
         logView.pressedRandomise(array: sortArray);
         sortButton.setTitle("START", for: .normal);
-        resetWith(newArray: createRandomArray(length: sortArray.count))
+        resetWith(newArray: InputArrays.randomInputArray(length: sortArray.count))
     }
     
     internal func reset() {
@@ -427,6 +431,7 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         animationStep = 0;
         sortArray = newArray;
         sortCollectionView.reloadData();
+        resetButtonState();
     }
     
     internal func stepBack() {
@@ -550,10 +555,12 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         isAnimating = willStart;
         stepBackButton.isEnabled = !willStart;
         stepForwardButton.isEnabled = !willStart;
-        plusButton.isEnabled = !willStart;
-        minusButton.isEnabled = !willStart;
+        plusButton.isEnabled = false;
+        minusButton.isEnabled = false;
         resetButton.isEnabled = !willStart;
         randomiseButton.isEnabled = !willStart;
+        bestCaseShowMe.isEnabled = !willStart;
+        worstCaseShowMe.isEnabled = !willStart;
     }
     
     private func animateRemoveLastElement() {

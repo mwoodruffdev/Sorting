@@ -16,7 +16,7 @@ class MergeSort: SortingAlgorithm {
     static var averageComplexity = BigOhStringFormatter.bigOhOfNLogN()
     static var bestComplexity = BigOhStringFormatter.bigOhOfNLogN()
     static var worstCase: [Int] = [4, 0, 6, 2, 5, 1, 7, 3];
-    static var bestCase:[Int] = [0, 1, 2, 3, 4, 5, 6, 7];
+    static var bestCase:[Int] = InputArrays.randomSortedArray(length: 8, ascending: true);
     
     static func sort(unsortedArray: [Int]) -> [MoveType] {
         
