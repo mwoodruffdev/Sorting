@@ -87,7 +87,11 @@ class MergeSort: SortingAlgorithm {
                 m1 += 1;
             }
             let arrayPosition: Position = Position(index: i+low, value: a[i+low]);
-            moves.append(MergeSortMove.swap(positionOne: arrayPosition, positionTwo: workingPosition));
+            
+            if(arrayPosition.index != workingPosition.index + low) {
+                moves.append(MergeSortMove.swap(positionOne: arrayPosition, positionTwo: workingPosition));
+            }
+            
         }
         var sortedSubArray: [Int] = []
         for i in low...high {

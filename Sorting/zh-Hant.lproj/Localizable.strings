@@ -29,7 +29,6 @@
 "logger_action_swap_right_and_pivot" = "Swap right pointer and pivot";
 "logger_action_swap_left_and_right" = "Swap left and right pointers";
 "logger_action_increment" = "Increment by one";
-"logger_action_swap_single" = "SWAP: %@";
 "logger_action_comparison" = "COMPARISON: %i %@ %i?";
 "logger_action_pivot" = "PIVOT: %@";
 "logger_action_detail_index" = "index: %i";
