@@ -191,8 +191,15 @@ class MergeSortViewController: BaseSortingViewController<MergeSort> {
                     self.sortCollectionView.moveItem(at: ip1, to: ip2);
                     self.sortCollectionView.moveItem(at: ip2, to: ip1);
                 });
+                let swappedAnimation = ViewSortAnimation({
+                    let arrayIndex = sortMove.positionTwo?.index
+                    let ip1 = IndexPath(row:arrayIndex!, section: 1)
+                    let cell = self.sortCollectionView.cellForItem(at: ip1);
+                    cell?.backgroundColor = .red;
+                });
                 
                 animationArray.append(swapAnimation);
+                animationArray.append(swappedAnimation);
                 break;
             case .removeWorking:
                 
