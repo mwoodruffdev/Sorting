@@ -27,19 +27,19 @@ class SortLogView: UITextView, UITextViewDelegate {
     }
     
     func insertComparison(first: Int, second: Int, sign: String) {
-        insertNewLine(text: "COMPARISON: \(first) \(sign) \(second)?", color: .red);
+        insertNewLine(text: String(format: NSLocalizedString("logger_action_comparison", comment: ""), first, sign, second), color: .red);
     }
     
     func insertSorted(text: String) {
-        insertNewLine(text: "SORTED: \(text)", color: .green);
+        insertNewLine(text: String(format: NSLocalizedString("logger_action_sorted", comment: ""), text),  color: .green);
     }
     
     func insertSwap(first: Int, second: Int) {
-        insertNewLine(text: "SWAP: \(first) and index \(second)", color: .black)
+        insertSwap(text: String(format: NSLocalizedString("logger_action_swap_default", comment: ""), first, second));
     }
     
     func insertSwap(text: String) {
-        insertNewLine(text: "SWAP: \(text)", color: .black);
+        insertNewLine(text: "\(String(format: NSLocalizedString("logger_action_swap", comment: "")))\(text)", color: .black);
     }
     
     func insertPointer(text: String) {
@@ -47,35 +47,35 @@ class SortLogView: UITextView, UITextViewDelegate {
     }
     
     func insertLPointer(text: String) {
-        insertPointer(text: "L POINTER: \(text)");
+        insertPointer(text: String(format: NSLocalizedString("logger_action_left_pointer", comment: ""), text));
     }
     
     func insertRPointer(text: String) {
-        insertPointer(text: "R POINTER: \(text)");
+        insertPointer(text: String(format: NSLocalizedString("logger_action_right_pointer", comment: ""), text));
     }
     
     func insertLRPointer(text: String) {
-        insertPointer(text: "L&R POINTER: \(text)");
+        insertPointer(text: String(format: NSLocalizedString("logger_action_left_and_right_pointer", comment: ""), text));
     }
     
     func insertPivot(text: String) {
-        insertNewLine(text: "PIVOT: \(text)", color: .blue);
+        insertNewLine(text: String(format: NSLocalizedString("logger_action_pivot", comment: ""), text), color: .blue);
     }
     
     func pressedReset() {
-        insertNewLine(text: "Resetting input array to original input", color: .black);
+        insertNewLine(text: NSLocalizedString("logger_action_reset", comment: ""), color: .black);
     }
     
     func pressedRandomise(array: [Int]) {
-        insertNewLine(text: "Resetting input array to a new, randomised input: \(stringifyArray(array: array))", color: .black);
+        insertNewLine(text: String(format: NSLocalizedString("logger_action_randomise", comment: ""), stringifyArray(array: array)), color: .black);
     }
     
     func pressedBest(array: [Int]) {
-        insertNewLine(text: "Changing input array to an example of the Algorithm's best case: \(stringifyArray(array: array))", color: .black);
+        insertNewLine(text: String(format: NSLocalizedString("logger_action_best_case", comment: ""), stringifyArray(array: array)), color: .black);
     }
     
     func pressedWorst(array: [Int]) {
-        insertNewLine(text: "Changing input array to an example of the Algorithm's worst case: \(stringifyArray(array: array))", color: .black);
+        insertNewLine(text: String(format: NSLocalizedString("logger_action_worst_case", comment: ""), stringifyArray(array: array)), color: .black);
     }
     
     func stringifyArray(array: [Int]) -> String {

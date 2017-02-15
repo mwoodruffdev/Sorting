@@ -42,7 +42,6 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     internal var logView = SortLogView();
     internal var worstCaseLabel = UILabel();
     internal var worstCaseShowMe = UIButton()
-    internal var averageCaseLabel = UILabel();
     internal var bestCaseLabel = UILabel();
     internal var bestCaseShowMe = UIButton();
     
@@ -108,19 +107,14 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     
     internal func setupComplexityLabels() {
         
-        let worstCase = NSMutableAttributedString(string: "Worst Case: ");
+        
+        let worstCase = NSMutableAttributedString(string: NSLocalizedString("worst_case_label", comment: ""));
         worstCase.append(Algorithm.worstComplexity);
         worstCaseLabel.attributedText = worstCase;
         worstCaseLabel.textColor = UIColor.black;
         view.addSubview(worstCaseLabel);
         
-        let averageCase = NSMutableAttributedString(string: "Average Case: ");
-        averageCase.append(Algorithm.averageComplexity);
-        averageCaseLabel.attributedText = averageCase;
-        averageCaseLabel.textColor = UIColor.black;
-        view.addSubview(averageCaseLabel);
-        
-        let bestCase = NSMutableAttributedString(string: "Best Case: ");
+        let bestCase = NSMutableAttributedString(string: NSLocalizedString("best_case_label", comment: ""));
         bestCase.append(Algorithm.bestComplexity);
         bestCaseLabel.attributedText = bestCase;
         bestCaseLabel.textColor = UIColor.black;
@@ -129,7 +123,7 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     
     internal func setupButtons() {
         
-        clearButton.setTitle("Clear", for: .normal);
+        clearButton.setTitle(NSLocalizedString("clear", comment: ""), for: .normal);
         clearButton.setTitleColor(.blue, for: .normal);
         clearButton.addTarget(self, action: #selector(clear), for: .touchUpInside);
         view.addSubview(clearButton);
@@ -150,12 +144,12 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         plusButton.setTitleColor(.white, for: .normal);
         view.addSubview(plusButton);
         
-        worstCaseShowMe.setTitle("Show Me!", for: .normal);
+        worstCaseShowMe.setTitle(NSLocalizedString("show_me", comment: ""), for: .normal);
         worstCaseShowMe.addTarget(self, action: #selector(showMeWorst), for: .touchUpInside);
         worstCaseShowMe.setTitleColor(.blue, for: .normal);
         view.addSubview(worstCaseShowMe);
         
-        bestCaseShowMe.setTitle("Show Me!", for: .normal);
+        bestCaseShowMe.setTitle(NSLocalizedString("show_me", comment: ""), for: .normal);
         bestCaseShowMe.addTarget(self, action: #selector(showMeBest), for: .touchUpInside);
         bestCaseShowMe.setTitleColor(.blue, for: .normal);
         view.addSubview(bestCaseShowMe);
@@ -165,7 +159,7 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         /* Hide back feature for now */
         stepBackButton.layer.borderColor = UIColor.white.cgColor
         stepBackButton.layer.borderWidth = 1;
-        stepBackButton.setTitle("BACK", for: .normal);
+        stepBackButton.setTitle(NSLocalizedString("back", comment: ""), for: .normal);
         stepBackButton.addTarget(self, action: #selector(stepBack), for: .touchUpInside);
         stepBackButton.backgroundColor = .black;
         stepBackButton.setTitleColor(.white, for: .normal);
@@ -174,7 +168,7 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         
         stepForwardButton.layer.borderColor = UIColor.white.cgColor
         stepForwardButton.layer.borderWidth = 1;
-        stepForwardButton.setTitle("Next", for: .normal);
+        stepForwardButton.setTitle(NSLocalizedString("next", comment: ""), for: .normal);
         stepForwardButton.addTarget(self, action: #selector(stepForward), for: .touchUpInside);
         stepForwardButton.backgroundColor = .black;
         stepForwardButton.setTitleColor(.white, for: .normal);
@@ -182,7 +176,7 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         
         randomiseButton.layer.borderColor = UIColor.white.cgColor
         randomiseButton.layer.borderWidth = 1;
-        randomiseButton.setTitle("RANDOMISE", for: .normal);
+        randomiseButton.setTitle(NSLocalizedString("randomise", comment: ""), for: .normal);
         randomiseButton.addTarget(self, action: #selector(randomise), for: .touchUpInside);
         randomiseButton.backgroundColor = .black;
         randomiseButton.setTitleColor(.white, for: .normal);
@@ -190,13 +184,13 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         
         resetButton.layer.borderColor = UIColor.white.cgColor
         resetButton.layer.borderWidth = 1;
-        resetButton.setTitle("RESET", for: .normal);
+        resetButton.setTitle(NSLocalizedString("reset", comment: ""), for: .normal);
         resetButton.addTarget(self, action: #selector(reset), for: .touchUpInside);
         resetButton.backgroundColor = .black;
         resetButton.setTitleColor(.white, for: .normal);
         view.addSubview(resetButton);
         
-        sortButton.setTitle("START", for: .normal);
+        sortButton.setTitle(NSLocalizedString("start", comment: ""), for: .normal);
         sortButton.addTarget(self, action: #selector(sort), for: .touchUpInside);
         sortButton.backgroundColor = .blue;
         sortButton.setTitleColor(.white, for: .normal);
@@ -255,12 +249,8 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         bestCaseShowMe.leftAnchor.constraint(equalTo: bestCaseLabel.rightAnchor, constant: 10).isActive = true;
         bestCaseShowMe.rightAnchor.constraint(lessThanOrEqualTo: view.rightAnchor, constant: -10).isActive = true;
         
-        averageCaseLabel.translatesAutoresizingMaskIntoConstraints = false;
-        averageCaseLabel.topAnchor.constraint(equalTo: worstCaseLabel.bottomAnchor, constant: 10).isActive = true
-        averageCaseLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true;
-        
         bestCaseLabel.translatesAutoresizingMaskIntoConstraints = false;
-        bestCaseLabel.topAnchor.constraint(equalTo: averageCaseLabel.bottomAnchor, constant: 10).isActive = true
+        bestCaseLabel.topAnchor.constraint(equalTo: worstCaseLabel.bottomAnchor, constant: 10).isActive = true
         bestCaseLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true;
         
         logView.translatesAutoresizingMaskIntoConstraints = false;
@@ -415,14 +405,14 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     internal func randomise() {
         
         logView.pressedRandomise(array: sortArray);
-        sortButton.setTitle("START", for: .normal);
+        sortButton.setTitle(NSLocalizedString("start", comment: ""), for: .normal);
         resetWith(newArray: InputArrays.randomInputArray(length: sortArray.count))
     }
     
     internal func reset() {
         
         logView.pressedReset();
-        sortButton.setTitle("START", for: .normal);
+        sortButton.setTitle(NSLocalizedString("start", comment: ""), for: .normal);
         resetWith(newArray:  sortArray.map { $0 });
     }
     
@@ -533,20 +523,20 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     
     private func didStartSort() {
      
-        sortButton.setTitle("STOP", for: .normal);
+        sortButton.setTitle(NSLocalizedString("stop", comment: ""), for: .normal);
         willStartAnimating(true);
     }
     
     private func didPauseSort() {
      
         willStartAnimating(false);
-        sortButton.setTitle("CONTINUE", for: .normal);
+        sortButton.setTitle(NSLocalizedString("continue", comment: ""), for: .normal);
     }
     
     private func didFinishSort() {
         
         didFinish = true;
-        sortButton.setTitle("RESET", for: .normal);
+        sortButton.setTitle(NSLocalizedString("reset", comment: ""), for: .normal);
         willStartAnimating(false);
     }
     
@@ -589,7 +579,5 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         logView.clear();
     }
     
-    internal func pressedMenu() {
-        print("yup");
-    }
+    internal func pressedMenu() {}
 }

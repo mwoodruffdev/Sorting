@@ -11,7 +11,7 @@ import UIKit
 class InsertionSort: SortingAlgorithm {
 
     typealias MoveType = InsertionSortMove
-    static var name = "Insertion  Sort";
+    static var name = NSLocalizedString("insertion_sort_title", comment: "");
     static var worstComplexity = BigOhStringFormatter.bigOhOfNSquared();
     static var averageComplexity = BigOhStringFormatter.bigOhOfNSquared();
     static var bestComplexity = BigOhStringFormatter.bigOofN();

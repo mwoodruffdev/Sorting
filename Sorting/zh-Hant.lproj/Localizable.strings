@@ -1,0 +1,46 @@
+/* 
+  Localizable.strings
+  Sorting
+
+  Created by Michael Woodruff on 15/02/2017.
+  Copyright © 2017 Mike Woodruff. All rights reserved.
+*/
+"worst_case_label" = "Worst Case: ";
+"best_case_label" = "Best Case: ";
+"clear" = "Clear";
+"show_me" = "Show Me!";
+"back" = "BACK";
+"next" = "NEXT";
+"randomise" = "RANDOMISE";
+"reset" = "RESET";
+"start" = "START";
+"stop" = "STOP";
+"continue" = "CONTINUE";
+"menu" = "Menu";
+"no" = "NO!";
+"yes" = "YES!";
+"logger_intro_text" = "Press start to begin!";
+"logger_action_sorted" = "SORTED: %@";
+"logger_action_sorted_detail_from_index" = "from index %i";
+"logger_action_sorted_detail_up_to_index" = "up to index %i";
+"logger_action_swap" = "SWAP: ";
+"logger_action_swap_default" = "%i and index %i";
+"logger_action_swap_left_and_pivot" = "Swap left pointer and pivot";
+"logger_action_swap_right_and_pivot" = "Swap right pointer and pivot";
+"logger_action_swap_left_and_right" = "Swap left and right pointers";
+"logger_action_increment" = "Increment by one";
+"logger_action_swap_single" = "SWAP: %@";
+"logger_action_comparison" = "COMPARISON: %i %@ %i?";
+"logger_action_pivot" = "PIVOT: %@";
+"logger_action_detail_index" = "index: %i";
+"logger_action_left_and_right_pointer" = "L&R POINTER: %@";
+"logger_action_left_pointer" = "L POINTER: %@";
+"logger_action_right_pointer" = "R POINTER: %@";;
+"logger_action_reset" = "Resetting input array to original input";
+"logger_action_randomise" = "Resetting input array to a new, randomised input: %@";
+"logger_action_best_case" = "Changing input array to an example of the Algorithm's best case: %@";
+"logger_action_worst_case" = "Changing input array to an example of the Algorithm's worst case: %@";
+"bubble_sort_title" = "氣泡排序";
+"merge_sort_title" = "合併排序";
+"quick_sort_title" = "快速排序";
+"insertion_sort_title" = "插入排序";

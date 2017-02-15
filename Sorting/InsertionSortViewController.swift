@@ -35,7 +35,7 @@ class InsertionSortViewController: BaseSortingViewController<InsertionSort> {
                             i = i - 1;
                         }
                         
-                        self.logView.insertSorted(text: "The list is now sorted up to index \(sortedPosition.index)");
+                        self.logView.insertSorted(text: String(format: NSLocalizedString("logger_action_sorted_detail_up_to_index", comment: ""), sortedPosition.index));
                     });
                     
                     animationArray.append(sortedAnimation);
@@ -94,9 +94,9 @@ class InsertionSortViewController: BaseSortingViewController<InsertionSort> {
             }
             
             if(!didSwap) {
-                self.logView.insertNewLine(text: "NO!", color: .black);
+                self.logView.insertNewLine(text: NSLocalizedString("no", comment: ""), color: .black);
             } else {
-                self.logView.insertNewLine(text: "YES!", color: .black);
+                self.logView.insertNewLine(text: NSLocalizedString("yes", comment: ""), color: .black);
             }
         });
     }

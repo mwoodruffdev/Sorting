@@ -12,7 +12,7 @@ import UIKit
 class QuickSort: SortingAlgorithm {
     
     typealias MoveType = QuickSortMove
-    static var name = "Quick Sort";
+    static var name = NSLocalizedString("quick_sort_title", comment: "");
     static var worstComplexity = BigOhStringFormatter.bigOhOfNSquared();
     static var averageComplexity = BigOhStringFormatter.bigOhOfNLogN();
     static var bestComplexity = BigOhStringFormatter.bigOhOfNLogN();

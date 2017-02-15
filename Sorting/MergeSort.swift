@@ -11,7 +11,7 @@ import UIKit
 class MergeSort: SortingAlgorithm {
     
     typealias MoveType = MergeSortMove
-    static var name = "Merge Sort";
+    static var name = NSLocalizedString("merge_sort_title", comment: "");
     static var worstComplexity = BigOhStringFormatter.bigOhOfNLogN()
     static var averageComplexity = BigOhStringFormatter.bigOhOfNLogN()
     static var bestComplexity = BigOhStringFormatter.bigOhOfNLogN()

@@ -63,7 +63,7 @@ class BubbleSortViewController: BaseSortingViewController<BubbleSort> {
                         i = i + 1;
                     }
                     
-                    self.logView.insertSorted(text: "From index \(position)");
+                    self.logView.insertSorted(text: String(format: NSLocalizedString("logger_action_sorted_detail_from_index", comment: ""), position.index));
                 });
                 
                 animationArray.append(sortedAnimation);

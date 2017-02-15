@@ -12,7 +12,7 @@ import UIKit
 class BubbleSort: SortingAlgorithm {
     
     typealias MoveType = BubbleSortMove
-    static var name = "Bubble Sort";
+    static var name = NSLocalizedString("bubble_sort_title", comment: "");
     
     static var worstComplexity = BigOhStringFormatter.bigOhOfNSquared();
     static var averageComplexity = BigOhStringFormatter.bigOhOfNSquared();

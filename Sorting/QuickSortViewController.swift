@@ -58,7 +58,7 @@ class QuickSortViewController: BaseSortingViewController<QuickSort> {
             case .dontSwap(let positionOne, let positionTwo):
                 let dontSwapAnimation = CollectionViewSortAnimation({
                     
-                    self.logView.insertNewLine(text: "NO!", color: .black);
+                    self.logView.insertNewLine(text: NSLocalizedString("no", comment: ""), color: .black);
                 });
                 
                 animationArray.append(dontSwapAnimation);
@@ -68,7 +68,7 @@ class QuickSortViewController: BaseSortingViewController<QuickSort> {
             case .pivotSwap(let positionOne, let positionTwo):
                 
                 let textAnimation = ViewSortAnimation({
-                    self.logView.insertSwap(text: "Right pointer has reached the pivot. Swap with the pivot");
+                    self.logView.insertSwap(text: NSLocalizedString("logger_action_swap_right_and_pivot", comment: ""));
                 });
                 
                 let pivotSwapAnimation = CollectionViewSortAnimation({
@@ -85,8 +85,7 @@ class QuickSortViewController: BaseSortingViewController<QuickSort> {
                 
                 let textAnimation = ViewSortAnimation({
                     if(positionOne.index != positionTwo.index) {
-                        
-                        self.logView.insertSwap(text: "YES! Swap the Left and Right pointers");
+                        self.logView.insertSwap(text: NSLocalizedString("logger_action_swap_left_and_right", comment: ""));
                     }
                 });
                 
@@ -102,14 +101,15 @@ class QuickSortViewController: BaseSortingViewController<QuickSort> {
                 
             case .incrementLeft(let leftPosition):
                 let incrementLeftAnimation = ViewSortAnimation({
-                    self.logView.insertLPointer(text: "Increment by one");
+                    
+                    self.logView.insertLPointer(text: NSLocalizedString("logger_action_increment", comment: ""));
                 });
                 
                 animationArray.append(incrementLeftAnimation);
                 break;
             case .incrementRight(let rightPosition):
                 let incrementRightAnimation = ViewSortAnimation({
-                    self.logView.insertRPointer(text: "Increment by one");
+                    self.logView.insertRPointer(text: NSLocalizedString("logger_action_increment", comment: ""));
                 });
                 
                 animationArray.append(incrementRightAnimation);
@@ -130,7 +130,7 @@ class QuickSortViewController: BaseSortingViewController<QuickSort> {
                     cell1?.isPivot = true;
                     cell1?.setAsPivot();
                     
-                    self.logView.insertPivot(text: "\(pivotPosition.value) (index: \(pivotPosition.index))");
+                    self.logView.insertPivot(text: "\(pivotPosition.value) (\(String(format: NSLocalizedString("logger_action_detail_index", comment: ""), pivotPosition.index)))");
                 });
                 
                 animationArray.append(selectPivotAnimation);
@@ -159,15 +159,15 @@ class QuickSortViewController: BaseSortingViewController<QuickSort> {
                     
                     if(positionOne.index == positionTwo.index) {
                         
-                        self.logView.insertLRPointer(text: "\(positionOne.value) (index \(positionOne.index))");
+                        self.logView.insertLRPointer(text: "\(positionOne.value) (\(String(format: NSLocalizedString("logger_action_detail_index", comment: ""), positionOne.index)))");
                         cell1?.setAsLAndR();
                     } else {
                         
                         cell1?.setAsL();
-                        self.logView.insertLPointer(text: "\(positionOne.value) (index \(positionOne.index))");
+                        self.logView.insertLPointer(text: "\(positionOne.value) (\(String(format: NSLocalizedString("logger_action_detail_index", comment: ""), positionOne.index)))");
                         
                         cell2?.setAsR();
-                        self.logView.insertRPointer(text: "\(positionTwo.value) (index \(positionTwo.index))");
+                        self.logView.insertRPointer(text: "\(positionTwo.value) (\(String(format: NSLocalizedString("logger_action_detail_index", comment: ""), positionTwo.index)))");
                     }
                 });
                 
@@ -195,7 +195,7 @@ class QuickSortViewController: BaseSortingViewController<QuickSort> {
                         cell1?.reset();
                     }
                     
-                    self.logView.insertSorted(text: "\(sortedPosition.value) (index \(sortedPosition.index))");
+                    self.logView.insertSorted(text: "\(sortedPosition.value) \(String(format: NSLocalizedString("logger_action_detail_index", comment: ""), sortedPosition.index)))");
                 });
                 
                 animationArray.append(selectSortedAnimation);
