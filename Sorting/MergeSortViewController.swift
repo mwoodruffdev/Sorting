@@ -75,16 +75,16 @@ class MergeSortViewController: BaseSortingViewController<MergeSort> {
             
             switch(sortMove.moveType) {
                 
-            case .addWorking:
+            case .addWorking(let low, let high, let workingArray):
                 
                 var averageColor: UIColor?;
                 let colorAnimation = ViewSortAnimation({
                     var avR: CGFloat = 0;
                     var avG: CGFloat = 0;
                     var avB: CGFloat = 0;
-                    let difference: CGFloat = CGFloat(sortMove.high! - sortMove.low! + 1);
+                    let difference: CGFloat = CGFloat(high - low + 1);
                     
-                    for i in sortMove.low!..<sortMove.high! + 1 {
+                    for i in low..<high + 1 {
                         
                         let cell = self.sortCollectionView.cellForItem(at: IndexPath(row: i, section: 0));
                         let color = cell?.backgroundColor;
@@ -99,7 +99,7 @@ class MergeSortViewController: BaseSortingViewController<MergeSort> {
                     avB = avB / difference;
                     averageColor = UIColor(red: avR, green: avG, blue: avB, alpha: 1);
                     
-                    for i in sortMove.low!..<sortMove.high! + 1 {
+                    for i in low..<high + 1 {
                         
                         let cell = self.sortCollectionView.cellForItem(at: IndexPath(row: i, section: 0));
                         cell?.backgroundColor = averageColor;
@@ -107,8 +107,8 @@ class MergeSortViewController: BaseSortingViewController<MergeSort> {
                 });
                 
                 let insertSectionDataAnimation = CollectionViewSortAnimation({
-                    self.sectionArray[1] = sortMove.high! - sortMove.low! + 1;
-                    self.workingArray = sortMove.workingArray!;
+                    self.sectionArray[1] = high - low + 1;
+                    self.workingArray = workingArray;
                     self.sortCollectionView.reloadSections(IndexSet(integer:1));
                 });
                 
@@ -130,25 +130,25 @@ class MergeSortViewController: BaseSortingViewController<MergeSort> {
                 animationArray.append(workingColorAnimation);
                 break;
                 
-            case .merge:
+            case .merge(let left, let right):
                 
                 let mergeTextAnimation = ViewSortAnimation({
                     var arrayOneText = "[";
                     var arrayTwoText = "[";
                     
-                    for i in 0..<sortMove.left!.count {
-                        arrayOneText = arrayOneText + "\(sortMove.left![i])";
-                        if(i != sortMove.left!.count-1) {
+                    for i in 0..<left.count {
+                        arrayOneText = arrayOneText + "\(left[i])";
+                        if(i != left.count-1) {
                             arrayOneText = arrayOneText + ", "
                         } else {
                             arrayOneText = arrayOneText + "]";
                         }
                     }
                     
-                    for i in 0..<sortMove.right!.count {
-                        arrayTwoText = arrayTwoText + "\(sortMove.right![i])";
+                    for i in 0..<right.count {
+                        arrayTwoText = arrayTwoText + "\(right[i])";
                         
-                        if(i != sortMove.right!.count-1) {
+                        if(i != right.count-1) {
                             arrayTwoText = arrayTwoText + ", "
                         } else {
                             arrayTwoText = arrayTwoText + "]";
@@ -161,13 +161,13 @@ class MergeSortViewController: BaseSortingViewController<MergeSort> {
                 animationArray.append(mergeTextAnimation);
                 break;
                 
-            case .sorted:
+            case .sorted(let left):
                 
                 let sortedTextAnimation = ViewSortAnimation({
                     var sortedArrayText = "SORTED: ["
-                    for i in 0..<sortMove.left!.count {
-                        sortedArrayText = sortedArrayText + "\(sortMove.left![i])";
-                        if(i != sortMove.left!.count - 1) {
+                    for i in 0..<left.count {
+                        sortedArrayText = sortedArrayText + "\(left[i])";
+                        if(i != left.count - 1) {
                             sortedArrayText = sortedArrayText + ", ";
                         } else {
                             sortedArrayText = sortedArrayText + "]";
@@ -180,20 +180,20 @@ class MergeSortViewController: BaseSortingViewController<MergeSort> {
                 animationArray.append(sortedTextAnimation);
                 break;
                 
-            case .swap:
+            case .swap(let positionOne, let positionTwo):
                 let swapAnimation = CollectionViewSortAnimation({
-                    let arrayIndex = sortMove.positionOne?.index;
-                    let workingIndex = sortMove.positionTwo?.index
+                    let arrayIndex = positionOne.index;
+                    let workingIndex = positionTwo.index
                     
-                    let ip1 = IndexPath(row:workingIndex!, section: 1)
-                    let ip2 = IndexPath(row: arrayIndex!, section: 0)
+                    let ip1 = IndexPath(row:workingIndex, section: 1)
+                    let ip2 = IndexPath(row: arrayIndex, section: 0)
                     
                     self.sortCollectionView.moveItem(at: ip1, to: ip2);
                     self.sortCollectionView.moveItem(at: ip2, to: ip1);
                 });
                 let swappedAnimation = ViewSortAnimation({
-                    let arrayIndex = sortMove.positionTwo?.index
-                    let ip1 = IndexPath(row:arrayIndex!, section: 1)
+                    let arrayIndex = positionTwo.index
+                    let ip1 = IndexPath(row:arrayIndex, section: 1)
                     let cell = self.sortCollectionView.cellForItem(at: ip1);
                     cell?.backgroundColor = .red;
                 });

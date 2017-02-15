@@ -10,10 +10,8 @@ import UIKit
 
 class MergeSortMove: SortMove {
 
-    var positionOne: Position?;
-    var positionTwo: Position?;
-    var moveAnimation: ViewSortAnimation?;
-    var moveType: MergeSortMoveType;
+    var moveAnimation: ViewSortAnimation?
+    var moveType: MergeSortMoveType
     
     var low: Int?
     var high: Int?
@@ -28,18 +26,12 @@ class MergeSortMove: SortMove {
     }
 
     static func addWorking(low: Int, high: Int, workingArray: [Int]) -> MergeSortMove {
-        let move: MergeSortMove = MergeSortMove(moveType: .addWorking);
-        move.low = low;
-        move.high = high;
-        move.workingArray = workingArray;
-        return move;
+        
+        return MergeSortMove(moveType: .addWorking(low, high, workingArray));
     }
     
     static func merge(left: [Int], right: [Int]) -> MergeSortMove {
-        let move = MergeSortMove(moveType: .merge);
-        move.left = left;
-        move.right = right;
-        return move;
+        return MergeSortMove(moveType: .merge(left, right));
     }
     
     static func removeWorking() -> MergeSortMove {
@@ -48,25 +40,20 @@ class MergeSortMove: SortMove {
     }
     
     static func sorted(left: [Int]) -> MergeSortMove {
-        let move = MergeSortMove(moveType: .sorted);
-        move.left = left;
-        return move;
+        return MergeSortMove(moveType: .sorted(left));
     }
     
     static func swap(positionOne: Position, positionTwo: Position) -> MergeSortMove {
         
-        let move = MergeSortMove(moveType: .swap);
-        move.positionOne = positionOne;
-        move.positionTwo = positionTwo;
-        return move;
+        return MergeSortMove(moveType: .swap(positionOne, positionTwo));
     }
 }
 
 enum MergeSortMoveType {
     
-    case addWorking
-    case merge
+    case addWorking(Int, Int, [Int])
+    case merge([Int], [Int])
     case removeWorking
-    case sorted
-    case swap;
+    case sorted([Int])
+    case swap(Position, Position);
 }
