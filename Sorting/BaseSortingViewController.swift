@@ -214,12 +214,7 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     
     internal func applyAutoLayoutConstraints() {
         
-        sortCollectionView.translatesAutoresizingMaskIntoConstraints = false;
-        sortCollectionView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor).isActive = true;
-        sortCollectionView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true;
-        
-        heightConstraint = sortCollectionView.heightAnchor.constraint(equalToConstant: 0);
-        heightConstraint?.isActive = true;
+        applyCollectionViewConstraints();
         
         minusButton.translatesAutoresizingMaskIntoConstraints = false;
         minusButton.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 6).isActive = true;
@@ -293,6 +288,15 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         sortButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true;
         sortButton.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true;
         sortButton.heightAnchor.constraint(equalToConstant: 50).isActive = true;
+    }
+    
+    internal func applyCollectionViewConstraints() {
+        
+        sortCollectionView.translatesAutoresizingMaskIntoConstraints = false;
+        sortCollectionView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor).isActive = true;
+        sortCollectionView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true;
+        heightConstraint = sortCollectionView.heightAnchor.constraint(equalToConstant: 0);
+        heightConstraint?.isActive = true;
     }
     
     internal func resetButtonState() {

@@ -29,6 +29,15 @@ class MergeSortViewController: BaseSortingViewController<MergeSort> {
         super.viewDidLoad();
     }
     
+    override func applyCollectionViewConstraints() {
+        
+        super.applyCollectionViewConstraints();
+        heightConstraint?.constant = 2 * (kCollectionViewLayoutWidthHeight + (2 * kCollectionViewLayoutTopBottomInset));
+    }
+    
+    //override as we need a bigger collection view height for the second section
+    override func viewDidLayoutSubviews() {}
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         return sectionArray[section];
