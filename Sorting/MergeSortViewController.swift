@@ -133,29 +133,8 @@ class MergeSortViewController: BaseSortingViewController<MergeSort> {
             case .merge(let left, let right):
                 
                 let mergeTextAnimation = ViewSortAnimation({
-                    var arrayOneText = "[";
-                    var arrayTwoText = "[";
                     
-                    for i in 0..<left.count {
-                        arrayOneText = arrayOneText + "\(left[i])";
-                        if(i != left.count-1) {
-                            arrayOneText = arrayOneText + ", "
-                        } else {
-                            arrayOneText = arrayOneText + "]";
-                        }
-                    }
-                    
-                    for i in 0..<right.count {
-                        arrayTwoText = arrayTwoText + "\(right[i])";
-                        
-                        if(i != right.count-1) {
-                            arrayTwoText = arrayTwoText + ", "
-                        } else {
-                            arrayTwoText = arrayTwoText + "]";
-                        }
-                    }
-                    
-                    self.logView.insertNewLine(text: "MERGE: \(arrayOneText) and \(arrayTwoText)", color: UIColor.black);
+                    self.logView.insertMerge(left: left, right: right);
                 });
                 
                 animationArray.append(mergeTextAnimation);
@@ -164,17 +143,7 @@ class MergeSortViewController: BaseSortingViewController<MergeSort> {
             case .sorted(let left):
                 
                 let sortedTextAnimation = ViewSortAnimation({
-                    var sortedArrayText = "SORTED: ["
-                    for i in 0..<left.count {
-                        sortedArrayText = sortedArrayText + "\(left[i])";
-                        if(i != left.count - 1) {
-                            sortedArrayText = sortedArrayText + ", ";
-                        } else {
-                            sortedArrayText = sortedArrayText + "]";
-                        }
-                    }
-                    
-                    self.logView.insertNewLine(text: sortedArrayText, color: UIColor.black);
+                    self.logView.insertSorted(arr: left);
                 });
                 
                 animationArray.append(sortedTextAnimation);
@@ -224,8 +193,7 @@ class MergeSortViewController: BaseSortingViewController<MergeSort> {
     }
     
     override func sort() {
-        
-        logView.insertNewLine(text: "SPLIT: Into \(sortArray.count) sub arrays", color: UIColor.black);
+        logView.insertSplit(count: sortArray.count);
         super.sort()
     }
 }

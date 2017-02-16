@@ -20,7 +20,9 @@
 "no" = "NO!";
 "yes" = "YES!";
 "logger_intro_text" = "Press start to begin!";
+"logger_action_merge" = "MERGE: %@ and %@";
 "logger_action_sorted" = "SORTED: %@";
+"logger_action_split" = "SPLIT: Into %i sub arrays";
 "logger_action_sorted_detail_from_index" = "from index %i";
 "logger_action_sorted_detail_up_to_index" = "up to index %i";
 "logger_action_swap" = "SWAP: ";

@@ -34,6 +34,14 @@ class SortLogView: UITextView, UITextViewDelegate {
         insertNewLine(text: String(format: NSLocalizedString("logger_action_sorted", comment: ""), text),  color: .green);
     }
     
+    func insertSorted(arr: [Int]) {
+        insertNewLine(text: String(format: NSLocalizedString("logger_action_sorted", comment: ""), stringifyArray(array: arr)),  color: .green);
+    }
+    
+    func insertSplit(count: Int) {
+        insertNewLine(text: String(format: NSLocalizedString("logger_action_split", comment: ""), count), color: UIColor.black);
+    }
+    
     func insertSwap(first: Int, second: Int) {
         insertSwap(text: String(format: NSLocalizedString("logger_action_swap_default", comment: ""), first, second));
     }
@@ -56,6 +64,11 @@ class SortLogView: UITextView, UITextViewDelegate {
     
     func insertLRPointer(text: String) {
         insertPointer(text: String(format: NSLocalizedString("logger_action_left_and_right_pointer", comment: ""), text));
+    }
+    
+    func insertMerge(left: [Int], right: [Int]) {
+        
+        insertNewLine(text: String(format: NSLocalizedString("logger_action_merge", comment: ""), stringifyArray(array: left), stringifyArray(array: right)), color: UIColor.black);
     }
     
     func insertPivot(text: String) {
@@ -93,6 +106,7 @@ class SortLogView: UITextView, UITextViewDelegate {
     func clear() {
         text = "";
     }
+    
     func insertNewLine(text: String, color: UIColor) {
         
         let attributedText =  NSMutableAttributedString(string:text);
