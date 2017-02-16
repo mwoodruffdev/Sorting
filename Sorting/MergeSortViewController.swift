@@ -47,7 +47,7 @@ class MergeSortViewController: BaseSortingViewController<MergeSort> {
                 
                 text = "\(sortArray[indexPath.row])"
                 
-                cell.backgroundColor = getRandomRainbowColor(index: indexPath.row);
+                cell.backgroundColor = UIColor.getRandomRainbowColor(index: indexPath.row);
             } else {
                 
                 text = "\(workingArray[indexPath.row])"
@@ -56,15 +56,6 @@ class MergeSortViewController: BaseSortingViewController<MergeSort> {
             
             cell.valueLabel.text = text
         }
-    }
-    
-    func getRandomRainbowColor(index: Int) -> UIColor {
-        
-        let hue = CGFloat(Int(arc4random() % 256)) / 256;
-        let saturation = CGFloat(Int(arc4random() % 128)) / 256 + 0.5;
-        let brightness = CGFloat(Int(arc4random() % 128)) / 256 + 0.5;
-        
-        return UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1);
     }
     
     override func createAnimations(moves: [MergeSortMove]) -> [SortAnimation] {
