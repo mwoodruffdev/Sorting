@@ -37,7 +37,7 @@ class SortLogView: UITextView, UITextViewDelegate {
     }
     
     func insertSorted(arr: [Int]) {
-        insertNewLine(text: String(format: NSLocalizedString("logger_action_sorted", comment: ""), stringifyArray(array: arr)),
+        insertNewLine(text: String(format: NSLocalizedString("logger_action_sorted", comment: ""), StringHelpers.stringifyArray(array: arr)),
                       color: .sortedLogTextColor);
     }
     
@@ -74,7 +74,7 @@ class SortLogView: UITextView, UITextViewDelegate {
     
     func insertMerge(left: [Int], right: [Int]) {
         
-        insertNewLine(text: String(format: NSLocalizedString("logger_action_merge", comment: ""), stringifyArray(array: left), stringifyArray(array: right)), color: .standardLogTextColor);
+        insertNewLine(text: String(format: NSLocalizedString("logger_action_merge", comment: ""), StringHelpers.stringifyArray(array: left), StringHelpers.stringifyArray(array: right)), color: .standardLogTextColor);
     }
     
     func insertPivot(text: String) {
@@ -88,27 +88,15 @@ class SortLogView: UITextView, UITextViewDelegate {
     }
     
     func pressedRandomise(array: [Int]) {
-        insertNewLine(text: String(format: NSLocalizedString("logger_action_randomise", comment: ""), stringifyArray(array: array)), color: .standardLogTextColor);
+        insertNewLine(text: String(format: NSLocalizedString("logger_action_randomise", comment: ""), StringHelpers.stringifyArray(array: array)), color: .standardLogTextColor);
     }
     
     func pressedBest(array: [Int]) {
-        insertNewLine(text: String(format: NSLocalizedString("logger_action_best_case", comment: ""), stringifyArray(array: array)), color: .standardLogTextColor);
+        insertNewLine(text: String(format: NSLocalizedString("logger_action_best_case", comment: ""), StringHelpers.stringifyArray(array: array)), color: .standardLogTextColor);
     }
     
     func pressedWorst(array: [Int]) {
-        insertNewLine(text: String(format: NSLocalizedString("logger_action_worst_case", comment: ""), stringifyArray(array: array)), color: .standardLogTextColor);
-    }
-    
-    func stringifyArray(array: [Int]) -> String {
-        var outputString = "[";
-        array.forEach({
-            outputString = outputString + "\($0), ";
-        });
-        
-        let start = outputString.index(outputString.endIndex, offsetBy: -2)
-        let end = outputString.index(outputString.endIndex, offsetBy: 0)
-        
-        return outputString.replacingCharacters(in: start..<end, with: "]");
+        insertNewLine(text: String(format: NSLocalizedString("logger_action_worst_case", comment: ""), StringHelpers.stringifyArray(array: array)), color: .standardLogTextColor);
     }
     
     func clear() {

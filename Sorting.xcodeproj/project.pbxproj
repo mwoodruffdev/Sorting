@@ -36,6 +36,8 @@
 		27B74B8B1DF8030100DFD30F /* BaseSortingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B74B8A1DF8030100DFD30F /* BaseSortingViewController.swift */; };
 		27BC66671E5314F5000C2B5F /* InputArrays.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BC66661E5314F5000C2B5F /* InputArrays.swift */; };
 		27BC666B1E5402DD000C2B5F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 27BC666D1E5402DD000C2B5F /* Localizable.strings */; };
+		27BC668E1E5543AF000C2B5F /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BC668D1E5543AF000C2B5F /* Colors.swift */; };
+		27BC66931E554689000C2B5F /* StringHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BC66921E554689000C2B5F /* StringHelpers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -71,6 +73,8 @@
 		27BC66661E5314F5000C2B5F /* InputArrays.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputArrays.swift; sourceTree = "<group>"; };
 		27BC666C1E5402DD000C2B5F /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		27BC666E1E5402EA000C2B5F /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		27BC668D1E5543AF000C2B5F /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		27BC66921E554689000C2B5F /* StringHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringHelpers.swift; sourceTree = "<group>"; };
 		39F50848D72ACC04E57D61CA /* Pods_Sorting.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sorting.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BFB77BFFE991217998F02A2 /* Pods-Sorting.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sorting.release.xcconfig"; path = "Pods/Target Support Files/Pods-Sorting/Pods-Sorting.release.xcconfig"; sourceTree = "<group>"; };
 		E149BA7F8AD5EB1C4BC3913D /* Pods-Sorting.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sorting.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Sorting/Pods-Sorting.debug.xcconfig"; sourceTree = "<group>"; };
@@ -175,6 +179,7 @@
 		2776F4AC1DC49892000AE6E5 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				27BC668F1E5543B4000C2B5F /* Colors */,
 				27545DBB1E32068700025032 /* Helpers */,
 				2776F4B41DC49986000AE6E5 /* SortingControllers */,
 				278480941DC9E246002ADF3D /* Views */,
@@ -251,9 +256,34 @@
 		27BC66681E5402A4000C2B5F /* Strings */ = {
 			isa = PBXGroup;
 			children = (
-				27BC666D1E5402DD000C2B5F /* Localizable.strings */,
+				27BC66901E554659000C2B5F /* Assets */,
+				27BC66911E554663000C2B5F /* Helpers */,
 			);
 			name = Strings;
+			sourceTree = "<group>";
+		};
+		27BC668F1E5543B4000C2B5F /* Colors */ = {
+			isa = PBXGroup;
+			children = (
+				27BC668D1E5543AF000C2B5F /* Colors.swift */,
+			);
+			name = Colors;
+			sourceTree = "<group>";
+		};
+		27BC66901E554659000C2B5F /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				27BC666D1E5402DD000C2B5F /* Localizable.strings */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
+		27BC66911E554663000C2B5F /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				27BC66921E554689000C2B5F /* StringHelpers.swift */,
+			);
+			name = Helpers;
 			sourceTree = "<group>";
 		};
 		6127772B9533C4369C54BD3A /* Frameworks */ = {
@@ -392,10 +422,12 @@
 			files = (
 				271AF4C61DEE92FD00B3FB02 /* InsertionSort.swift in Sources */,
 				278480851DC99ED9002ADF3D /* BubbleSortViewController.swift in Sources */,
+				27BC66931E554689000C2B5F /* StringHelpers.swift in Sources */,
 				278480911DC9A302002ADF3D /* MainViewController.swift in Sources */,
 				2731415E1DD1A7840060B6B4 /* SortCollectionViewCell.swift in Sources */,
 				275B391F1DE2DCFE0000B22C /* MergeSort.swift in Sources */,
 				275B39211DE41A1C0000B22C /* MergeSortMove.swift in Sources */,
+				27BC668E1E5543AF000C2B5F /* Colors.swift in Sources */,
 				2784808D1DC9A04C002ADF3D /* SideMenuViewController.swift in Sources */,
 				271AF4C81DEEAE1900B3FB02 /* InsertionSortMove.swift in Sources */,
 				27B74B8B1DF8030100DFD30F /* BaseSortingViewController.swift in Sources */,
