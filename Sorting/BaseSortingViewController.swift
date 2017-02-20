@@ -582,6 +582,4 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     internal func clear() {
         logView.clear();
     }
-    
-    internal func pressedMenu() {}
 }
