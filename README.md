@@ -49,6 +49,6 @@ Furthermore, the following features are also to be implemented to enhance learni
 - Code highlighting
 
 <a name="bugsandsupport"/>
-##Bugs & Supports
+##Bugs & Support
 
 If you would like to support this app, report bugs or anything else, please contact abc@def.com
