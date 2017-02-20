@@ -17,18 +17,22 @@ Presently, SortMeOut supports four basic sorting algorithms:
 <a name="bubblesort" />
 ##Bubble Sort
 
-![alt text](https://github.com/mwoodruffdev/Sorting/blob/develop/gifs/bubblesort.gif "Bubble Sort")
+![alt text](text](../gifs/BubbleSort.gif "Bubble Sort")
 
 <a name="mergesort" />
 ##Merge Sort
 
+![alt text](../gifs/MergeSort.gif "Merge Sort")
+
 <a name="quicksort" />
 ##Quick Sort
+
+![alt text](../gifs/QuickSort.gif "Quick Sort")
 
 <a name="insertionsort" />
 ##Insertion Sort
 
-![alt text](https://github.com/mwoodruffdev/Sorting/blob/feature/readmegifs/gifs/insertionsort.gif "Insertion Sort")
+![alt text](../gifs/InsertionSort.gif "Insertion Sort")
 
 
 <a name="comingnext" />
