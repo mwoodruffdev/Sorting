@@ -55,6 +55,14 @@ class SortLogView: UITextView, UITextViewDelegate {
             color: .standardLogTextColor);
     }
     
+    func insertLSwap() {
+        insertNewLine(text: "\(NSLocalizedString("logger_action_swap_L_P", comment: "")) \(NSLocalizedString("logger_action_swap_left_and_pivot", comment: ""))", color: .standardLogTextColor);
+    }
+    
+    func insertLRSwap() {
+        insertNewLine(text: "\(NSLocalizedString("logger_action_swap_L_R", comment: "")) \(NSLocalizedString("logger_action_swap_left_and_right", comment: ""))", color: .standardLogTextColor);
+    }
+    
     func insertPointer(text: String) {
         insertNewLine(text: text,
                       color: .leftRightPointerTextColor);

@@ -26,10 +26,12 @@
 "logger_action_sorted_detail_from_index" = "from index %i";
 "logger_action_sorted_detail_up_to_index" = "up to index %i";
 "logger_action_swap" = "SWAP: ";
+"logger_action_swap_L_P" = "SWAP L&P";
+"logger_action_swap_L_R" = "SWAP L&R";
 "logger_action_swap_default" = "%i and index %i";
-"logger_action_swap_left_and_pivot" = "Swap left pointer and pivot";
-"logger_action_swap_right_and_pivot" = "Swap right pointer and pivot";
-"logger_action_swap_left_and_right" = "Swap left and right pointers";
+"logger_action_swap_left_and_pivot" = "R == P. Swap L and P pointers";
+"logger_action_swap_right_and_pivot" = "L&R == P, P is in sorted position";
+"logger_action_swap_left_and_right" = "R <= P && index(L) < index(R), so swap L&R";
 "logger_action_increment" = "Increment by one";
 "logger_action_swap_single" = "SWAP: %@";
 "logger_action_comparison" = "COMPARISON: %i %@ %i?";

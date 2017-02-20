@@ -55,7 +55,7 @@ class QuickSortViewController: BaseSortingViewController<QuickSort> {
                 animationArray.append(checkAnimation);
                 break;
                 
-            case .dontSwap(let positionOne, let positionTwo):
+            case .dontSwap:
                 let dontSwapAnimation = CollectionViewSortAnimation({
                     
                     self.logView.insertNewLine(text: NSLocalizedString("no", comment: ""), color: .black);
@@ -65,16 +65,23 @@ class QuickSortViewController: BaseSortingViewController<QuickSort> {
                 
                 break;
                 
-            case .pivotSwap(let positionOne, let positionTwo):
+            case .pivotSwap(let positionOne, let pivotPosition):
                 
                 let textAnimation = ViewSortAnimation({
-                    self.logView.insertSwap(text: NSLocalizedString("logger_action_swap_right_and_pivot", comment: ""));
+                    
+                    if(positionOne.index == pivotPosition.index) {
+                        self.logView.insertText("\nBoth L&R both reached the pivot. P is in sorted position");
+                    } else {
+                        self.logView.insertLSwap();
+                    }
                 });
                 
                 let pivotSwapAnimation = CollectionViewSortAnimation({
                     
-                    self.sortCollectionView.moveItem(at: IndexPath(row: positionOne.index, section: 0), to: IndexPath(row: positionTwo.index, section: 0))
-                    self.sortCollectionView.moveItem(at: IndexPath(row: positionTwo.index, section: 0), to: IndexPath(row: positionOne.index, section: 0))
+                    if(positionOne.index != pivotPosition.index) {
+                        self.sortCollectionView.moveItem(at: IndexPath(row: positionOne.index, section: 0), to: IndexPath(row: pivotPosition.index, section: 0))
+                        self.sortCollectionView.moveItem(at: IndexPath(row: pivotPosition.index, section: 0), to: IndexPath(row: positionOne.index, section: 0))
+                    }
                 });
                 
                 animationArray.append(textAnimation);
@@ -83,10 +90,13 @@ class QuickSortViewController: BaseSortingViewController<QuickSort> {
                 
             case .swap(let positionOne, let positionTwo):
                 
+                if(positionOne.index == positionTwo.index) {
+                    continue;
+                }
+                
                 let textAnimation = ViewSortAnimation({
-                    if(positionOne.index != positionTwo.index) {
-                        self.logView.insertSwap(text: NSLocalizedString("logger_action_swap_left_and_right", comment: ""));
-                    }
+                    
+                    self.logView.insertLRSwap();
                 });
                 
                 let swapAnimation = CollectionViewSortAnimation({
@@ -99,32 +109,10 @@ class QuickSortViewController: BaseSortingViewController<QuickSort> {
                 animationArray.append(swapAnimation);
                 break;
                 
-            case .incrementLeft(let leftPosition):
-                let incrementLeftAnimation = ViewSortAnimation({
-                    
-                    self.logView.insertLPointer(text: NSLocalizedString("logger_action_increment", comment: ""));
-                });
-                
-                animationArray.append(incrementLeftAnimation);
-                break;
-            case .incrementRight(let rightPosition):
-                let incrementRightAnimation = ViewSortAnimation({
-                    self.logView.insertRPointer(text: NSLocalizedString("logger_action_increment", comment: ""));
-                });
-                
-                animationArray.append(incrementRightAnimation);
-                break;
-                
             case .selectPivot(let pivotPosition):
                 let selectPivotAnimation = ViewSortAnimation({
-                    
-                    for i in (0 ..< self.sortArray.count) {
-                        
-                        if let unHighlightedCell =  self.sortCollectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? QuickSortCollectionViewCell, unHighlightedCell.isSorted == false {
-                            
-                            unHighlightedCell.reset();
-                        }
-                    }
+
+                    self.resetCells();
                     
                     let cell1 = self.sortCollectionView.cellForItem(at: IndexPath(row: pivotPosition.index, section: 0)) as? QuickSortCollectionViewCell;
                     cell1?.isPivot = true;
@@ -140,19 +128,7 @@ class QuickSortViewController: BaseSortingViewController<QuickSort> {
                 
                 let selectLeftRightAnimation = ViewSortAnimation({
                     
-                    for i in (0 ..< self.sortArray.count) {
-                        
-                        if i == positionOne.index || i == positionTwo.index {
-                            continue;
-                        }
-                        
-                        if let unHighlightedCell =  self.sortCollectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? QuickSortCollectionViewCell,
-                            unHighlightedCell.isPivot == false, unHighlightedCell.isSorted == false {
-                            
-                            unHighlightedCell.reset();
-                        }
-                    }
-                    
+                    self.resetCells();
                     
                     let cell1 = self.sortCollectionView.cellForItem(at: IndexPath(row: positionOne.index, section: 0)) as? QuickSortCollectionViewCell;
                     let cell2 = self.sortCollectionView.cellForItem(at: IndexPath(row: positionTwo.index, section: 0)) as? QuickSortCollectionViewCell;
@@ -178,14 +154,7 @@ class QuickSortViewController: BaseSortingViewController<QuickSort> {
                 
                 let selectSortedAnimation = ViewSortAnimation({
                     
-                    for i in (0 ..< self.sortArray.count) {
-                        
-                        if let unHighlightedCell =  self.sortCollectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? QuickSortCollectionViewCell,
-                            unHighlightedCell.isPivot == false, unHighlightedCell.isSorted == false {
-                            
-                            unHighlightedCell.reset();
-                        }
-                    }
+                    self.resetCells();
                     
                     let cell1 = self.sortCollectionView.cellForItem(at: IndexPath(row: sortedPosition.index, section: 0)) as? QuickSortCollectionViewCell;
                     cell1?.isSorted = !cell1!.isSorted;
@@ -195,7 +164,7 @@ class QuickSortViewController: BaseSortingViewController<QuickSort> {
                         cell1?.reset();
                     }
                     
-                    self.logView.insertSorted(text: "\(sortedPosition.value) \(String(format: NSLocalizedString("logger_action_detail_index", comment: ""), sortedPosition.index)))");
+                    self.logView.insertSorted(text: "\(sortedPosition.value) (\(String(format: NSLocalizedString("logger_action_detail_index", comment: ""), sortedPosition.index)))");
                 });
                 
                 animationArray.append(selectSortedAnimation);
@@ -204,6 +173,18 @@ class QuickSortViewController: BaseSortingViewController<QuickSort> {
         }
         
         return animationArray;
+    }
+    
+    internal func resetCells() {
+     
+        for i in (0 ..< self.sortArray.count) {
+            
+            if let unHighlightedCell =  self.sortCollectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? QuickSortCollectionViewCell,
+                unHighlightedCell.isPivot == false, unHighlightedCell.isSorted == false {
+                
+                unHighlightedCell.reset();
+            }
+        }
     }
 }
 

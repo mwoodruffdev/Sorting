@@ -67,14 +67,11 @@ class QuickSort: SortingAlgorithm {
                 (v[left], v[right]) = (v[right], v[left])
   
                 moves.append(QuickSortMove.swap(positionOne: leftPosition, positionTwo: rightPosition));
-                moves.append(QuickSortMove.incrementLeft(positionOne: leftPosition));
                 left += 1
             } else {
                 
                 moves.append(QuickSortMove.dontSwap(positionOne: leftPosition, positionTwo: rightPosition));
             }
-            
-            moves.append(QuickSortMove.incrementRight(positionOne: rightPosition));
         }
         
         (v[left], v[high]) = (v[high], v[left])
@@ -82,7 +79,7 @@ class QuickSort: SortingAlgorithm {
         let leftPosition: Position = Position(index: left, value: v[left]);
         let pivotPosition: Position = Position(index: high, value: v[high]);
         
-        moves.append(QuickSortMove.pivotSwap(positionOne: leftPosition, positionTwo: pivotPosition));
+        moves.append(QuickSortMove.pivotSwap(positionOne: leftPosition, pivotPosition: pivotPosition));
         moves.append(QuickSortMove.selectSorted(positionOne: leftPosition));
         
         return left
