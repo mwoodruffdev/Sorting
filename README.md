@@ -17,7 +17,7 @@ Presently, SortMeOut supports four basic sorting algorithms:
 <a name="bubblesort" />
 ##Bubble Sort
 
-![alt text](text](https://cloud.githubusercontent.com/assets/11582455/23112538/fbcb96a6-f76b-11e6-837d-c7c94aa5a9c6.gif "Bubble Sort")
+![alt text](https://cloud.githubusercontent.com/assets/11582455/23112538/fbcb96a6-f76b-11e6-837d-c7c94aa5a9c6.gif "Bubble Sort")
 
 <a name="mergesort" />
 ##Merge Sort
