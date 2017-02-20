@@ -392,7 +392,6 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         
         if(didFinish) {
             reset()
-            didFinish = false;
             return;
         }
         
@@ -426,6 +425,7 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         sortArray = newArray;
         sortCollectionView.reloadData();
         resetButtonState();
+        didFinish = false;
     }
     
     internal func stepBack() {

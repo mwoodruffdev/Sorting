@@ -38,6 +38,22 @@ class QuickSortViewController: BaseSortingViewController<QuickSort> {
         }
     }
     
+    override func reset() {
+        resetCells { (cell) -> Bool in
+            return true;
+        }
+        super.reset();
+        
+    }
+    
+    override func randomise() {
+        resetCells { (cell) -> Bool in
+            return true;
+        }
+        super.randomise();
+        
+    }
+    
     override func createAnimations(moves: [QuickSortMove]) -> [SortAnimation] {
         
         var animationArray: [SortAnimation] = [];
@@ -112,7 +128,7 @@ class QuickSortViewController: BaseSortingViewController<QuickSort> {
             case .selectPivot(let pivotPosition):
                 let selectPivotAnimation = ViewSortAnimation({
 
-                    self.resetCells();
+                    self.resetCells(clause: self.animationCondition);
                     
                     let cell1 = self.sortCollectionView.cellForItem(at: IndexPath(row: pivotPosition.index, section: 0)) as? QuickSortCollectionViewCell;
                     cell1?.isPivot = true;
@@ -128,7 +144,7 @@ class QuickSortViewController: BaseSortingViewController<QuickSort> {
                 
                 let selectLeftRightAnimation = ViewSortAnimation({
                     
-                    self.resetCells();
+                    self.resetCells(clause: self.animationCondition);
                     
                     let cell1 = self.sortCollectionView.cellForItem(at: IndexPath(row: positionOne.index, section: 0)) as? QuickSortCollectionViewCell;
                     let cell2 = self.sortCollectionView.cellForItem(at: IndexPath(row: positionTwo.index, section: 0)) as? QuickSortCollectionViewCell;
@@ -154,7 +170,7 @@ class QuickSortViewController: BaseSortingViewController<QuickSort> {
                 
                 let selectSortedAnimation = ViewSortAnimation({
                     
-                    self.resetCells();
+                    self.resetCells(clause: self.animationCondition);
                     
                     let cell1 = self.sortCollectionView.cellForItem(at: IndexPath(row: sortedPosition.index, section: 0)) as? QuickSortCollectionViewCell;
                     cell1?.isSorted = !cell1!.isSorted;
@@ -175,16 +191,19 @@ class QuickSortViewController: BaseSortingViewController<QuickSort> {
         return animationArray;
     }
     
-    internal func resetCells() {
+    internal func resetCells(clause: (QuickSortCollectionViewCell) -> Bool) {
      
         for i in (0 ..< self.sortArray.count) {
             
-            if let unHighlightedCell =  self.sortCollectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? QuickSortCollectionViewCell,
-                unHighlightedCell.isPivot == false, unHighlightedCell.isSorted == false {
+            if let unHighlightedCell =  self.sortCollectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? QuickSortCollectionViewCell, clause(unHighlightedCell) {
                 
                 unHighlightedCell.reset();
             }
         }
+    }
+    
+    internal func animationCondition(cell: QuickSortCollectionViewCell) -> Bool {
+        return cell.isPivot == false && cell.isSorted == false;
     }
 }
 
