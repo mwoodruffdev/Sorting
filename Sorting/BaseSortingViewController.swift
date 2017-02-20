@@ -145,12 +145,12 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         view.addSubview(plusButton);
         
         worstCaseShowMe.setTitle(NSLocalizedString("show_me", comment: ""), for: .normal);
-        worstCaseShowMe.addTarget(self, action: #selector(showMeWorst), for: .touchUpInside);
+        worstCaseShowMe.addTarget(self, action: #selector(pressedShowMeWorst), for: .touchUpInside);
         worstCaseShowMe.setTitleColor(.blue, for: .normal);
         view.addSubview(worstCaseShowMe);
         
         bestCaseShowMe.setTitle(NSLocalizedString("show_me", comment: ""), for: .normal);
-        bestCaseShowMe.addTarget(self, action: #selector(showMeBest), for: .touchUpInside);
+        bestCaseShowMe.addTarget(self, action: #selector(pressedShowMeBest), for: .touchUpInside);
         bestCaseShowMe.setTitleColor(.blue, for: .normal);
         view.addSubview(bestCaseShowMe);
         
@@ -160,7 +160,7 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         stepBackButton.layer.borderColor = UIColor.white.cgColor
         stepBackButton.layer.borderWidth = 1;
         stepBackButton.setTitle(NSLocalizedString("back", comment: ""), for: .normal);
-        stepBackButton.addTarget(self, action: #selector(stepBack), for: .touchUpInside);
+        stepBackButton.addTarget(self, action: #selector(pressedStepBack), for: .touchUpInside);
         stepBackButton.backgroundColor = .black;
         stepBackButton.setTitleColor(.white, for: .normal);
         view.addSubview(stepBackButton);
@@ -169,7 +169,7 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         stepForwardButton.layer.borderColor = UIColor.white.cgColor
         stepForwardButton.layer.borderWidth = 1;
         stepForwardButton.setTitle(NSLocalizedString("next", comment: ""), for: .normal);
-        stepForwardButton.addTarget(self, action: #selector(stepForward), for: .touchUpInside);
+        stepForwardButton.addTarget(self, action: #selector(pressedStepForward), for: .touchUpInside);
         stepForwardButton.backgroundColor = .black;
         stepForwardButton.setTitleColor(.white, for: .normal);
         view.addSubview(stepForwardButton);
@@ -177,7 +177,7 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         randomiseButton.layer.borderColor = UIColor.white.cgColor
         randomiseButton.layer.borderWidth = 1;
         randomiseButton.setTitle(NSLocalizedString("randomise", comment: ""), for: .normal);
-        randomiseButton.addTarget(self, action: #selector(randomise), for: .touchUpInside);
+        randomiseButton.addTarget(self, action: #selector(pressedRandomise), for: .touchUpInside);
         randomiseButton.backgroundColor = .black;
         randomiseButton.setTitleColor(.white, for: .normal);
         view.addSubview(randomiseButton);
@@ -185,13 +185,13 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         resetButton.layer.borderColor = UIColor.white.cgColor
         resetButton.layer.borderWidth = 1;
         resetButton.setTitle(NSLocalizedString("reset", comment: ""), for: .normal);
-        resetButton.addTarget(self, action: #selector(reset), for: .touchUpInside);
+        resetButton.addTarget(self, action: #selector(pressedReset), for: .touchUpInside);
         resetButton.backgroundColor = .black;
         resetButton.setTitleColor(.white, for: .normal);
         view.addSubview(resetButton);
         
         sortButton.setTitle(NSLocalizedString("start", comment: ""), for: .normal);
-        sortButton.addTarget(self, action: #selector(sort), for: .touchUpInside);
+        sortButton.addTarget(self, action: #selector(pressedSort), for: .touchUpInside);
         sortButton.backgroundColor = .blue;
         sortButton.setTitleColor(.white, for: .normal);
         view.addSubview(sortButton);
@@ -372,13 +372,13 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         }
     }
     
-    internal func showMeBest() {
+    internal func pressedShowMeBest() {
         
         resetWith(newArray: Algorithm.bestCase);
         logView.pressedBest(array: Algorithm.bestCase);
     }
     
-    internal func showMeWorst() {
+    internal func pressedShowMeWorst() {
         
         resetWith(newArray: Algorithm.worstCase);
         logView.pressedWorst(array: Algorithm.bestCase);
@@ -388,10 +388,10 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         preconditionFailure("This method must be overridden!");
     }
     
-    internal func sort() {
+    internal func pressedSort() {
         
         if(didFinish) {
-            reset()
+            resetWith(newArray:  sortArray.map { $0 });
             return;
         }
         
@@ -405,22 +405,21 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         }
     }
     
-    internal func randomise() {
+    internal func pressedRandomise() {
         
         logView.pressedRandomise(array: sortArray);
-        sortButton.setTitle(NSLocalizedString("start", comment: ""), for: .normal);
         resetWith(newArray: InputArrays.randomInputArray(length: sortArray.count))
     }
     
-    internal func reset() {
+    internal func pressedReset() {
         
         logView.pressedReset();
-        sortButton.setTitle(NSLocalizedString("start", comment: ""), for: .normal);
         resetWith(newArray:  sortArray.map { $0 });
     }
     
     internal func resetWith(newArray: [Int]) {
         
+        sortButton.setTitle(NSLocalizedString("start", comment: ""), for: .normal);
         animationStep = 0;
         sortArray = newArray;
         sortCollectionView.reloadData();
@@ -428,7 +427,7 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         didFinish = false;
     }
     
-    internal func stepBack() {
+    internal func pressedStepBack() {
         
         if(!isAnimating) {
             
@@ -439,7 +438,7 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         }
     }
     
-    internal func stepForward() {
+    internal func pressedStepForward() {
         
         if(!isAnimating) {
             willStartAnimating(true);
@@ -561,7 +560,7 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         sortCollectionView.performBatchUpdates({
             self.sortCollectionView.deleteItems(at: [IndexPath(row: self.sortArray.count, section: 0)])
         }, completion: { (didComplete) in
-            UIView.animate(withDuration: kAnimationDuration, animations: {
+            UIView.animate(withDuration: self.kAnimationDuration, animations: {
                 self.view.setNeedsLayout();
                 self.view.layoutIfNeeded();
             })
@@ -572,7 +571,7 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         sortCollectionView.performBatchUpdates({
             self.sortCollectionView.insertItems(at: [IndexPath(row: self.sortArray.count-1, section: 0)]);
         }, completion: { (didComplete) in
-            UIView.animate(withDuration: kAnimationDuration, animations: {
+            UIView.animate(withDuration: self.kAnimationDuration, animations: {
                 self.view.setNeedsLayout();
                 self.view.layoutIfNeeded();
             })

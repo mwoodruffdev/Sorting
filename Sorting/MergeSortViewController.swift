@@ -35,16 +35,16 @@ class MergeSortViewController: BaseSortingViewController<MergeSort> {
         heightConstraint?.constant = 2 * (kCollectionViewLayoutWidthHeight + (2 * kCollectionViewLayoutTopBottomInset));
     }
     
-    override func reset() {
-        
-        super.reset();
-        removeWorking();
-    }
-    
-    override func randomise() {
-        
-        super.randomise();
-        removeWorking();
+    override func resetWith(newArray: [Int]) {
+
+        sortButton.setTitle(NSLocalizedString("start", comment: ""), for: .normal);
+        animationStep = 0;
+        sortArray = newArray;
+        workingArray = [];
+        sectionArray[1] = self.workingArray.count;
+        sortCollectionView.reloadData();
+        resetButtonState();
+        didFinish = false;
     }
     
     //override as we need a bigger collection view height for the second section
@@ -206,11 +206,12 @@ class MergeSortViewController: BaseSortingViewController<MergeSort> {
         
         workingArray = [];
         sectionArray[1] = self.workingArray.count;
+//        sortCollectionView.reloadSections(IndexSet(integer: 0...1))
         sortCollectionView.reloadSections(IndexSet(integer:1));
     }
     
-    override func sort() {
+    override func pressedSort() {
         logView.insertSplit(count: sortArray.count);
-        super.sort()
+        super.pressedSort()
     }
 }

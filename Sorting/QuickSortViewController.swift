@@ -38,20 +38,11 @@ class QuickSortViewController: BaseSortingViewController<QuickSort> {
         }
     }
     
-    override func reset() {
+    override func resetWith(newArray: [Int]) {
         resetCells { (cell) -> Bool in
             return true;
         }
-        super.reset();
-        
-    }
-    
-    override func randomise() {
-        resetCells { (cell) -> Bool in
-            return true;
-        }
-        super.randomise();
-        
+        super.resetWith(newArray: newArray);
     }
     
     override func createAnimations(moves: [QuickSortMove]) -> [SortAnimation] {

@@ -16,8 +16,8 @@ class QuickSort: SortingAlgorithm {
     static var worstComplexity = BigOhStringFormatter.bigOhOfNSquared();
     static var averageComplexity = BigOhStringFormatter.bigOhOfNLogN();
     static var bestComplexity = BigOhStringFormatter.bigOhOfNLogN();
-    static var worstCase: [Int] = [0, 1, 2, 3, 4];
-    static var bestCase:[Int] = [4, 3, 2, 1, 0];
+    static var worstCase: [Int] = [1,2,3,4, 0];
+    static var bestCase:[Int] = [0, 1, 4, 3, 2];
     
     static func sort(unsortedArray: [Int]) -> [MoveType] {
         
