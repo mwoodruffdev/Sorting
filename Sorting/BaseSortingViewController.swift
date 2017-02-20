@@ -561,7 +561,7 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         sortCollectionView.performBatchUpdates({
             self.sortCollectionView.deleteItems(at: [IndexPath(row: self.sortArray.count, section: 0)])
         }, completion: { (didComplete) in
-            UIView.animate(withDuration: 0.5, animations: {
+            UIView.animate(withDuration: kAnimationDuration, animations: {
                 self.view.setNeedsLayout();
                 self.view.layoutIfNeeded();
             })
@@ -572,7 +572,7 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         sortCollectionView.performBatchUpdates({
             self.sortCollectionView.insertItems(at: [IndexPath(row: self.sortArray.count-1, section: 0)]);
         }, completion: { (didComplete) in
-            UIView.animate(withDuration: 0.5, animations: {
+            UIView.animate(withDuration: kAnimationDuration, animations: {
                 self.view.setNeedsLayout();
                 self.view.layoutIfNeeded();
             })
