@@ -17,17 +17,17 @@ Presently, SortMeOut supports four basic sorting algorithms:
 <a name="bubblesort" />
 ##Bubble Sort
 
-![alt text](text](../gifs/https://cloud.githubusercontent.com/assets/11582455/23112538/fbcb96a6-f76b-11e6-837d-c7c94aa5a9c6.gif "Bubble Sort")
+![alt text](text](https://cloud.githubusercontent.com/assets/11582455/23112538/fbcb96a6-f76b-11e6-837d-c7c94aa5a9c6.gif "Bubble Sort")
 
 <a name="mergesort" />
 ##Merge Sort
 
-![alt text](../gifs/https://cloud.githubusercontent.com/assets/11582455/23112548/0d7c477e-f76c-11e6-87c6-e721d20a3fb9.gif "Merge Sort")
+![alt text](https://cloud.githubusercontent.com/assets/11582455/23112548/0d7c477e-f76c-11e6-87c6-e721d20a3fb9.gif "Merge Sort")
 
 <a name="quicksort" />
 ##Quick Sort
 
-![alt text](../gifs/https://cloud.githubusercontent.com/assets/11582455/23112560/20a17cac-f76c-11e6-884e-cf40e4ca1469.gif "Quick Sort")
+![alt text](https://cloud.githubusercontent.com/assets/11582455/23112560/20a17cac-f76c-11e6-884e-cf40e4ca1469.gif "Quick Sort")
 
 <a name="insertionsort" />
 ##Insertion Sort
