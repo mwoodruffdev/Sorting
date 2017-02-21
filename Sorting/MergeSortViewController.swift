@@ -30,9 +30,13 @@ class MergeSortViewController: BaseSortingViewController<MergeSort> {
     }
     
     override func applyCollectionViewConstraints() {
-        
+
         super.applyCollectionViewConstraints();
-        heightConstraint?.constant = 2 * (kCollectionViewLayoutWidthHeight + (2 * kCollectionViewLayoutTopBottomInset));
+        //Assumes a square
+        let cellsPerRow: CGFloat = 9;
+        let individualHeight = (view.frame.size.width - 102)/cellsPerRow;
+        //Assumes top bottom inset is a constant
+        heightConstraint?.constant = 2 * (individualHeight + (2 * kCollectionViewLayoutTopBottomInset));
     }
     
     override func resetWith(newArray: [Int]) {
@@ -206,7 +210,6 @@ class MergeSortViewController: BaseSortingViewController<MergeSort> {
         
         workingArray = [];
         sectionArray[1] = self.workingArray.count;
-//        sortCollectionView.reloadSections(IndexSet(integer: 0...1))
         sortCollectionView.reloadSections(IndexSet(integer:1));
     }
     

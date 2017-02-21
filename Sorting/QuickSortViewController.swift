@@ -11,23 +11,15 @@ import UIKit
 
 class QuickSortViewController: BaseSortingViewController<QuickSort> {
     
-    override func createCollectionViewLayout() -> UICollectionViewLayout {
-        
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 6, left: 3, bottom: 6, right: 3)
-        layout.itemSize = CGSize(width: 30, height: 60)
-        
-        return layout;
+    override func registerCells() {
+        sortCollectionView.register(QuickSortCollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
     }
     
-    override func setupCollectionView(layout: UICollectionViewLayout) {
+    override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        sortCollectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
-        sortCollectionView.dataSource = self
-        sortCollectionView.delegate = self
-        sortCollectionView.register(QuickSortCollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
-        sortCollectionView.backgroundColor = .white
-        self.view.addSubview(sortCollectionView)
+        let superSize = super.collectionView(collectionView, layout: collectionViewLayout, sizeForItemAt: indexPath);
+        let doubleHeightSize = CGSize(width: superSize.width, height: superSize.height * 2);
+        return doubleHeightSize;
     }
     
     override func setupCell(indexPath: IndexPath, cell: UICollectionViewCell) {

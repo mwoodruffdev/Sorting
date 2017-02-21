@@ -24,6 +24,8 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     
     internal let kMinimumSortArrayLength = 3;
     
+    let kMaxCellsPerRow: CGFloat = 9;
+    
     var animationMoves: [SortAnimation] = [];
     var isAnimating: Bool = false;
     var didFinish: Bool = false;
@@ -45,8 +47,6 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     internal var bestCaseLabel = UILabel();
     internal var bestCaseShowMe = UIButton();
     
-    let kCollectionViewLayoutWidthHeight: CGFloat = 30;
-    let kCollectionViewLayoutLeftRightInset: CGFloat = 3;
     let kCollectionViewLayoutTopBottomInset: CGFloat = 6;
     //Constraints
     internal var heightConstraint: NSLayoutConstraint?;
@@ -69,39 +69,62 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         sortArray = InputArrays.randomInputArray(length: length);
     }
     
-    internal func createCollectionViewLayout() -> UICollectionViewLayout {
+     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: kCollectionViewLayoutTopBottomInset,
-                                           left: kCollectionViewLayoutLeftRightInset,
-                                           bottom: kCollectionViewLayoutTopBottomInset,
-                                           right: kCollectionViewLayoutLeftRightInset )
-        layout.itemSize = CGSize(width: kCollectionViewLayoutWidthHeight, height: kCollectionViewLayoutWidthHeight)
-        
-        return layout;
+        let cellsPerRow: CGFloat = kMaxCellsPerRow;
+        let totalWidth = sortCollectionView.frame.size.width;
+        let individualTotalWidth  = (totalWidth / cellsPerRow);
+        let inset = individualTotalWidth / 10;
+        let widthAfterInset = individualTotalWidth - (2 * inset);
+        return CGSize(width: widthAfterInset, height: widthAfterInset);
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+     
+        let cellsPerRow: CGFloat = kMaxCellsPerRow;
+        let totalWidth = sortCollectionView.frame.size.width;
+        let individualTotalWidth  = (totalWidth / cellsPerRow);
+        let inset = individualTotalWidth / 10;
+        return UIEdgeInsets(top: kCollectionViewLayoutTopBottomInset,
+                            left: inset,
+                            bottom: kCollectionViewLayoutTopBottomInset,
+                            right: inset)
     }
     
     internal func setupViews() {
         
-        setupCollectionView(layout: createCollectionViewLayout());
+        setupCollectionView();
         setupComplexityLabels()
         setupLogView();
         setupButtons();
     }
     
-    internal func setupCollectionView(layout: UICollectionViewLayout) {
+    internal func setupCollectionView() {
         
-        sortCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+        //Default layout
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: kCollectionViewLayoutTopBottomInset,
+                                           left: 3,
+                                           bottom: kCollectionViewLayoutTopBottomInset,
+                                           right: 3)
+        layout.itemSize = CGSize(width: 30, height: 30)
+        
+        sortCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout);
+        
         sortCollectionView.dataSource = self
         sortCollectionView.delegate = self
-        sortCollectionView.register(SortCollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
+        registerCells();
         sortCollectionView.backgroundColor = UIColor.white
         self.view.addSubview(sortCollectionView)
     }
     
+    internal func registerCells() {
+        sortCollectionView.register(SortCollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
+    }
+    
     internal func setupLogView() {
         
-        logView.text = "Press start to begin!";
+        logView.text = NSLocalizedString("logger_intro_text", comment: "");
         view.addSubview(logView);
     }
     
@@ -157,6 +180,7 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         /* Hide back feature for now */
         stepBackButton.isHidden = true;
         /* Hide back feature for now */
+        
         stepBackButton.layer.borderColor = UIColor.white.cgColor
         stepBackButton.layer.borderWidth = 1;
         stepBackButton.setTitle(NSLocalizedString("back", comment: ""), for: .normal);
@@ -361,11 +385,16 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
             minusButton.isHidden = false;
         }
         
+            
         //Check if another cell can be added to the collection view. If it cannot, then disable plus.
+        let widthHeight = sortCollectionView.collectionViewLayout.collectionViewContentSize.height;
+
         let lastCell = sortCollectionView.cellForItem(at: IndexPath(row: sortCollectionView.numberOfItems(inSection: 0) - 1, section: 0));
-        let rightPointOfNextCell = lastCell!.frame.origin.x + kCollectionViewLayoutWidthHeight + kCollectionViewLayoutWidthHeight + kCollectionViewLayoutLeftRightInset + kCollectionViewLayoutLeftRightInset;
         
-        if(rightPointOfNextCell > (sortCollectionView.frame.origin.x + sortCollectionView.frame.size.width)) {
+        let rightPointOfNextCell = lastCell!.frame.origin.x + widthHeight;
+        let rightSideOfCollectionView = sortCollectionView.frame.origin.x + sortCollectionView.frame.size.width;
+        
+        if(rightPointOfNextCell > (rightSideOfCollectionView)) {
             plusButton.isHidden = true;
         } else {
             plusButton.isHidden = false;
