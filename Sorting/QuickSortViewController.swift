@@ -69,22 +69,23 @@ class QuickSortViewController: BaseSortingViewController<QuickSort> {
                 let textAnimation = ViewSortAnimation({
                     
                     if(positionOne.index == pivotPosition.index) {
-                        self.logView.insertText("\nBoth L&R both reached the pivot. P is in sorted position");
+                        self.logView.insertNewLine(text: NSLocalizedString("logger_action_L_R_reached_pivot", comment: ""), color: .black);
                     } else {
                         self.logView.insertLSwap();
                     }
                 });
                 
-                let pivotSwapAnimation = CollectionViewSortAnimation({
+                animationArray.append(textAnimation);
+                if(positionOne.index != pivotPosition.index) {
                     
-                    if(positionOne.index != pivotPosition.index) {
+                    let pivotSwapAnimation = CollectionViewSortAnimation({
                         self.sortCollectionView.moveItem(at: IndexPath(row: positionOne.index, section: 0), to: IndexPath(row: pivotPosition.index, section: 0))
                         self.sortCollectionView.moveItem(at: IndexPath(row: pivotPosition.index, section: 0), to: IndexPath(row: positionOne.index, section: 0))
-                    }
-                });
+                    });
+                    animationArray.append(pivotSwapAnimation);
+                }
                 
-                animationArray.append(textAnimation);
-                animationArray.append(pivotSwapAnimation);
+                
                 break;
                 
             case .swap(let positionOne, let positionTwo):
@@ -114,7 +115,6 @@ class QuickSortViewController: BaseSortingViewController<QuickSort> {
                     self.resetCells(clause: self.animationCondition);
                     
                     let cell1 = self.sortCollectionView.cellForItem(at: IndexPath(row: pivotPosition.index, section: 0)) as? QuickSortCollectionViewCell;
-                    cell1?.isPivot = true;
                     cell1?.setAsPivot();
                     
                     self.logView.insertPivot(text: "\(pivotPosition.value) (\(String(format: NSLocalizedString("logger_action_detail_index", comment: ""), pivotPosition.index)))");
@@ -156,8 +156,8 @@ class QuickSortViewController: BaseSortingViewController<QuickSort> {
                     self.resetCells(clause: self.animationCondition);
                     
                     let cell1 = self.sortCollectionView.cellForItem(at: IndexPath(row: sortedPosition.index, section: 0)) as? QuickSortCollectionViewCell;
-                    cell1?.isSorted = !cell1!.isSorted;
-                    if(cell1!.isSorted) {
+                    
+                    if(!cell1!.isSorted) {
                         cell1?.setAsSorted();
                     } else {
                         cell1?.reset();

@@ -126,9 +126,6 @@ class MergeSortViewController: BaseSortingViewController<MergeSort> {
                     self.sectionArray[1] = high - low + 1;
                     self.workingArray = workingArray;
                     self.sortCollectionView.reloadSections(IndexSet(integer:1));
-                });
-                
-                let addSectionAnimation = ViewSortAnimation({
                     self.view.setNeedsLayout();
                     self.view.layoutIfNeeded();
                 });
@@ -142,7 +139,6 @@ class MergeSortViewController: BaseSortingViewController<MergeSort> {
                 
                 animationArray.append(colorAnimation);
                 animationArray.append(insertSectionDataAnimation);
-                animationArray.append(addSectionAnimation);
                 animationArray.append(workingColorAnimation);
                 break;
                 
@@ -190,15 +186,11 @@ class MergeSortViewController: BaseSortingViewController<MergeSort> {
                 
                 let removeSectionAnimation = CollectionViewSortAnimation({
                     self.removeWorking();
-                });
-                
-                let updateViewSection = ViewSortAnimation({
                     self.view.setNeedsLayout();
                     self.view.layoutIfNeeded();
                 });
                 
                 animationArray.append(removeSectionAnimation);
-                animationArray.append(updateViewSection);
                 break;
             }
         }

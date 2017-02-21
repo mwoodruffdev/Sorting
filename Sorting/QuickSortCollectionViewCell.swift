@@ -10,12 +10,12 @@ import UIKit
 
 class QuickSortCollectionViewCell: UICollectionViewCell {
     
-    
+
     var valueLabel: UILabel!;
     var lrLabel: UILabel!;
     
-    var isPivot: Bool = false;
-    var isSorted: Bool = false;
+    private(set) var isPivot: Bool = false;
+    private(set) var isSorted: Bool = false;
     
     override init(frame: CGRect) {
         
@@ -74,18 +74,22 @@ class QuickSortCollectionViewCell: UICollectionViewCell {
     }
     
     func reset() {
+        isSorted = false;
+        isPivot = false;
         lrLabel.fadeTransition(duration: 1);
         lrLabel.text = "";
         backgroundColor = .black;
     }
     
     func setAsPivot() {
+        isPivot = true;
         lrLabel.fadeTransition(duration: 1);
         lrLabel.text = "P";
         backgroundColor = .blue;
     }
     
     func setAsSorted() {
+        isSorted = true;
         lrLabel.fadeTransition(duration: 1);
         lrLabel.text = "";
         backgroundColor = .green;
