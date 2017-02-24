@@ -10,6 +10,10 @@ import UIKit
 
 extension UIFont {
     
-    static var standardFont: UIFont { return UIFont(name: "Roboto-Regular", size: 16)!; };
-    static var actionButtonFont: UIFont { return UIFont(name: "Roboto-Regular", size: 12)!; };
+    static var standardFont: UIFont { return roboto(size: 16) };
+    static var actionButtonFont: UIFont { return roboto(size: 12) };
+    
+    static func roboto(size: CGFloat) -> UIFont {
+        return UIFont(name: "Roboto-Regular", size: size)!;
+    }
 }

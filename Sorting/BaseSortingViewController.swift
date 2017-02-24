@@ -42,13 +42,14 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     internal var stepForwardButton = ButtonFactory.actionButton(text: ">",
                                                                       target: self,
                                                                       action: #selector(pressedStepForward));
-    internal var randomiseButton = ButtonFactory.standardButtonWith(text: NSLocalizedString("randomise", comment: ""),
+    internal var randomiseButton = ButtonFactory.standardButtonWith(image: UIImage(named:"Shuffle-50")!,
                                                                    target: self,
                                                                    action: #selector(pressedRandomise));
-    internal var resetButton = ButtonFactory.standardButtonWith(text: NSLocalizedString("reset", comment: ""),
+    internal var resetButton = ButtonFactory.standardButtonWith(image: UIImage(named: "Restart Filled-50")!,
                                                                target: self,
                                                                action: #selector(pressedReset));
-    internal var sortButton = ButtonFactory.standardButtonWith(text: NSLocalizedString("start", comment: ""),
+
+    internal var sortButton = ButtonFactory.standardButtonWith(image: UIImage(named:"Play-50")!,
                                                               target: self,
                                                               action: #selector(pressedSort));
     internal var clearButton = UIButton();
@@ -170,9 +171,9 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         clearButton.titleLabel?.font = .standardFont;
         view.addSubview(clearButton);
         
-        minusButton.titleLabel?.font = UIFont(name: "Roboto-Regular", size: 40);
+        minusButton.titleLabel?.font = UIFont.roboto(size: 40);
         view.addSubview(minusButton);
-        plusButton.titleLabel?.font = UIFont(name: "Roboto-Regular", size: 25);
+        plusButton.titleLabel?.font = UIFont.roboto(size: 25);
         view.addSubview(plusButton);
         view.addSubview(worstCaseShowMe);
         view.addSubview(bestCaseShowMe);
@@ -180,7 +181,7 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         stepBackButton.isHidden = true;
         /* Hide back feature for now */
         view.addSubview(stepBackButton);
-        stepForwardButton.titleLabel?.font = UIFont(name: "Roboto-Regular", size: 25);
+        stepForwardButton.titleLabel?.font = UIFont.roboto(size: 25)
         view.addSubview(stepForwardButton);
         view.addSubview(randomiseButton);
         view.addSubview(resetButton);
@@ -266,14 +267,13 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         resetButton.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true;
         resetButton.bottomAnchor.constraint(equalTo: sortButton.topAnchor).isActive = true;
         resetButton.heightAnchor.constraint(equalToConstant: 50).isActive = true;
-        resetButton.widthAnchor.constraint(equalToConstant: view.frame.size.width / 3).isActive = true;
+        resetButton.widthAnchor.constraint(equalToConstant: 50).isActive = true;
         
         randomiseButton.translatesAutoresizingMaskIntoConstraints = false;
         randomiseButton.leftAnchor.constraint(equalTo: resetButton.rightAnchor).isActive = true;
         randomiseButton.bottomAnchor.constraint(equalTo: sortButton.topAnchor).isActive = true;
         randomiseButton.heightAnchor.constraint(equalToConstant: 50).isActive = true;
-        randomiseButton.widthAnchor.constraint(greaterThanOrEqualToConstant: view.frame.size.width / 3).isActive = true;
-        
+        randomiseButton.widthAnchor.constraint(equalToConstant: 50).isActive = true;
         
         sortButton.translatesAutoresizingMaskIntoConstraints = false;
         sortButton.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true;
@@ -416,7 +416,7 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     
     internal func resetWith(newArray: [Int]) {
         
-        sortButton.setTitle(NSLocalizedString("start", comment: ""), for: .normal);
+        sortButton.setImage(UIImage(named:"Play-50")!, for: .normal);
         animationStep = 0;
         sortArray = newArray;
         sortCollectionView.reloadData();
@@ -523,20 +523,20 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     
     private func didStartSort() {
      
-        sortButton.setTitle(NSLocalizedString("stop", comment: ""), for: .normal);
+        sortButton.setImage(UIImage(named:"Pause-50"), for: .normal);
         willStartAnimating(true);
     }
     
     private func didPauseSort() {
      
         willStartAnimating(false);
-        sortButton.setTitle(NSLocalizedString("continue", comment: ""), for: .normal);
+        sortButton.setImage(UIImage(named:"Play-50")!, for: .normal);
     }
     
     private func didFinishSort() {
         
         didFinish = true;
-        sortButton.setTitle(NSLocalizedString("reset", comment: ""), for: .normal);
+        sortButton.setImage(UIImage(named:"Restart Filled-50")!, for: .normal);
         willStartAnimating(false);
     }
     

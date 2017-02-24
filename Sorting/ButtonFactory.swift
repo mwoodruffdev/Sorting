@@ -14,10 +14,11 @@ class ButtonFactory {
         
         let standardButton = UIButton();
         standardButton.titleLabel?.font = .standardFont;
-        standardButton.layer.borderColor = UIColor.white.cgColor
+        standardButton.layer.borderColor = UIColor.black.cgColor
         standardButton.layer.borderWidth = 1;
-        standardButton.backgroundColor = .black;
-        standardButton.setTitleColor(.white, for: .normal);
+        standardButton.backgroundColor = .white;
+        standardButton.setTitleColor(.black, for: .normal);
+        standardButton.tintColor = .black;
         return standardButton;
     }
     
@@ -25,6 +26,14 @@ class ButtonFactory {
         
         let standardButton = self.standardButton();
         standardButton.setTitle(text, for: .normal);
+        standardButton.addTarget(target, action: action, for: .touchUpInside);
+        return standardButton;
+    }
+    
+    static func standardButtonWith(image: UIImage, target: Any?, action: Selector) -> UIButton {
+        
+        let standardButton = self.standardButton();
+        standardButton.setImage(image.withRenderingMode(.alwaysTemplate), for: .normal)
         standardButton.addTarget(target, action: action, for: .touchUpInside);
         return standardButton;
     }
