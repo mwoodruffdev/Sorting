@@ -15,6 +15,7 @@ class SortLogView: UITextView, UITextViewDelegate {
     init() {
         
         super.init(frame: CGRect.zero, textContainer: nil);
+        font = Fonts.standardFont();
         delegate = self;
         layoutManager.allowsNonContiguousLayout = false;
         isEditable = false;

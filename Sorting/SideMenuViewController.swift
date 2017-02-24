@@ -28,6 +28,13 @@ class SideMenuViewController: UITableViewController {
         selectedIndex = 0;
     }
     
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = super.tableView(tableView, cellForRowAt: indexPath);
+        cell.textLabel?.font = Fonts.standardFont();
+        return cell;
+        
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if(indexPath.row != self.selectedIndex) {

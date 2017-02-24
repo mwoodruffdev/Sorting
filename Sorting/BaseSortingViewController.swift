@@ -32,20 +32,37 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     var animationStep: Int = 0;
     
     //UI
+
     internal var sortCollectionView: UICollectionView!
-    internal var minusButton = UIButton();
-    internal var plusButton = UIButton();
-    internal var stepBackButton = UIButton();
-    internal var stepForwardButton = UIButton();
-    internal var randomiseButton = UIButton();
-    internal var resetButton = UIButton();
-    internal var sortButton = UIButton();
-    internal var clearButton = UIButton();
+    internal var minusButton = ButtonFactory.standardButtonWith(text: "-", target: self, action: #selector(removeElement));
+    internal var plusButton = ButtonFactory.standardButtonWith(text: "+", target: self, action: #selector(addElement));
+    internal var stepBackButton = ButtonFactory.standardButtonWith(text: NSLocalizedString("back", comment: ""),
+                                                                   target: self,
+                                                                   action: #selector(pressedStepBack));
+    internal var stepForwardButton = ButtonFactory.standardButtonWith(text: NSLocalizedString("next", comment: ""),
+                                                                      target: self,
+                                                                      action: #selector(pressedStepForward));
+    internal var randomiseButton = ButtonFactory.standardButtonWith(text: NSLocalizedString("randomise", comment: ""),
+                                                                   target: self,
+                                                                   action: #selector(pressedRandomise));
+    internal var resetButton = ButtonFactory.standardButtonWith(text: NSLocalizedString("reset", comment: ""),
+                                                               target: self,
+                                                               action: #selector(pressedReset));
+    internal var sortButton = ButtonFactory.standardButtonWith(text: NSLocalizedString("start", comment: ""),
+                                                              target: self,
+                                                              action: #selector(pressedSort));
+    internal var clearButton = ButtonFactory.highlightedButton(text: NSLocalizedString("clear", comment: ""),
+                                                                target: self,
+                                                                action: #selector(clear));
     internal var logView = SortLogView();
     internal var worstCaseLabel = UILabel();
-    internal var worstCaseShowMe = UIButton()
+    internal var worstCaseShowMe = ButtonFactory.highlightedButton(text: NSLocalizedString("show_me", comment: ""),
+                                                                    target: self,
+                                                                    action: #selector(pressedShowMeWorst));
     internal var bestCaseLabel = UILabel();
-    internal var bestCaseShowMe = UIButton();
+    internal var bestCaseShowMe = ButtonFactory.highlightedButton(text: NSLocalizedString("show_me", comment: ""),
+                                                                   target: self,
+                                                                   action: #selector(pressedShowMeBest));
     
     let kCollectionViewLayoutTopBottomInset: CGFloat = 6;
     //Constraints
@@ -133,12 +150,14 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         
         let worstCase = NSMutableAttributedString(string: NSLocalizedString("worst_case_label", comment: ""));
         worstCase.append(Algorithm.worstComplexity);
+        worstCaseLabel.font = Fonts.standardFont();
         worstCaseLabel.attributedText = worstCase;
         worstCaseLabel.textColor = UIColor.black;
         view.addSubview(worstCaseLabel);
         
         let bestCase = NSMutableAttributedString(string: NSLocalizedString("best_case_label", comment: ""));
         bestCase.append(Algorithm.bestComplexity);
+        bestCaseLabel.font = Fonts.standardFont();
         bestCaseLabel.attributedText = bestCase;
         bestCaseLabel.textColor = UIColor.black;
         view.addSubview(bestCaseLabel);
@@ -146,78 +165,18 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     
     internal func setupButtons() {
         
-        clearButton.setTitle(NSLocalizedString("clear", comment: ""), for: .normal);
-        clearButton.setTitleColor(.blue, for: .normal);
-        clearButton.addTarget(self, action: #selector(clear), for: .touchUpInside);
         view.addSubview(clearButton);
-        
-        minusButton.layer.borderColor = UIColor.white.cgColor
-        minusButton.layer.borderWidth = 1;
-        minusButton.setTitle("-", for: .normal);
-        minusButton.addTarget(self, action: #selector(removeElement), for: .touchUpInside);
-        minusButton.backgroundColor = .black;
-        minusButton.setTitleColor(.white, for: .normal);
         view.addSubview(minusButton);
-        
-        plusButton.layer.borderColor = UIColor.white.cgColor
-        plusButton.layer.borderWidth = 1;
-        plusButton.setTitle("+", for: .normal);
-        plusButton.addTarget(self, action: #selector(addElement), for: .touchUpInside);
-        plusButton.backgroundColor = .black;
-        plusButton.setTitleColor(.white, for: .normal);
         view.addSubview(plusButton);
-        
-        worstCaseShowMe.setTitle(NSLocalizedString("show_me", comment: ""), for: .normal);
-        worstCaseShowMe.addTarget(self, action: #selector(pressedShowMeWorst), for: .touchUpInside);
-        worstCaseShowMe.setTitleColor(.blue, for: .normal);
         view.addSubview(worstCaseShowMe);
-        
-        bestCaseShowMe.setTitle(NSLocalizedString("show_me", comment: ""), for: .normal);
-        bestCaseShowMe.addTarget(self, action: #selector(pressedShowMeBest), for: .touchUpInside);
-        bestCaseShowMe.setTitleColor(.blue, for: .normal);
         view.addSubview(bestCaseShowMe);
-        
         /* Hide back feature for now */
         stepBackButton.isHidden = true;
         /* Hide back feature for now */
-        
-        stepBackButton.layer.borderColor = UIColor.white.cgColor
-        stepBackButton.layer.borderWidth = 1;
-        stepBackButton.setTitle(NSLocalizedString("back", comment: ""), for: .normal);
-        stepBackButton.addTarget(self, action: #selector(pressedStepBack), for: .touchUpInside);
-        stepBackButton.backgroundColor = .black;
-        stepBackButton.setTitleColor(.white, for: .normal);
         view.addSubview(stepBackButton);
-        
-        
-        stepForwardButton.layer.borderColor = UIColor.white.cgColor
-        stepForwardButton.layer.borderWidth = 1;
-        stepForwardButton.setTitle(NSLocalizedString("next", comment: ""), for: .normal);
-        stepForwardButton.addTarget(self, action: #selector(pressedStepForward), for: .touchUpInside);
-        stepForwardButton.backgroundColor = .black;
-        stepForwardButton.setTitleColor(.white, for: .normal);
         view.addSubview(stepForwardButton);
-        
-        randomiseButton.layer.borderColor = UIColor.white.cgColor
-        randomiseButton.layer.borderWidth = 1;
-        randomiseButton.setTitle(NSLocalizedString("randomise", comment: ""), for: .normal);
-        randomiseButton.addTarget(self, action: #selector(pressedRandomise), for: .touchUpInside);
-        randomiseButton.backgroundColor = .black;
-        randomiseButton.setTitleColor(.white, for: .normal);
         view.addSubview(randomiseButton);
-        
-        resetButton.layer.borderColor = UIColor.white.cgColor
-        resetButton.layer.borderWidth = 1;
-        resetButton.setTitle(NSLocalizedString("reset", comment: ""), for: .normal);
-        resetButton.addTarget(self, action: #selector(pressedReset), for: .touchUpInside);
-        resetButton.backgroundColor = .black;
-        resetButton.setTitleColor(.white, for: .normal);
         view.addSubview(resetButton);
-        
-        sortButton.setTitle(NSLocalizedString("start", comment: ""), for: .normal);
-        sortButton.addTarget(self, action: #selector(pressedSort), for: .touchUpInside);
-        sortButton.backgroundColor = .blue;
-        sortButton.setTitleColor(.white, for: .normal);
         view.addSubview(sortButton);
         
         resetButtonState();
