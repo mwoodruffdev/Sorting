@@ -26,12 +26,12 @@ class QuickSortCollectionViewCell: UICollectionViewCell {
         
         valueLabel = UILabel();
         valueLabel.textAlignment = .center;
-        valueLabel.textColor = UIColor.white;
+        valueLabel.textColor = .white;
         valueLabel.adjustsFontSizeToFitWidth = true;
         
         lrLabel = UILabel();
         lrLabel.textAlignment = .center;
-        lrLabel.textColor = UIColor.white;
+        lrLabel.textColor = .white;
         lrLabel.adjustsFontSizeToFitWidth = true;
         
         contentView.addSubview(lrLabel);

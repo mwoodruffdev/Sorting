@@ -23,9 +23,9 @@ class BubbleSortViewController: BaseSortingViewController<BubbleSort> {
                 
                 let checkAnimation = ViewSortAnimation({
                     let cell1 = self.sortCollectionView.cellForItem(at: IndexPath(row: positionOne.index, section: 0));
-                    cell1?.backgroundColor = UIColor.red;
+                    cell1?.backgroundColor = .red;
                     let cell2 = self.sortCollectionView.cellForItem(at: IndexPath(row: positionTwo.index, section: 0));
-                    cell2?.backgroundColor = UIColor.red;
+                    cell2?.backgroundColor = .red;
                     
                     for i in (0 ..< self.sortArray.count) {
                         
@@ -35,7 +35,7 @@ class BubbleSortViewController: BaseSortingViewController<BubbleSort> {
                         if let unHighlightedCell =  self.sortCollectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? SortCollectionViewCell,
                             !unHighlightedCell.isSortedCell() {
                             
-                            unHighlightedCell.backgroundColor = UIColor.black;
+                            unHighlightedCell.backgroundColor = .black;
                         }
                     }
                     
@@ -56,9 +56,9 @@ class BubbleSortViewController: BaseSortingViewController<BubbleSort> {
                         let cell = self.sortCollectionView.cellForItem(at: IndexPath(row: i, section: 0)) as! SortCollectionViewCell;
                         oldColors.append(cell.backgroundColor!);
                         if(i < position.index) {
-                            cell.backgroundColor = UIColor.black;
+                            cell.backgroundColor = .black;
                         } else {
-                            cell.backgroundColor = UIColor.green;
+                            cell.backgroundColor = .green;
                         }
                         i = i + 1;
                     }

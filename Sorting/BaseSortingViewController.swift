@@ -34,12 +34,12 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     //UI
 
     internal var sortCollectionView: UICollectionView!
-    internal var minusButton = ButtonFactory.standardButtonWith(text: "-", target: self, action: #selector(removeElement));
-    internal var plusButton = ButtonFactory.standardButtonWith(text: "+", target: self, action: #selector(addElement));
+    internal var minusButton = ButtonFactory.roundButton(text: "-", target: self, action: #selector(removeElement), width:25);
+    internal var plusButton = ButtonFactory.roundButton(text: "+", target: self, action: #selector(addElement), width: 25);
     internal var stepBackButton = ButtonFactory.standardButtonWith(text: NSLocalizedString("back", comment: ""),
                                                                    target: self,
                                                                    action: #selector(pressedStepBack));
-    internal var stepForwardButton = ButtonFactory.standardButtonWith(text: NSLocalizedString("next", comment: ""),
+    internal var stepForwardButton = ButtonFactory.actionButton(text: ">",
                                                                       target: self,
                                                                       action: #selector(pressedStepForward));
     internal var randomiseButton = ButtonFactory.standardButtonWith(text: NSLocalizedString("randomise", comment: ""),
@@ -51,16 +51,15 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     internal var sortButton = ButtonFactory.standardButtonWith(text: NSLocalizedString("start", comment: ""),
                                                               target: self,
                                                               action: #selector(pressedSort));
-    internal var clearButton = ButtonFactory.highlightedButton(text: NSLocalizedString("clear", comment: ""),
-                                                                target: self,
-                                                                action: #selector(clear));
+    internal var clearButton = UIButton();
+                                                                
     internal var logView = SortLogView();
     internal var worstCaseLabel = UILabel();
-    internal var worstCaseShowMe = ButtonFactory.highlightedButton(text: NSLocalizedString("show_me", comment: ""),
+    internal var worstCaseShowMe = ButtonFactory.actionButton(text: NSLocalizedString("show_me", comment: ""),
                                                                     target: self,
                                                                     action: #selector(pressedShowMeWorst));
     internal var bestCaseLabel = UILabel();
-    internal var bestCaseShowMe = ButtonFactory.highlightedButton(text: NSLocalizedString("show_me", comment: ""),
+    internal var bestCaseShowMe = ButtonFactory.actionButton(text: NSLocalizedString("show_me", comment: ""),
                                                                    target: self,
                                                                    action: #selector(pressedShowMeBest));
     
@@ -73,7 +72,7 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         super.viewDidLoad();
         
         title = Algorithm.name;
-        view.backgroundColor = UIColor.white;
+        view.backgroundColor = .mainBGColor;
         automaticallyAdjustsScrollViewInsets = false;
         
         setupSortingArray(length: 5);
@@ -127,11 +126,11 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         layout.itemSize = CGSize(width: 30, height: 30)
         
         sortCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout);
-        
+        sortCollectionView.backgroundColor = .clear;
         sortCollectionView.dataSource = self
         sortCollectionView.delegate = self
         registerCells();
-        sortCollectionView.backgroundColor = UIColor.white
+        sortCollectionView.backgroundColor = .white
         self.view.addSubview(sortCollectionView)
     }
     
@@ -147,26 +146,33 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     
     internal func setupComplexityLabels() {
         
-        
         let worstCase = NSMutableAttributedString(string: NSLocalizedString("worst_case_label", comment: ""));
         worstCase.append(Algorithm.worstComplexity);
-        worstCaseLabel.font = Fonts.standardFont();
+        worstCaseLabel.font = .standardFont;
         worstCaseLabel.attributedText = worstCase;
-        worstCaseLabel.textColor = UIColor.black;
+        worstCaseLabel.textColor = .white;
         view.addSubview(worstCaseLabel);
         
         let bestCase = NSMutableAttributedString(string: NSLocalizedString("best_case_label", comment: ""));
         bestCase.append(Algorithm.bestComplexity);
-        bestCaseLabel.font = Fonts.standardFont();
+        bestCaseLabel.font = .standardFont;
         bestCaseLabel.attributedText = bestCase;
-        bestCaseLabel.textColor = UIColor.black;
+        bestCaseLabel.textColor = .white;
         view.addSubview(bestCaseLabel);
     }
     
     internal func setupButtons() {
         
+        clearButton.titleLabel?.font = .standardFont;
+        clearButton.setTitleColor(.blue, for: .normal);
+        clearButton.setTitle(NSLocalizedString("clear", comment: ""), for: .normal);
+        clearButton.addTarget(self, action: #selector(clear), for: .touchUpInside);
+        clearButton.titleLabel?.font = .standardFont;
         view.addSubview(clearButton);
+        
+        minusButton.titleLabel?.font = UIFont(name: "Roboto-Regular", size: 40);
         view.addSubview(minusButton);
+        plusButton.titleLabel?.font = UIFont(name: "Roboto-Regular", size: 25);
         view.addSubview(plusButton);
         view.addSubview(worstCaseShowMe);
         view.addSubview(bestCaseShowMe);
@@ -174,6 +180,7 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         stepBackButton.isHidden = true;
         /* Hide back feature for now */
         view.addSubview(stepBackButton);
+        stepForwardButton.titleLabel?.font = UIFont(name: "Roboto-Regular", size: 25);
         view.addSubview(stepForwardButton);
         view.addSubview(randomiseButton);
         view.addSubview(resetButton);
@@ -200,35 +207,37 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
         applyCollectionViewConstraints();
         
         minusButton.translatesAutoresizingMaskIntoConstraints = false;
-        minusButton.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 6).isActive = true;
+        minusButton.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor).isActive = true;
         minusButton.leftAnchor.constraint(equalTo: sortCollectionView.rightAnchor, constant: 10).isActive = true;
         minusButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true;
         minusButton.heightAnchor.constraint(equalToConstant: 40).isActive = true;
         minusButton.widthAnchor.constraint(equalToConstant: 40).isActive = true;
         
         plusButton.translatesAutoresizingMaskIntoConstraints = false;
-        plusButton.topAnchor.constraint(equalTo: minusButton.bottomAnchor).isActive = true;
+        plusButton.topAnchor.constraint(equalTo: minusButton.bottomAnchor, constant: 5).isActive = true;
         plusButton.leftAnchor.constraint(equalTo: minusButton.leftAnchor).isActive = true;
         plusButton.rightAnchor.constraint(equalTo: minusButton.rightAnchor).isActive = true;
         plusButton.heightAnchor.constraint(equalToConstant: 40).isActive = true;
         plusButton.widthAnchor.constraint(equalToConstant: 40).isActive = true;
         
         worstCaseLabel.translatesAutoresizingMaskIntoConstraints = false;
-        worstCaseLabel.topAnchor.constraint(equalTo: sortCollectionView.bottomAnchor, constant: 10).isActive = true
+        worstCaseLabel.centerYAnchor.constraint(equalTo: worstCaseShowMe.centerYAnchor).isActive = true;
         worstCaseLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true;
         
         worstCaseShowMe.translatesAutoresizingMaskIntoConstraints = false;
-        worstCaseShowMe.centerYAnchor.constraint(equalTo: worstCaseLabel.centerYAnchor).isActive = true;
+        worstCaseShowMe.topAnchor.constraint(equalTo: sortCollectionView.bottomAnchor, constant: 5).isActive = true
         worstCaseShowMe.leftAnchor.constraint(equalTo: worstCaseLabel.rightAnchor, constant: 10).isActive = true;
+        worstCaseShowMe.widthAnchor.constraint(greaterThanOrEqualToConstant: 70).isActive = true;
         worstCaseShowMe.rightAnchor.constraint(lessThanOrEqualTo: view.rightAnchor, constant: -10).isActive = true;
         
         bestCaseShowMe.translatesAutoresizingMaskIntoConstraints = false;
-        bestCaseShowMe.centerYAnchor.constraint(equalTo: bestCaseLabel.centerYAnchor).isActive = true;
+        bestCaseShowMe.topAnchor.constraint(equalTo: worstCaseShowMe.bottomAnchor, constant: 5).isActive = true;
         bestCaseShowMe.leftAnchor.constraint(equalTo: bestCaseLabel.rightAnchor, constant: 10).isActive = true;
+        bestCaseShowMe.widthAnchor.constraint(greaterThanOrEqualToConstant: 70).isActive = true;
         bestCaseShowMe.rightAnchor.constraint(lessThanOrEqualTo: view.rightAnchor, constant: -10).isActive = true;
         
         bestCaseLabel.translatesAutoresizingMaskIntoConstraints = false;
-        bestCaseLabel.topAnchor.constraint(equalTo: worstCaseLabel.bottomAnchor, constant: 10).isActive = true
+        bestCaseLabel.centerYAnchor.constraint(equalTo: bestCaseShowMe.centerYAnchor).isActive = true;
         bestCaseLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true;
         
         logView.translatesAutoresizingMaskIntoConstraints = false;
@@ -314,7 +323,7 @@ class BaseSortingViewController<Algorithm: SortingAlgorithm>: UIViewController, 
     
     internal func setupCell(indexPath: IndexPath, cell: UICollectionViewCell) {
         if let cell = cell as? SortCollectionViewCell {
-            cell.backgroundColor = UIColor.black;
+            cell.backgroundColor = .black;
             cell.valueLabel.text = "\(sortArray[indexPath.row])";
         }
     }

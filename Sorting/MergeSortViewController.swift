@@ -72,11 +72,11 @@ class MergeSortViewController: BaseSortingViewController<MergeSort> {
                 
                 text = "\(sortArray[indexPath.row])"
                 
-                cell.backgroundColor = UIColor.getRandomRainbowColor(index: indexPath.row);
+                cell.backgroundColor = .getRandomRainbowColor(index: indexPath.row);
             } else {
                 
                 text = "\(workingArray[indexPath.row])"
-                cell.backgroundColor = UIColor.black;
+                cell.backgroundColor = .black;
             }
             
             cell.valueLabel.text = text

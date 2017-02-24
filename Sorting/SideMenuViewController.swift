@@ -30,7 +30,7 @@ class SideMenuViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = super.tableView(tableView, cellForRowAt: indexPath);
-        cell.textLabel?.font = Fonts.standardFont();
+        cell.textLabel?.font = .standardFont;
         return cell;
         
     }

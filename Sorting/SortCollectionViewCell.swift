@@ -21,9 +21,9 @@ class SortCollectionViewCell: UICollectionViewCell {
         contentView.layer.borderWidth = 1;
         
         valueLabel = UILabel()
-        valueLabel.font = Fonts.standardFont();
+        valueLabel.font = .standardFont;
         valueLabel.textAlignment = .center;
-        valueLabel.textColor = UIColor.white;
+        valueLabel.textColor = .white;
         valueLabel.adjustsFontSizeToFitWidth = true;
         contentView.addSubview(valueLabel);
         

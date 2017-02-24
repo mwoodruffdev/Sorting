@@ -13,7 +13,7 @@ class ButtonFactory {
     static func standardButton() -> UIButton {
         
         let standardButton = UIButton();
-        standardButton.titleLabel?.font = Fonts.standardFont();
+        standardButton.titleLabel?.font = .standardFont;
         standardButton.layer.borderColor = UIColor.white.cgColor
         standardButton.layer.borderWidth = 1;
         standardButton.backgroundColor = .black;
@@ -29,12 +29,31 @@ class ButtonFactory {
         return standardButton;
     }
     
-    static func highlightedButton(text: String, target: Any?, action: Selector) -> UIButton {
+    static func actionButton(text: String, target: Any?, action: Selector) -> UIButton {
         
-        let highlightedButton = UIButton();
-        highlightedButton.setTitle(text, for: .normal);
-        highlightedButton.setTitleColor(.blue, for: .normal);
-        highlightedButton.addTarget(target, action: action, for: .touchUpInside);
+        let highlightedButton = standardButtonWith(text: text, target: target, action: action);
+        highlightedButton.titleLabel?.font = .actionButtonFont;
+        highlightedButton.layer.cornerRadius = 10;
+        highlightedButton.layer.shadowColor = UIColor.black.cgColor;
+        highlightedButton.layer.shadowOffset = CGSize(width: 0, height: 3);
+        highlightedButton.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 5)
+        highlightedButton.clipsToBounds = true;
+        highlightedButton.backgroundColor = .white;
+        highlightedButton.setTitleColor(.black, for: .normal);
         return highlightedButton
+    }
+    
+    static func roundButton(text: String, target: Any?, action: Selector, width: CGFloat) -> UIButton {
+        
+        let roundButton = standardButtonWith(text: text, target: target, action: action);
+        roundButton.titleLabel?.font = .actionButtonFont;
+        roundButton.layer.cornerRadius = width/2;
+        roundButton.layer.cornerRadius = 10;
+        roundButton.layer.shadowColor = UIColor.black.cgColor;
+        roundButton.layer.shadowOffset = CGSize(width: 0, height: 3);
+        roundButton.clipsToBounds = true;
+        roundButton.backgroundColor = .white;
+        roundButton.setTitleColor(.black, for: .normal);
+        return roundButton;
     }
 }

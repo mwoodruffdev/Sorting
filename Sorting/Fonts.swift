@@ -8,8 +8,8 @@
 
 import UIKit
 
-class Fonts {
-    static func standardFont() -> UIFont {
-        return UIFont(name: "Roboto-Regular", size: 16)!;
-    }
+extension UIFont {
+    
+    static var standardFont: UIFont { return UIFont(name: "Roboto-Regular", size: 16)!; };
+    static var actionButtonFont: UIFont { return UIFont(name: "Roboto-Regular", size: 12)!; };
 }

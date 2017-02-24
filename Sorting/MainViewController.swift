@@ -34,7 +34,10 @@ class MainViewController: UIViewController, SideMenuViewControllerDelegate {
     func didSelectViewController(viewController: UIViewController) {
         
         let navController = UINavigationController(rootViewController: viewController);
-        navController.navigationBar.titleTextAttributes = [NSFontAttributeName: Fonts.standardFont(), NSForegroundColorAttributeName: UIColor.black];
+        navController.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont.standardFont,
+                                                           NSForegroundColorAttributeName: UIColor.white];
+        navController.navigationBar.barTintColor = .navBarColor;
+        
         viewController.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Menu", style: .plain, target: self, action: #selector(pressedMenu));
         
         selectedViewController = navController;

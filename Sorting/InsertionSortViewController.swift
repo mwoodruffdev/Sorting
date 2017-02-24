@@ -30,7 +30,7 @@ class InsertionSortViewController: BaseSortingViewController<InsertionSort> {
                         while i >= 0 {
                             
                             let cell = self.sortCollectionView.cellForItem(at: IndexPath(row: i, section: 0)) as! SortCollectionViewCell;
-                            cell.backgroundColor = UIColor.green;
+                            cell.backgroundColor = .green;
                             cell.sorted = true;
                             i = i - 1;
                         }
@@ -65,8 +65,8 @@ class InsertionSortViewController: BaseSortingViewController<InsertionSort> {
         return ViewSortAnimation({
             let cell1 = self.sortCollectionView.cellForItem(at: IndexPath(row: positionOne.index, section: 0));
             let cell2 = self.sortCollectionView.cellForItem(at: IndexPath(row: positionTwo.index, section: 0));
-            cell1?.backgroundColor = UIColor.red;
-            cell2?.backgroundColor = UIColor.red;
+            cell1?.backgroundColor = .red;
+            cell2?.backgroundColor = .red;
             
             self.logView.insertComparison(first: positionOne.value, second: positionTwo.value, sign: "<=");
         });
