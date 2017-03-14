@@ -51,4 +51,4 @@ Furthermore, the following features are also to be implemented to enhance learni
 <a name="bugsandsupport"/>
 ##Bugs & Support
 
-If you would like to support this app, report bugs or anything else, please contact abc@def.com
+If you would like to support this app, report bugs or anything else, please contact mwoodruffdev@gmail.com
